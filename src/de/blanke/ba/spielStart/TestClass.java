@@ -1,4 +1,4 @@
-package de.blanke.ba.test;
+package de.blanke.ba.spielStart;
 
 public class TestClass {
 
