@@ -4,3 +4,4 @@ Bitte beachten: Dieses Projekt hat eine Abhängigkeit mit folgenden JAR die für
 
 - jade 4.3
 - myCBR 3.1
+- log4j 1.2 (später)
