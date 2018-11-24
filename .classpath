@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/paul4/Desktop/Dateien/Bachelorarbeit/Jars/jade.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/paul4/Desktop/Dateien/Bachelorarbeit/Jars/mycbr.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/paul4/Desktop/Dateien/Bachelorarbeit/Jars/log4j-1.2-api-2.11.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
