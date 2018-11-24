@@ -13,53 +13,7 @@ public class Converter {
 	/**
 	 * Diese Methode soll Mühlen erkennen und aufstellen
 	 */
-	public boolean ermitteleMühle(Spieler spieler, Board board) {
-		// Es muss für alle Steine eines Spieler überlegt werden, ob sie in einer Mühle sind
-		// Variablen
-		List<Stein> data = spieler.getAlleSteinePosition();
-		List<Feld> felder = new ArrayList<Feld>();
-		List<Feld> mühlePos = new ArrayList<Feld>();
-		Mühle mühle = null;
-		
-		// mache aus den Steinen Felder
-		for(Stein stein: data) {
-			felder.add(board.gebeFeldZurueck(stein.getRing(), stein.getxCord(), stein.getyCord()));
-		}
-		// Durchlaufe alle Felder und entferne eins und vergleiche es mit den anderen
-		for(int i = 0; i < felder.size(); i++) {
-			Feld feld = felder.remove(i);
-			mühlePos.add(feld);
-			// Durchsuche andere Felder
-			for(Feld f: felder) {
-				if(f.getxCord() == feld.getxCord()) {
-					mühlePos.add(f);
-				} else if(f.getyCord() == feld.getyCord()) {
-					mühlePos.add(f);
-				}
-			}
-			
-			// Wenn nach dem Durchlauf 3 Felder vorhanden sind
-			if(mühlePos.size() == 3) {
-				
-				mühle = new Mühle(mühlePos);
-				spieler.addMuehle(mühle);
-				mühlePos.clear();
-				// Setze die Steine auf protected durch Mühle
-				
-				
-			} else {
-				mühlePos.clear();
-			}
-			
-			
-		}
-		
-		 boolean rueckgabe = false;
-		// laufe über alle neun Steine rüber.
-		
-		
-		return rueckgabe;
-	}
+	
 	
 	public Feld ermitteleFeld(int xCord, int yCord) {
 		int ring = 0;

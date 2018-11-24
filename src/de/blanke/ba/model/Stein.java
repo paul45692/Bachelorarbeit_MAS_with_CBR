@@ -90,5 +90,9 @@ public class Stein {
 		this.xCord = xCord;
 		this.yCord = yCord;
 	}
+	
+	public Feld convertToFeld() {
+		return new Feld(this.ring, this.xCord, this.yCord);
+	}
 
 }

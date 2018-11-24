@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import de.blanke.ba.model.Mühle;
-import de.blanke.ba.model.Stein;
+import de.blanke.ba.model.Spielstein;
+
 
 /**
  * Diese klasse hält Spieler informationen bereit.
@@ -41,7 +41,7 @@ public class Spieler implements Serializable{
 	 * Diese Liste zeigt die Position der eignen Spielsteine an.
 	 * 
 	 */
-	private List<Stein> posiSteine = new ArrayList<>();
+	private List<Spielstein> posiSteine = new ArrayList<>();
 	
 	/**
 	 * Dieses Attribute hält die Mühlen des Spielers.
@@ -110,11 +110,9 @@ public class Spieler implements Serializable{
 	
 	
 // Methoden	
-	public void setzStein(Stein stein) {
-		this.posiSteine.add(stein);
-	}
 	
-	public void removeStein(Stein stein) {
+	
+	public void removeStein(Spielstein stein) {
 		this.posiSteine.remove(stein);
 	}
 	
@@ -128,9 +126,19 @@ public class Spieler implements Serializable{
 		this.vorhandeneMuehlen.remove(muehle);
 	}
 	
-	public List<Stein> getAlleSteinePosition() {
-		return this.posiSteine;
+	public void setzeSpielstein(Spielstein stein) {
+		this.posiSteine.add(stein);
 	}
+
+	protected List<Spielstein> getPosiSteine() {
+		return posiSteine;
+	}
+
+	protected void setPosiSteine(List<Spielstein> posiSteine) {
+		this.posiSteine = posiSteine;
+	}
+	
+	
 	
 
 	

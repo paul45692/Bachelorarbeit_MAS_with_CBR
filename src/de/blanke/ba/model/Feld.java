@@ -16,8 +16,11 @@ import de.blanke.ba.logik.Board;
  * 
  */
 public class Feld implements Serializable {
-
-// Attribute
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -93812416829409512L;
+	// Attribute
 	private int ringZahl;
 	private int xCord;
 	private int yCord;

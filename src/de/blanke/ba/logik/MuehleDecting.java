@@ -48,7 +48,7 @@ public class MuehleDecting {
 	 * @return gefundene Mühle oder nicht.
 	 */
 	public boolean findeMühle(Spieler spieler) {
-		List<Stein> spielsteine = spieler.getAlleSteinePosition();
+		List<Stein> spielsteine = null;
 		
 		List<Stein> alleRing1 = new ArrayList<>();
 		List<Stein> alleRing2 = new ArrayList<>();
@@ -74,12 +74,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 					
 				} else {
 					counter = 0;
@@ -90,12 +86,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -105,12 +97,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -120,12 +108,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}	
@@ -141,12 +125,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -156,12 +136,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -171,12 +147,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -186,13 +158,9 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
 					break;
+					
 				} else {
 					counter = 0;
 				}	
@@ -206,12 +174,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -221,12 +185,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -236,12 +196,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -251,12 +207,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}	
@@ -270,12 +222,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -285,12 +233,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -300,12 +244,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -315,12 +255,8 @@ public class MuehleDecting {
 					}
 				}
 				if(counter==3) {
-					if(!checkObMühleBeiSpielerIst(spieler, posiRing1A)) {
-						rueckgabe = true;
-						break;
-					} else {
-						counter = 0;
-					}
+					rueckgabe = true;
+					break;
 				} else {
 					counter = 0;
 				}
@@ -391,38 +327,4 @@ public class MuehleDecting {
 	
 	}
 	
-	/**
-	 * Diese Methode untersucht ob eine gefundene Mühle bereits zu dem Spieler gehört.
-	 * Falls das denn der Fall ist wird die Mühle nicht weiter betrachetet und sonst wieder sie 
-	 * hinzu gefügt.
-	 * @param spieler Der aktuelle Spieler am Zug
-	 * @param data eine Mühle die untersucht wird
-	 * @return ja / nein
-	 */
-	private boolean checkObMühleBeiSpielerIst(Spieler spieler, List<Stein> data) {
-		boolean rueckgabe = false;
-		for(Mühle mühle: spieler.getVorhandeneMuehlen()) {
-			for(Feld f: mühle.getFelder()) {
-				for(Stein s: data) {
-					if((f.getRingZahl() == s.getRing())&& (f.getxCord() == s.getxCord()) &&(f.getyCord() == s.getyCord()) ) {
-						rueckgabe = true;
-						break;
-					}
-				}
-			}
-		}
-		
-		if(!rueckgabe) {
-			List<Feld> felder = new ArrayList<>();
-			for(Stein s: data) {
-				felder.add(new Feld(s.getRing(), s.getxCord(), s.getyCord()));
-				System.out.println("Eine Mühle wurde bei Spieler: " + spieler.getSpielFarbe() + " angefügt!");
-				
-			}
-			
-			spieler.addMuehle(new Mühle(felder));
-		}
-		return rueckgabe;
-		
-	}
 }

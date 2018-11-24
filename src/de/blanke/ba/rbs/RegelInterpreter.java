@@ -54,8 +54,37 @@ public class RegelInterpreter {
 	
 	
 	private Stein analyseQuerySpielPhase0(Board board, Spieler spieler) {
-		Stein stein = null;
-		return stein;
+		Stein steinRueckgabe = null;
+		// Ein Schnittstellen problem
+		List<Stein> dataInput = null;
+		
+		for(RegelSpielPhase0 regel: spielphase0) {
+			if(regel.getIfTeil().contains("Frei") && board.checkFeld(regel.getIfStein().convertToFeld())) {
+				steinRueckgabe = regel.getElseStein();
+				spielphase0.remove(regel);
+				break;
+			} else  if(regel.getIfTeil().contains("Belegt") && !board.checkFeld(regel.getIfStein().convertToFeld()) &&
+						board.checkFeld(regel.getElseStein().convertToFeld())){
+				steinRueckgabe = regel.getElseStein();
+				spielphase0.remove(regel);
+				break;
+			} else if(regel.getIfTeil().contains("Zufall")) {
+				// Solange wie nichts gefunden wurde, suche weiter:)
+				while(!board.checkFeld(regel.getIfStein().convertToFeld())) {
+					regel.erzeugeZufällig();
+					System.out.println("Suche!");
+					if(board.checkFeld(regel.getIfStein().convertToFeld())) {
+						
+						steinRueckgabe = regel.getElseStein();
+						regel.erzeugeZufällig();
+						break;
+					}
+				}
+			}
+			
+		}
+		
+		return steinRueckgabe;
 	}
 	
 	private Stein analyseQuerySpielPhase1(Board board, Spieler spieler) {
