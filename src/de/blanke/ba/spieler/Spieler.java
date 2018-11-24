@@ -15,6 +15,10 @@ import de.blanke.ba.model.Stein;
  */
 public class Spieler implements Serializable{
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7740050342688455840L;
+	/**
 	 * Diese Var. speichert die aktuelle Anzahl der Steine auf dem Spielfeld.
 	 */
 	private int anzahlSteine;

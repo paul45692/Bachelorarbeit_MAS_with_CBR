@@ -14,7 +14,6 @@ public class Spielstein  {
 	/**
 	 * Die verknüpfung des Steines aus der Logik schicht
 	 */
-	
 	private int x;
 	private int y;
 	// Farbe
