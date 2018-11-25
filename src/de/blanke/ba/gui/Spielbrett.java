@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import de.blanke.ba.logger.Test;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Spielstein;
@@ -25,6 +30,8 @@ public class Spielbrett extends JPanel implements MouseListener {
 	 * 
 	 */
 	private static final long serialVersionUID = -3334802508888319034L;
+	
+	private static final Logger logger = Logger.getLogger(Spielbrett.class);
 	float interpolation;
 	// Change the player
 	int player = 0;
@@ -48,6 +55,8 @@ public class Spielbrett extends JPanel implements MouseListener {
 	
 	
 	public Spielbrett(ControllerAgent controller, int agenten_anzahl) {
+		PropertyConfigurator.configure(Test.class.getResource("log4j.info"));
+		logger.info("Programm gestarted");
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
 		this.spielController = new SpielController();
@@ -125,7 +134,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 		
 		xCord = me.getX();
 		yCord = me.getY();
-		System.out.println(" " + xCord + "- " + yCord);
+		logger.info(" " + xCord + "- " + yCord);
 		List<Spielstein> zugDoppel = new ArrayList<>();
 		// Checke ob das Spiel schon zu Ende ist.
 		pruefeSpielEnde();
@@ -160,7 +169,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
-							System.out.println("Ein Fehler wurde gemacht");
+							logger.error("Ein Fehler wurde gemacht");
 							break;
 						}
 						
@@ -241,7 +250,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
-							System.out.println("Ein Fehler wurde gemacht");
+							logger.error("Ein Fehler wurde gemacht");
 							break;
 						}
 						
@@ -297,9 +306,10 @@ public class Spielbrett extends JPanel implements MouseListener {
 		if(spielerA.getAnzahlSteine() < 3 && spielerA.getSpielPhase() == 2) {
 			this.spielEnde = true;
 			System.out.println("Der Spieler " + spielerB.getSpielFarbe().toString() + "  gewinnt!");
+			logger.info("Der Spieler " + spielerB.getSpielFarbe().toString() + "  gewinnt!");
 		} else if(spielerB.getAnzahlSpielZüge() < 3 && spielerB.getSpielPhase() == 2) {
 			this.spielEnde = true;
-			System.out.println("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
+			logger.info("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
 		}
 	}
  

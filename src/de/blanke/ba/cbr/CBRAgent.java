@@ -10,7 +10,7 @@ public class CBRAgent extends Agent{
 
 	@Override
 	protected void setup() {
-		System.out.print("Ich bin der zweite Agent");
+		System.out.print("CBR System aktiv!");
 		super.setup();
 	}
 }

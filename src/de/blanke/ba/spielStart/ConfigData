@@ -1,1 +1,9 @@
 Konfigurationsanleitung
+
+der Parameter agenten_anzahl setzt die Anzahl der Agenten:
+
+-	0 Kein Agent.
+-	1 ein RBS Agent
+-	2 zwei Agenten 
+-	3 zwei Agenten
+-	4 ein CBR Agent

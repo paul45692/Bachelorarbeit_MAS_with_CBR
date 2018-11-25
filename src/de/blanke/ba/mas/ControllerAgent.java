@@ -19,23 +19,17 @@ public class ControllerAgent extends Agent {
 	 * Attribute
 	 */
 	private static final long serialVersionUID = 1L;
+	// Ein Instanz des Board das den Spielstand repräsentiert.
 	private Board board;
+	private Spieler spieler;
+	private boolean rbsAmZug;
+	// Fixe Steine aus denen Spielsteine erzeugt werden
 	private List<Stein> fixeSteineRing1 = new ArrayList<>();
 	private List<Stein> fixeSteineRing2 = new ArrayList<>();
 	private List<Stein> fixeSteineRing3 = new ArrayList<>();
-	
-	public Feld getFeld() {
-		return feld;
-	}
+	// Rückgabe Parameter
+	private List<Stein> data = new ArrayList<>();
 
-
-	public void setFeld(Feld feld) {
-		this.feld = feld;
-	}
-
-
-	private Feld feld;
-	private Spieler spieler;
 // Getter und Setter
 	public Board getBoard() {
 		return board;
@@ -70,12 +64,19 @@ public class ControllerAgent extends Agent {
 		// TODO Auto-generated method stub
 		super.takeDown();
 	}
-	
-	public Feld leiteZugEin(Spieler spieler, Board board) {
+	// Konstruktor
+	public List<Spielstein> leiteZugEin(Board board, boolean rbsAmZug, Spieler spieler) {
 		this.board = board;
+		this.spieler = spieler;
+		this.rbsAmZug = rbsAmZug;
 		addBehaviour(new B1(this));
+		List<Spielstein> rueckgabe = new ArrayList<>();
+		rueckgabe.add(sucheSteinRaus(data.get(0)));
+		if(data.get(1) != null) {
+			rueckgabe.add(sucheSteinRaus(data.get(1)));
+		}
 		
-		return this.feld;
+		return rueckgabe;
 	}
 	
 	private void setzeSpielsteineAuf() {
@@ -142,6 +143,11 @@ public class ControllerAgent extends Agent {
 	
 	
 	class B1 extends Behaviour {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7247228369210425231L;
+		
 		private boolean finished = false;
 		
 			public B1(Agent a) {
@@ -153,13 +159,17 @@ public class ControllerAgent extends Agent {
 			public void action() {
 			// Der Agent sendet die Nachricht ab	
 			ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-			msg.addReceiver(new AID("CBR Agent", AID.ISLOCALNAME));
+			if(rbsAmZug) {
+				msg.addReceiver(new AID("RBS Agent", AID.ISLOCALNAME));
+			} else {
+				msg.addReceiver(new AID("CBR Agent", AID.ISLOCALNAME));
+			}
 			msg.setContent("Du bist am Zug");
 			try {
 				msg.setContentObject(board);
 				msg.setContentObject(spieler);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			send(msg);
@@ -167,7 +177,12 @@ public class ControllerAgent extends Agent {
 			msg = receive();
 			if(msg != null) {
 				try {
-					feld = (Feld) msg.getContentObject();
+					Stein eins = (Stein) msg.getContentObject();
+					data.add(eins);
+					Stein zwei = (Stein) msg.getContentObject();
+					if(zwei != null) {
+						data.add(zwei);
+					}
 				} catch (UnreadableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
