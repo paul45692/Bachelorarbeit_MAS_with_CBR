@@ -23,8 +23,8 @@ public class TestClass {
 		setUpMAS();	
 				// Treffe Spieleinstellungen
 			       	// Diese Einstellung setzt die KI auf mit true
-		boolean spiel_ki = false;       
-		GameLoop loop = new GameLoop(conAgent, spiel_ki);
+		int agenten_anzahl = 0;       
+		GameLoop loop = new GameLoop(conAgent, agenten_anzahl);
 		loop.setVisible(true);
 				
 	}

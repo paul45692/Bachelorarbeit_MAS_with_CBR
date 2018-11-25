@@ -3,6 +3,7 @@ package de.blanke.ba.logik;
 
 import java.util.List;
 
+import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.model.Stein;
@@ -155,6 +156,16 @@ public class SpielController {
 			boolean ergebnis = decting.findeMühle(spieler);
 			System.out.println("Mühlen Fund: " + ergebnis);
 		}
+	}
+	
+	/**
+	 * Diese Methode stellt den Einstiegspunkt ins MAS bereit.
+	 * @param spieler
+	 * @param controller
+	 * @return
+	 */
+	public Spielstein excuteMASSpielzug(Spieler spieler, ControllerAgent controller) {
+		return null;
 	}
 	
 	

@@ -31,7 +31,7 @@ public class GameLoop extends JFrame implements ActionListener {
 	private int fps = 60;
 	private int framecount = 0;
 	// Interene Spieleinstellung vornehmen
-	private boolean agent_ai_on = false;
+	
 	private boolean spielEnde = false;
 	private ControllerAgent agent = null;
 	
@@ -42,10 +42,10 @@ public class GameLoop extends JFrame implements ActionListener {
 	/**
 	 * Konstruktor
 	 */
-	public GameLoop(ControllerAgent agent, boolean agent_ai_on) {
+	public GameLoop(ControllerAgent agent, int agenten_anzahl) {
 		
 		super("Bachelorarbeit-Mühle mit KI");
-		this.spielbrett = new Spielbrett(agent, agent_ai_on);
+		this.spielbrett = new Spielbrett(agent, agenten_anzahl);
 		this.agent = agent;
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
@@ -62,7 +62,6 @@ public class GameLoop extends JFrame implements ActionListener {
 		startButton.addActionListener(this);
 		pausedButton.addActionListener(this);
 		endeButton.addActionListener(this);
-		this.agent_ai_on = false;
 		this.spielEnde = false;
 		
 	}
@@ -180,17 +179,6 @@ public class GameLoop extends JFrame implements ActionListener {
 	private void drawGame(float interpolation) {
 		 spielbrett.repaint();
 	}
-
-
-	public boolean isAgent_ai_on() {
-		return agent_ai_on;
-	}
-
-
-	public void setAgent_ai_on(boolean agent_ai_on) {
-		this.agent_ai_on = agent_ai_on;
-	}
-
 
 	public boolean isSpielEnde() {
 		return spielEnde;

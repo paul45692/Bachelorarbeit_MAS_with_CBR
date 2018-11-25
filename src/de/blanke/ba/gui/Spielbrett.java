@@ -16,6 +16,7 @@ import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.spieler.Spieler;
+import de.blanke.ba.spieler.SpielerAgent;
 
 
 public class Spielbrett extends JPanel implements MouseListener {
@@ -43,18 +44,40 @@ public class Spielbrett extends JPanel implements MouseListener {
 	private Spieler spielerB;
 	// Spieler Agent wird eingesetzt
 	private ControllerAgent controller;
-	private boolean agenten_ai_on = false;
 	
 	
 	
-	public Spielbrett(ControllerAgent controller, boolean agenten_ai_on) {
+	public Spielbrett(ControllerAgent controller, int agenten_anzahl) {
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
-		this.spielerA = new Spieler(Color.WHITE);
-		this.spielerB = new Spieler(Color.BLUE);
 		this.spielController = new SpielController();
 		this.controller = controller;
-		this.agenten_ai_on = agenten_ai_on;
+		// Diese Implementierung split nach Anzahl der übergebenen Agenten und setzt das Spiel entsprechend auf
+		switch(agenten_anzahl) {
+		case 0: 	this.spielerA = new Spieler(Color.WHITE);
+					this.spielerB = new Spieler(Color.BLUE);
+					break;
+					
+		case 1:		this.spielerA = new Spieler(Color.WHITE);
+					this.spielerB = new SpielerAgent(Color.BLUE, true);
+					break;
+		
+		case 2:    	this.spielerA = new SpielerAgent(Color.WHITE, false);
+					this.spielerB = new SpielerAgent(Color.BLUE, true);
+					break;
+					
+		case 3:    	this.spielerA = new SpielerAgent(Color.WHITE, true);
+					this.spielerB = new SpielerAgent(Color.BLUE, false);
+					break;
+					
+		case 4: 	this.spielerA = new SpielerAgent(Color.WHITE, false);	
+					this.spielerB = new Spieler(Color.BLUE);
+					break;
+					
+		default:    this.spielerA = new Spieler(Color.WHITE);
+					this.spielerB = new Spieler(Color.BLUE);
+					break;			
+		}
 		
 		try {
 			bi = ImageIO.read(this.getClass().getResource("/res/Muehlefeld.jpg"));
@@ -72,11 +95,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 		this.interpolation = interpol;
 	}
 	
-	public void update() {
-		
-		
-		
-		
+	public void update() {	
 	}
 	
 	public void paintComponent(Graphics g) {

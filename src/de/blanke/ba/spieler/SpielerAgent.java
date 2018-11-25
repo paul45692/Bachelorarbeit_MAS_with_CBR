@@ -2,13 +2,20 @@ package de.blanke.ba.spieler;
 
 import java.awt.Color;
 
+import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Spielstein;
 
 public class SpielerAgent extends Spieler {
 
-	public SpielerAgent(Color farbe) {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private boolean rbs;
+	public SpielerAgent(Color farbe, boolean rbs) {
 		super(farbe);
+		this.rbs = rbs;
 		// TODO Auto-generated constructor stub
 	}
 	/**
@@ -16,7 +23,7 @@ public class SpielerAgent extends Spieler {
 	 * @param agent der ControllerAgent der für das MAS verantwortlich ist.
 	 * @return
 	 */
-	public Spielstein calculateGameMove(ControllerAgent agent) {
+	public Spielstein calculateGameMove(ControllerAgent agent, Board board) {
 		return null;
 	}
 
