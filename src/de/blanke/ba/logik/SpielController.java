@@ -67,7 +67,7 @@ public class SpielController {
 				spieler.setAnzahlSteine(spieler.getAnzahlSteine() + 1);
 				spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 				Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
-				spieler.setzeSpielstein(steinGUI);
+				spieler.setzeSpielstein(stein);
 				
 				if(spieler.getAnzahlSteine() == 9) {
 					spieler.setSpielPhase(1);
@@ -89,7 +89,7 @@ public class SpielController {
 				
 					spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 					Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
-					spieler.setzeSpielstein(steinGUI);
+					spieler.setzeSpielstein(stein);
 				
 					
 				return true;
@@ -124,7 +124,7 @@ public class SpielController {
 		feld = helper.ermitteleFeld(x, y);
 		Spielstein spielstein = board.entferneStein(feld);
 		spieler.setAnzahlSteine(spieler.getAnzahlSteine() -1);
-		spieler.removeStein(spielstein);
+		spieler.removeStein(feld.getStein());
 		
 		return spielstein;
 	}

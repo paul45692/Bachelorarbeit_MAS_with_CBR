@@ -59,7 +59,7 @@ public class ControllerAgent extends Agent {
 	// Agenten Methoden
 	@Override
 	protected void setup() {
-		System.out.println("Ich verwaltet hier alles.");
+		System.out.println("Controller Agent aktiv");
 		setzeSpielsteineAuf();
 		super.setup();
 	}

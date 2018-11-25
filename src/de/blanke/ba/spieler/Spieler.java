@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import de.blanke.ba.model.Mühle;
-import de.blanke.ba.model.Spielstein;
+import de.blanke.ba.model.Stein;
 
 
 /**
@@ -41,7 +41,7 @@ public class Spieler implements Serializable{
 	 * Diese Liste zeigt die Position der eignen Spielsteine an.
 	 * 
 	 */
-	private List<Spielstein> posiSteine = new ArrayList<>();
+	private List<Stein> posiSteine = new ArrayList<>();
 	
 	/**
 	 * Dieses Attribute hält die Mühlen des Spielers.
@@ -90,6 +90,18 @@ public class Spieler implements Serializable{
 		this.vorhandeneMuehlen = vorhandeneMuehlen;
 	}
 	
+	public void setWeitereMühlenDazu(List<Mühle> weitere) {
+		for(Mühle mühle: weitere) {
+			this.vorhandeneMuehlen.add(mühle);
+		}
+	}
+	
+	public void removeÜberflüssigeMühlen(List<Mühle> überzählig) {
+		for(Mühle mühle: überzählig) {
+			this.vorhandeneMuehlen.remove(mühle);
+		}
+	}
+	
 	
 	
 // Kontruktor
@@ -112,7 +124,7 @@ public class Spieler implements Serializable{
 // Methoden	
 	
 	
-	public void removeStein(Spielstein stein) {
+	public void removeStein(Stein stein) {
 		this.posiSteine.remove(stein);
 	}
 	
@@ -126,15 +138,15 @@ public class Spieler implements Serializable{
 		this.vorhandeneMuehlen.remove(muehle);
 	}
 	
-	public void setzeSpielstein(Spielstein stein) {
+	public void setzeSpielstein(Stein stein) {
 		this.posiSteine.add(stein);
 	}
 
-	protected List<Spielstein> getPosiSteine() {
+	public List<Stein> getPosiSteine() {
 		return posiSteine;
 	}
 
-	protected void setPosiSteine(List<Spielstein> posiSteine) {
+	public void setPosiSteine(List<Stein> posiSteine) {
 		this.posiSteine = posiSteine;
 	}
 	

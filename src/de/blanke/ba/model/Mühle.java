@@ -1,5 +1,7 @@
 package de.blanke.ba.model;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.blanke.ba.model.Feld;
@@ -9,43 +11,37 @@ import de.blanke.ba.model.Feld;
  *
  */
 public class Mühle {
-	private List<Feld> felder;
-	private int muehleIstOffen = 0;
 	
-	public List<Feld> getFelder() {
-		return felder;
+	private int index;
+	private List<Stein> steine = new ArrayList<>();
+	
+	public int getIndex() {
+		return index;
 	}
 
-	public void setFelder(List<Feld> felder) {
-		this.felder = felder;
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
-	public int getMuehleIstOffen() {
-		return muehleIstOffen;
+	public List<Stein> getSteine() {
+		return steine;
 	}
 
-	public void setMuehleIstOffen(int muehleIstOffen) {
-		this.muehleIstOffen = muehleIstOffen;
+	public void setSteine(List<Stein> steine) {
+		this.steine = steine;
 	}
-
-	public Mühle(List<Feld> felder) {
-		this.felder = felder;
-		this.muehleIstOffen = 0;
+	// Konstruktor
+	public Mühle(int index, List<Stein> steine) {
+		this.setIndex(index);
+		this.setSteine(steine);
+		
 	}
+	// Methoden
 	
-	public void offeneMuehle() {
-		this.muehleIstOffen = 1;
+	public void setFarbe(Color color) {
+		for(Stein stein: steine) {
+			stein.setFarbe(color);
+		}
 	}
-	
-	public void schliesseMuehle() {
-		this.muehleIstOffen = 0;
-	}
-	
-	public void addFeld(Feld feld) {
-		this.felder.add(feld);
-	}
-	
-	
-	
 	
 }

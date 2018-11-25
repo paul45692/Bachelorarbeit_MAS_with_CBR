@@ -1,5 +1,6 @@
 package de.blanke.ba.logger;
 
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -9,11 +10,7 @@ public class Test {
 	
 	public static void main(String[]args) {
 		PropertyConfigurator.configure(Test.class.getResource("log4j.info"));
-		System.out.println("Test");
-		
 		logger.info("Programm gestarted");
-		System.out.println("Testausgabe ->");
-		
 	}
 
 }

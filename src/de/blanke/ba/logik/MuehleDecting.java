@@ -2,7 +2,6 @@ package de.blanke.ba.logik;
 
 import java.util.ArrayList;
 import java.util.List;
-import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Mühle;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
@@ -28,17 +27,20 @@ public class MuehleDecting {
 	List<Stein> posiRing2C = new ArrayList<>();
 	List<Stein> posiRing2D = new ArrayList<>();
 	
+	
 	List<Stein> posiRing3A = new ArrayList<>();
 	List<Stein> posiRing3B = new ArrayList<>();
 	List<Stein> posiRing3C = new ArrayList<>();
 	List<Stein> posiRing3D = new ArrayList<>();
+	
 	
 	List<Stein> posiRing4A = new ArrayList<>();
 	List<Stein> posiRing4B = new ArrayList<>();
 	List<Stein> posiRing4C = new ArrayList<>();
 	List<Stein> posiRing4D = new ArrayList<>();
 	
-	
+	List<Mühle> alleMühlen = new ArrayList<>();
+	List<Mühle> tempGefunden = new ArrayList<>();
 	
 	public MuehleDecting() {
 		erzeugeMühlen();
@@ -48,13 +50,13 @@ public class MuehleDecting {
 	 * @return gefundene Mühle oder nicht.
 	 */
 	public boolean findeMühle(Spieler spieler) {
-		List<Stein> spielsteine = null;
-		
+		List<Stein> spielsteine = spieler.getPosiSteine();
+		// Sortiere die Steine nach den Ringen
 		List<Stein> alleRing1 = new ArrayList<>();
 		List<Stein> alleRing2 = new ArrayList<>();
 		List<Stein> alleRing3 = new ArrayList<>();
-		boolean rueckgabe = false;
-		
+	
+		// Splitte auf
 		for(Stein s: spielsteine) {
 			if(s.getRing()== 0) {
 				alleRing1.add(s);
@@ -66,262 +68,308 @@ public class MuehleDecting {
 		}
 		int counter = 0;
 		if(alleRing1.size() >= 3) {
-			for(Stein s: alleRing1) {
-				
+			
 				for(Stein check: posiRing1A) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing1) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(0));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-					
-				} else {
-					counter = 0;
-				}
+				counter = 0;
 				for(Stein check: posiRing1B) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing1) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(1));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+			
 				for(Stein check: posiRing1C) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing1) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(2));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+				
 				for(Stein check: posiRing1D) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing1) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(3));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}	
-			}
+				counter = 0;
+			
 			
 		} else if(alleRing2.size() >= 3) {
 			
-			for(Stein s: alleRing2) {
-				
-				for(Stein check: posiRing2A) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
-					}
-				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
-				for(Stein check: posiRing2B) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
-					}
-				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
-				for(Stein check: posiRing2C) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
-					}
-				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
-				for(Stein check: posiRing2D) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
-					}
-				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-					
-				} else {
-					counter = 0;
-				}	
-			}
 			
-		} else if(alleRing3.size() >= 3) {
-			for(Stein s: alleRing3) {
+				for(Stein check: posiRing2A) {
+					for(Stein s:alleRing2) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(4));
+						}
+					}
+				}
+				counter = 0;
+				for(Stein check: posiRing2B) {
+					for(Stein s:alleRing2) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(5));
+						}
+					}
+				}
+				counter = 0;
+				for(Stein check: posiRing2C) {
+					for(Stein s:alleRing2) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(6));
+						}
+					}
+				}
+				counter = 0;
+				for(Stein check: posiRing2D) {
+					for(Stein s:alleRing2) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(7));
+						}
+					}
+				}
+				counter = 0;
+			
+			
+		} else if(spielsteine.size() >= 3) {
+			
 				for(Stein check: posiRing3A) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing3) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(8));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+				
 				for(Stein check: posiRing3B) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing3) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(9));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+				
 				for(Stein check: posiRing3C) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing3) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(10));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+				
 				for(Stein check: posiRing3D) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:alleRing3) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(11));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}	
-			}
+				counter = 0;
+			
 			
 		} else {
-			for(Stein s:spielsteine) {
+			
 				for(Stein check: posiRing4A) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:spielsteine) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(12));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+				
 				for(Stein check: posiRing4B) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:spielsteine) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(13));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+				
 				for(Stein check: posiRing4C) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s:spielsteine) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(14));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
-				}
+				counter = 0;
+				
 				for(Stein check: posiRing4D) {
-					if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
-						counter++;
+					for(Stein s: spielsteine) {
+						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+							counter++;
+						} else if(counter == 3) {
+							tempGefunden.add(alleMühlen.get(15));
+						}
 					}
 				}
-				if(counter==3) {
-					rueckgabe = true;
-					break;
-				} else {
-					counter = 0;
+				counter = 0;
+			}
+	
+		
+		
+		return untersucheMühleFund(spieler);
+	}
+	/**
+	 * Diese Methode untersucht ob die gefundenen Mühlen schon zum Spieler gehören.
+	 * @param spieler
+	 * @return
+	 */
+	private boolean untersucheMühleFund(Spieler spieler) {
+		List<Mühle> alleVorhSpieler = spieler.getVorhandeneMuehlen();
+		
+		for(Mühle mühle: this.tempGefunden) {
+			for(Mühle vergleich:alleVorhSpieler) {
+				if(mühle.getIndex() == vergleich.getIndex()) {
+					this.tempGefunden.remove(mühle.getIndex());
+					alleVorhSpieler.remove(mühle.getIndex());
 				}
 			}
 		}
-		
-		
-		return rueckgabe;
+		// Prüfe auf eine leere Liste, da dann keine Mühle gefunden wurde
+		if(tempGefunden.size() == 0 && alleVorhSpieler.size() == 0) {
+			
+			System.out.println("Keine neue Mühle gefunden");
+			spieler.setVorhandeneMuehlen(spieler.getVorhandeneMuehlen());
+			return false;
+			
+		} else if(alleVorhSpieler.size() == 0 && tempGefunden.size() >= 0) {
+			
+			spieler.setVorhandeneMuehlen(spieler.getVorhandeneMuehlen());
+			spieler.setWeitereMühlenDazu(tempGefunden);
+			return true;
+			
+		} else if(alleVorhSpieler.size() > 0) {
+			spieler.removeÜberflüssigeMühlen(alleVorhSpieler);
+			return false;
+			
+		} else {
+			System.out.println("Ein Fehler ist passiert");
+			return false;
+		}
 	}
+	
 	/**
 	 * Diese Methode setzt zu Beginn die Mühle auf.
+	 * Dabei werden 16 mögliche Positionen getrackt.
 	 */
 	private void erzeugeMühlen() {
 		// Erster Ring(Außen)
 		posiRing1A.add(new Stein(0,0,0,null));
 		posiRing1A.add(new Stein(0,1,0,null));
 		posiRing1A.add(new Stein(0,2,0,null));
+		alleMühlen.add(new Mühle(0, posiRing1A));
 		posiRing1B.add(new Stein(0,0,0,null));
 		posiRing1B.add(new Stein(0,0,1,null));
 		posiRing1B.add(new Stein(0,0,2,null));
+		alleMühlen.add(new Mühle(1, posiRing1B));
 		posiRing1C.add(new Stein(0,0,2,null));
 		posiRing1C.add(new Stein(0,1,2,null));
 		posiRing1C.add(new Stein(0,2,2,null));
+		alleMühlen.add(new Mühle(2, posiRing1C));
 		posiRing1D.add(new Stein(0,2,2,null));
 		posiRing1D.add(new Stein(0,2,1,null));
 		posiRing1D.add(new Stein(0,2,0,null));
-		// zweiter Ring
+		alleMühlen.add(new Mühle(3, posiRing1D));
+		
+		// Alle Positionen
 		posiRing2A.add(new Stein(1,0,0,null));
 		posiRing2A.add(new Stein(1,1,0,null));
 		posiRing2A.add(new Stein(1,2,0,null));
+		alleMühlen.add(new Mühle(4, posiRing2A));
 		posiRing2B.add(new Stein(1,0,0,null));
 		posiRing2B.add(new Stein(1,0,1,null));
 		posiRing2B.add(new Stein(1,0,2,null));
+		alleMühlen.add(new Mühle(5, posiRing2B));
 		posiRing2C.add(new Stein(1,0,2,null));
 		posiRing2C.add(new Stein(1,1,2,null));
 		posiRing2C.add(new Stein(1,2,2,null));
+		alleMühlen.add(new Mühle(6, posiRing2C));
 		posiRing2D.add(new Stein(1,2,2,null));
 		posiRing2D.add(new Stein(1,2,1,null));
 		posiRing2D.add(new Stein(1,2,0,null));
+		alleMühlen.add(new Mühle(7, posiRing2D));
+		
 		// 3. Ring (Innen)
 		posiRing3A.add(new Stein(2,0,0,null));
 		posiRing3A.add(new Stein(2,1,0,null));
 		posiRing3A.add(new Stein(2,2,0,null));
+		alleMühlen.add(new Mühle(8, posiRing3A));
 		posiRing3B.add(new Stein(2,0,0,null));
 		posiRing3B.add(new Stein(2,0,1,null));
 		posiRing3B.add(new Stein(2,0,2,null));
+		alleMühlen.add(new Mühle(9, posiRing3B));
 		posiRing3C.add(new Stein(2,0,2,null));
 		posiRing3C.add(new Stein(2,1,2,null));
 		posiRing3C.add(new Stein(2,2,2,null));
+		alleMühlen.add(new Mühle(10, posiRing3C));
 		posiRing3D.add(new Stein(2,2,2,null));
 		posiRing3D.add(new Stein(2,2,1,null));
-		posiRing3D.add(new Stein(1,2,0,null));
+		posiRing3D.add(new Stein(2,2,0,null));
+		alleMühlen.add(new Mühle(11, posiRing3D));
 		// Sonstige Mühlen über alle Felder
 		posiRing4A.add(new Stein(0,1,0,null));
 		posiRing4A.add(new Stein(1,1,0,null));
 		posiRing4A.add(new Stein(2,1,0,null));
+		alleMühlen.add(new Mühle(12, posiRing4A));
 		posiRing4B.add(new Stein(0,1,2,null));
 		posiRing4B.add(new Stein(1,1,2,null));
 		posiRing4B.add(new Stein(2,1,2,null));
+		alleMühlen.add(new Mühle(13, posiRing4B));
 		posiRing4C.add(new Stein(0,0,1,null));
 		posiRing4C.add(new Stein(1,0,1,null));
 		posiRing4C.add(new Stein(2,0,1,null));
+		alleMühlen.add(new Mühle(14, posiRing4C));
 		posiRing4D.add(new Stein(0,2,1,null));
 		posiRing4D.add(new Stein(1,2,1,null));
 		posiRing4D.add(new Stein(2,2,1,null));
+		alleMühlen.add(new Mühle(15, posiRing4D));
 		
 		
 	
