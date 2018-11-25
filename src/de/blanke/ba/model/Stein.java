@@ -1,9 +1,15 @@
 package de.blanke.ba.model;
 
 import java.awt.Color;
+
+import jade.util.leap.Serializable;
 // Diese Klasse bildet die Spielsteine auf der Logikebene ab.
-public class Stein {
+public class Stein implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4084719863898733007L;
 	private Color farbe;
 	private int ring;
 	private int xCord;

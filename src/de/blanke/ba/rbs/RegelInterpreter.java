@@ -1,6 +1,7 @@
 package de.blanke.ba.rbs;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.blanke.ba.logik.Board;
@@ -11,19 +12,19 @@ public class RegelInterpreter {
 	
 	private RegelSet data = new RegelSet();
 	private List<RegelSpielPhase0> spielphase0 = data.getSpielphase0();
+	private List<Stein> dataBack = new ArrayList<>();
 	
-	public RegelInterpreter() {
-		
-	}
+
 	/**
 	 * Diese Methode verarbeitet eine Anfrage an das System.
 	 * @param board
 	 * @param spieler
 	 * @return
 	 */
-	public Stein sendQuery(Board board, Spieler spieler) {
+	public List<Stein> sendQuery(Board board, Spieler spieler) {
 		this.setzeColor(spieler.getSpielFarbe());
-		Stein stein = null;
+		this.dataBack.clear();
+		
 		switch(spieler.getSpielPhase()) {
 		
 		case 0:    	analyseQuerySpielPhase0(board, spieler);
@@ -39,7 +40,7 @@ public class RegelInterpreter {
 					break;
 		default:    break;
 		}
-		return null;
+		return this.dataBack;
 	}
 	
 	
@@ -53,19 +54,17 @@ public class RegelInterpreter {
 	
 	
 	
-	private Stein analyseQuerySpielPhase0(Board board, Spieler spieler) {
-		Stein steinRueckgabe = null;
+	private void analyseQuerySpielPhase0(Board board, Spieler spieler) {
 		// Ein Schnittstellen problem
-		List<Stein> dataInput = null;
 		
 		for(RegelSpielPhase0 regel: spielphase0) {
 			if(regel.getIfTeil().contains("Frei") && board.checkFeld(regel.getIfStein().convertToFeld())) {
-				steinRueckgabe = regel.getElseStein();
+				this.dataBack.add(regel.getElseStein());
 				spielphase0.remove(regel);
 				break;
 			} else  if(regel.getIfTeil().contains("Belegt") && !board.checkFeld(regel.getIfStein().convertToFeld()) &&
 						board.checkFeld(regel.getElseStein().convertToFeld())){
-				steinRueckgabe = regel.getElseStein();
+				this.dataBack.add(regel.getElseStein());
 				spielphase0.remove(regel);
 				break;
 			} else if(regel.getIfTeil().contains("Zufall")) {
@@ -75,7 +74,7 @@ public class RegelInterpreter {
 					System.out.println("Suche!");
 					if(board.checkFeld(regel.getIfStein().convertToFeld())) {
 						
-						steinRueckgabe = regel.getElseStein();
+						this.dataBack.add(regel.getElseStein());
 						regel.erzeugeZufällig();
 						break;
 					}
@@ -83,8 +82,6 @@ public class RegelInterpreter {
 			}
 			
 		}
-		
-		return steinRueckgabe;
 	}
 	
 	private Stein analyseQuerySpielPhase1(Board board, Spieler spieler) {
