@@ -13,7 +13,7 @@ import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
 
-public class TestClass {
+public class SpielStart {
 	
 	private static ControllerAgent conAgent = null;
 	
