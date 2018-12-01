@@ -7,9 +7,9 @@ import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 
 /**
- * Diese Klasse stellt die Logik bereit um eine Mühle zu finden
+ * Diese Klasse ermittelt eine Mühle anhand vorgegbener Positionen
  * 
- * @author paul4
+ * @author Paul Blanke
  *
  */
 public class MuehleDecting {
@@ -280,16 +280,16 @@ public class MuehleDecting {
 			
 		} else if(alleVorhSpieler.size() == 0 && tempGefunden.size() >= 0) {
 			
-			spieler.setVorhandeneMuehlen(spieler.getVorhandeneMuehlen());
-			spieler.setWeitereMühlenDazu(tempGefunden);
+			spieler.setVorhandeneMuehlen(tempGefunden);
+			System.out.println("Eine neue Mühle wurde gefunden!");
 			return true;
 			
-		} else if(alleVorhSpieler.size() > 0) {
+		} else if(alleVorhSpieler.size() > 0 && tempGefunden.size() == 0) {
 			spieler.removeÜberflüssigeMühlen(alleVorhSpieler);
 			return false;
 			
 		} else {
-			System.out.println("Ein Fehler ist passiert");
+			System.out.println("Beim Mühle Tracking ist ein Fehler aufgetreten!");
 			return false;
 		}
 	}

@@ -11,6 +11,7 @@ import de.blanke.ba.spieler.Spieler;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
@@ -22,6 +23,7 @@ public class ControllerAgent extends Agent {
 	// Ein Instanz des Board das den Spielstand repräsentiert.
 	private Board board;
 	private Spieler spieler;
+	private MessageBox box;
 	private boolean rbsAmZug;
 	// Fixe Steine aus denen Spielsteine erzeugt werden
 	private List<Stein> fixeSteineRing1 = new ArrayList<>();
@@ -30,7 +32,17 @@ public class ControllerAgent extends Agent {
 	// Rückgabe Parameter
 	private List<Stein> data = new ArrayList<>();
 
-// Getter und Setter
+	public List<Stein> getData() {
+		return data;
+	}
+
+
+	public void setData(List<Stein> data) {
+		this.data = data;
+	}
+
+
+	// Getter und Setter
 	public Board getBoard() {
 		return board;
 	}
@@ -65,18 +77,13 @@ public class ControllerAgent extends Agent {
 		super.takeDown();
 	}
 	// Konstruktor
-	public List<Spielstein> leiteZugEin(Board board, boolean rbsAmZug, Spieler spieler) {
+	public void leiteZugEin(Board board, boolean rbsAmZug, Spieler spieler) {
 		this.board = board;
 		this.spieler = spieler;
+		this.box = new MessageBox(spieler, board);
 		this.rbsAmZug = rbsAmZug;
 		addBehaviour(new B1(this));
-		List<Spielstein> rueckgabe = new ArrayList<>();
-		rueckgabe.add(sucheSteinRaus(data.get(0)));
-		if(data.get(1) != null) {
-			rueckgabe.add(sucheSteinRaus(data.get(1)));
-		}
 		
-		return rueckgabe;
 	}
 	
 	private void setzeSpielsteineAuf() {
@@ -142,13 +149,12 @@ public class ControllerAgent extends Agent {
 	 
 	
 	
-	class B1 extends Behaviour {
+	class B1 extends OneShotBehaviour {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = -7247228369210425231L;
 		
-		private boolean finished = false;
 		
 			public B1(Agent a) {
 				super(a);
@@ -166,41 +172,31 @@ public class ControllerAgent extends Agent {
 			}
 			msg.setContent("Du bist am Zug");
 			try {
-				msg.setContentObject(board);
-				msg.setContentObject(spieler);
+				msg.setContentObject(box);
 			} catch (IOException e) {
 				
 				e.printStackTrace();
 			}
 			send(msg);
+			block();
 			// Er wartet auf eine neue Nachricht und holt das Feld aus der Nachricht.
 			msg = receive();
 			if(msg != null) {
 				try {
 					Stein eins = (Stein) msg.getContentObject();
 					data.add(eins);
-					Stein zwei = (Stein) msg.getContentObject();
-					if(zwei != null) {
-						data.add(zwei);
-					}
+					System.out.println("Die Nachricht ist angekommen!");
+					System.out.println("Zugvorschlag: " + eins.getRing() + " " + eins.getxCord() + eins.getyCord());
 				} catch (UnreadableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				finished = true;
 			} else {
 				block();
 			}
 			
 			
 			}
-		
-
-			@Override
-			public boolean done() {
-			// 	addBehaviour(this);
-			return finished;
-		}
 	
 	}
 }

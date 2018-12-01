@@ -1,10 +1,13 @@
 package de.blanke.ba.logik;
 
+import java.util.List;
+
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
+import de.blanke.ba.spieler.SpielerAgent;
 
 /**
  * Diese Klasse untersucht mögliche Züge
@@ -157,8 +160,8 @@ public class SpielController {
 	 * @param controller
 	 * @return
 	 */
-	public Spielstein excuteMASSpielzug(Spieler spieler, ControllerAgent controller) {
-		return null;
+	public Spielstein excuteMASSpielzug(SpielerAgent spieler, ControllerAgent controller) {
+		return spieler.calculateGameMove(controller, board);
 	}
 	
 	

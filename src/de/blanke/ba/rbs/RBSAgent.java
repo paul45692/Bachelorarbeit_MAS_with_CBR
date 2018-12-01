@@ -3,6 +3,7 @@ package de.blanke.ba.rbs;
 import java.io.IOException;
 import java.util.List;
 import de.blanke.ba.logik.Board;
+import de.blanke.ba.mas.MessageBox;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 import jade.core.AID;
@@ -54,9 +55,11 @@ public class RBSAgent extends Agent {
 					List<Stein> rueckgabe = null;
 					try {
 						// Hole den Zwischenstand aus der Nachricht
-						Board board = (Board) msg.getContentObject();
-						Spieler spieler = (Spieler) msg.getContentObject();
+						MessageBox box = (MessageBox) msg.getContentObject();
+						Spieler spieler = box.getSpieler();
+						Board board = box.getBoard();
 						rueckgabe = interpreter.sendQuery(board, spieler);
+						
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -66,13 +69,11 @@ public class RBSAgent extends Agent {
 					msg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
 					msg.setContent("Zug beendet");
 					Stein eins = rueckgabe.get(0);
-					Stein zwei = null;
-					if(rueckgabe.get(1) != null) {
-						 zwei = rueckgabe.get(1);
-					}
+					System.out.println("Zugvorschlag: " + eins.getRing() + " " + eins.getxCord() + eins.getyCord());
+					
 					try {
 						msg.setContentObject(eins);
-						msg.setContentObject(zwei);
+						// msg.setContentObject(zwei);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

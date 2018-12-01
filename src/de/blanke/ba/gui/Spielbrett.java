@@ -47,8 +47,11 @@ public class Spielbrett extends JPanel implements MouseListener {
 	private SpielController spielController;
 	// Spieler A: weiss und @player false;
 	private Spieler spielerA;
+	private int playerA;
 	// Spieler B: blau und @player true;
 	private Spieler spielerB;
+	private int playerB;
+	
 	// Spieler Agent wird eingesetzt
 	private ControllerAgent controller;
 	
@@ -64,15 +67,20 @@ public class Spielbrett extends JPanel implements MouseListener {
 		// Diese Implementierung split nach Anzahl der übergebenen Agenten und setzt das Spiel entsprechend auf
 		switch(agenten_anzahl) {
 		case 0: 	this.spielerA = new Spieler(Color.WHITE);
+					this.playerA = 0;
 					this.spielerB = new Spieler(Color.BLUE);
+					this.playerB = 1;
 					break;
 					
 		case 1:		this.spielerA = new Spieler(Color.WHITE);
+					this.playerA = 0;
 					this.spielerB = new SpielerAgent(Color.BLUE, true);
+					this.playerB = 3;
 					break;
 		
 		case 2:    	this.spielerA = new SpielerAgent(Color.WHITE, false);
 					this.spielerB = new SpielerAgent(Color.BLUE, true);
+					this.playerB = 3;
 					break;
 					
 		case 3:    	this.spielerA = new SpielerAgent(Color.WHITE, true);
@@ -144,7 +152,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 						// Erste Spielphase (Steine frei setzen)
 						if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein)) {
 							spielsteine.add(spielstein);
-							player = 0;
+							player = playerA;
 							break;
 						}
 				
@@ -159,7 +167,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							break;
 						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
 							spielsteine.add(spielstein);
-							player = 0;
+							player = playerA;
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
@@ -177,7 +185,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							break;
 						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
 							spielsteine.add(spielstein);
-							player = 0;
+							player = playerA;
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
@@ -189,7 +197,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerA);
 						spielsteine.remove(stein);
 						// Der Spieler muss wieder in die Spielphase zurück
-						player = 0;
+						player  = playerA;
 						spielerB.setSpielPhase(spielerB.getTempspielPhase());
 						break;
 			default: 						
@@ -210,7 +218,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 			case 0:
 						if(spielController.setSpielStein(xCord, yCord, spielerA, spielstein)) {
 							spielsteine.add(spielstein);
-							player = 1;
+							player = playerB;
 							
 						}
 						
@@ -224,7 +232,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							break;
 						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
 							spielsteine.add(spielstein);
-							player = 1;
+							player = playerB;
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
@@ -240,7 +248,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							break;
 						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
 							spielsteine.add(spielstein);
-							player = 1;
+							player = playerB;
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
@@ -252,7 +260,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 			case 3:		Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
 						spielsteine.remove(stein);
 						// Der Spieler muss wieder in die Spielphase zurück
-						player = 0;
+						player = playerB;
 						spielerA.setSpielPhase(spielerA.getTempspielPhase());
 				
 						break;
@@ -262,7 +270,10 @@ public class Spielbrett extends JPanel implements MouseListener {
 			}
 			spielController.pruefeAufMuehle(spielerA);
 			System.out.println("Der Spieler B (Blau) ist am Zug!");
-		}	
+		} else if(player == 3) {
+			macheWBSZug();
+			System.out.println("Zug abgeschlossen");
+		}
 	}
 
 	@Override
@@ -307,5 +318,12 @@ public class Spielbrett extends JPanel implements MouseListener {
 		//	logger.info("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
 		}
 	}
- 
+	
+	
+	private void  macheWBSZug() {
+		Spielstein data = spielController.excuteMASSpielzug((SpielerAgent) spielerB, controller);
+		System.out.println("Es funktioniert:" + data.toString());
+		
+	}
+	
 }

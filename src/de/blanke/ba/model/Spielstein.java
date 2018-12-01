@@ -1,12 +1,18 @@
 package de.blanke.ba.model;
 
 import java.awt.Color;
+
+import jade.util.leap.Serializable;
 /**
  * Diese Klasse speichert die Daten zum zeichnen zwischen.
  * @author paul4
  *
  */
-public class Spielstein  {
+public class Spielstein implements Serializable  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 625361226234884439L;
 	/**
 	 * 
 	 */

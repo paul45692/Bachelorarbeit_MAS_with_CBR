@@ -32,9 +32,12 @@ public class SpielerAgent extends Spieler {
 	 * @param agent der ControllerAgent der für das MAS verantwortlich ist.
 	 * @return
 	 */
-	public List<Spielstein> calculateGameMove(ControllerAgent agent, Board board) {
+	public Spielstein calculateGameMove(ControllerAgent agent, Board board) {
 		
-		return agent.leiteZugEin(board, rbs, this);
+			
+			agent.leiteZugEin(board, rbs, this);
+			return agent.sucheSteinRaus(agent.getData().get(0));
+			
 	}
 
 }
