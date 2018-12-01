@@ -44,7 +44,7 @@ public class RegelSpielPhase1u2  extends Regel {
 		this.bewegungsFeld = bewegungsFeld;
 	}
 
-	public RegelSpielPhase1u2(String ifTeil,Stein besetztesFeld, Stein freiesFeld, String elseTeil, Stein bewegungsFeld) {
+	public RegelSpielPhase1u2(String ifTeil,Stein freiesFeld, Stein besetztesFeld, String elseTeil, Stein bewegungsFeld) {
 		super(ifTeil, elseTeil);
 		this.besetztesFeld = besetztesFeld;
 		this.freiesFeld = freiesFeld;
