@@ -3,7 +3,12 @@ package de.blanke.ba.rbs;
 import java.awt.Color;
 import java.util.Random;
 import de.blanke.ba.model.Stein;
-
+/**
+ * Diese Klasse stellt die Grundform 
+ * für die Regeln der zweiten & dritten Spielphase bereit.
+ * @author Paul Blanke
+ *
+ */
 public class RegelSpielPhase1u2  extends Regel {
 	
 

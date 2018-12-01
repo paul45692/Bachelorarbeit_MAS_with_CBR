@@ -4,11 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.blanke.ba.model.Stein;
-
+/**
+ * Diese Klasse enthält alle Regeln in Listen bereit.
+ * Innerhalb dieser Klasse werden die Regeln beim Programmstart zusammen gestellt.
+ * @author Paul Blanke
+ *
+ */
 public class RegelSet {	
 	
 	// Attribute
 	protected List<RegelSpielPhase0> spielphase0 = new ArrayList<>();
+	protected List<RegelSpielPhase1u2> spielphase1 = new ArrayList<>();
+	protected List<RegelSpielPhase1u2> spielphase2 = new ArrayList<>();
 	protected List<RegelSpielPhase0> spielphase3 = new ArrayList<>();
 	
 // Getter und Setter	
@@ -54,6 +61,13 @@ public class RegelSet {
 		// setzeSonstigeRegelAuf
 	}
 	
+	private void setSteineVerschiebenZweiteSpielPhaseAuf() {
+		
+	}
+	
+	private void setSteineVerschiebenDritteSpielPhaseAuf() {
+		
+	}
 	
 	private void setUpSteineLoeschen() {
 		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(0,0,0, null), "Entferne", new Stein(0,0,0, null)));
@@ -67,7 +81,7 @@ public class RegelSet {
 		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,0,2, null), "Entferne", new Stein(0,0,2, null)));
 		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(2,1,0, null), "Entferne", new Stein(0,1,0, null)));
 		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(2,2,0, null), "Entferne", new Stein(0,2,0, null)));
-		RegelSpielPhase0 zufall = new RegelSpielPhase0("Frei", new Stein(0,1,2, null), "", new Stein(0,1,2, null));
+		RegelSpielPhase0 zufall = new RegelSpielPhase0("Belegt", new Stein(0,1,2, null), "", new Stein(0,1,2, null));
 		zufall.erzeugeZufällig();
 		for(RegelSpielPhase0 regel: spielphase0) {
 			if(regel.equals(zufall)) {
@@ -83,6 +97,8 @@ public class RegelSet {
 	public RegelSet() {
 		this.setUpSteineSetzen();
 		this.setUpSteineLoeschen();
+		this.setSteineVerschiebenZweiteSpielPhaseAuf();
+		this.setSteineVerschiebenDritteSpielPhaseAuf();
 	}
 	
 }
