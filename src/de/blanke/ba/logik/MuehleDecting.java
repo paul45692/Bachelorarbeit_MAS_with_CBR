@@ -275,7 +275,6 @@ public class MuehleDecting {
 		// Prüfe auf eine leere Liste, da dann keine Mühle gefunden wurde
 		if(tempGefunden.size() == 0 && alleVorhSpieler.size() == 0) {
 			
-			System.out.println("Keine neue Mühle gefunden");
 			spieler.setVorhandeneMuehlen(spieler.getVorhandeneMuehlen());
 			return false;
 			

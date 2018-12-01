@@ -31,7 +31,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 	 */
 	private static final long serialVersionUID = -3334802508888319034L;
 	
-	private static final Logger logger = Logger.getLogger(Spielbrett.class);
+	//private static final Logger logger = Logger.getLogger(Spielbrett.class);
 	float interpolation;
 	// Change the player
 	int player = 0;
@@ -56,7 +56,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 	
 	public Spielbrett(ControllerAgent controller, int agenten_anzahl) {
 		PropertyConfigurator.configure(Test.class.getResource("log4j.info"));
-		logger.info("Programm gestarted");
+	//	logger.info("Programm gestarted");
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
 		this.spielController = new SpielController();
@@ -109,8 +109,6 @@ public class Spielbrett extends JPanel implements MouseListener {
 	
 	public void paintComponent(Graphics g) {
 		g.drawImage(bi, 0,0, this.getWidth(), this.getHeight(), this);
-		
-		
 		if(spielsteine != null) {
 			
 			for(Spielstein k :spielsteine) {
@@ -124,9 +122,6 @@ public class Spielbrett extends JPanel implements MouseListener {
 				
 			}
 		}
-		
-		
-		
 	}
 
 	@Override
@@ -134,14 +129,13 @@ public class Spielbrett extends JPanel implements MouseListener {
 		
 		xCord = me.getX();
 		yCord = me.getY();
-		logger.info(" " + xCord + "- " + yCord);
+	//	logger.info(" " + xCord + "- " + yCord);
 		List<Spielstein> zugDoppel = new ArrayList<>();
 		// Checke ob das Spiel schon zu Ende ist.
 		pruefeSpielEnde();
 		
 		if(player == 1) {
 			 
-			
 			Spielstein spielstein = new Spielstein(xCord, yCord, Color.BLUE);
 			// Wechsele die Spielphasen durch
 			switch(spielerB.getSpielPhase()) {
@@ -169,7 +163,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
-							logger.error("Ein Fehler wurde gemacht");
+						//	logger.error("Ein Fehler wurde gemacht");
 							break;
 						}
 						
@@ -204,7 +198,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 			}
 			
 			spielController.pruefeAufMuehle(spielerB);
-			
+			System.out.println("Der Spieler A (Weiss) ist am Zug!");
 			
 		} else if(player == 0)  {
 			
@@ -250,7 +244,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 							zugwechsel =! zugwechsel;
 							break;
 						} else {
-							logger.error("Ein Fehler wurde gemacht");
+						//	logger.error("Ein Fehler wurde gemacht");
 							break;
 						}
 						
@@ -267,6 +261,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 				
 			}
 			spielController.pruefeAufMuehle(spielerA);
+			System.out.println("Der Spieler B (Blau) ist am Zug!");
 		}	
 	}
 
@@ -306,10 +301,10 @@ public class Spielbrett extends JPanel implements MouseListener {
 		if(spielerA.getAnzahlSteine() < 3 && spielerA.getSpielPhase() == 2) {
 			this.spielEnde = true;
 			System.out.println("Der Spieler " + spielerB.getSpielFarbe().toString() + "  gewinnt!");
-			logger.info("Der Spieler " + spielerB.getSpielFarbe().toString() + "  gewinnt!");
+			//logger.info("Der Spieler " + spielerB.getSpielFarbe().toString() + "  gewinnt!");
 		} else if(spielerB.getAnzahlSpielZüge() < 3 && spielerB.getSpielPhase() == 2) {
 			this.spielEnde = true;
-			logger.info("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
+		//	logger.info("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
 		}
 	}
  

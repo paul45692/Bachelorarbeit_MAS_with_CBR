@@ -86,6 +86,8 @@ public class RegelSet {
 		spielphase1.add(regel05);
 		RegelSpielPhase1u2 regel06 = new RegelSpielPhase1u2("Verschiebe", new Stein(2,0,2, null), new Stein(2,0,1, null), "-",  new Stein(2,0,1, null));
 		spielphase1.add(regel06);
+		RegelSpielPhase1u2 regel07 = new RegelSpielPhase1u2("zufall", new Stein(0,0,0, null), new Stein(0,0,0,null), "zufall", new Stein(0,0,0, null));
+		spielphase1.add(regel07);
 	}
 	
 	private void setSteineVerschiebenDritteSpielPhaseAuf() {
@@ -101,6 +103,9 @@ public class RegelSet {
 		spielphase2.add(regel05);
 		RegelSpielPhase1u2 regel06 = new RegelSpielPhase1u2("Verschiebe", new Stein(2,0,2, null), new Stein(2,1,0, null), "Spring zu ",  new Stein(2,1,0, null));
 		spielphase2.add(regel06);
+		RegelSpielPhase1u2 regel07 = new RegelSpielPhase1u2("zufall", new Stein(0,0,0, null), new Stein(0,0,0,null), "zufall", new Stein(0,0,0, null));
+		spielphase1.add(regel07);
+		
 	}
 	
 	private void setUpSteineLoeschen() {

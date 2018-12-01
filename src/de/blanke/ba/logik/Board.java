@@ -128,46 +128,6 @@ public class Board implements Serializable {
 			}
 			return feld;
 		}
-		/**
-		 * Diese Methode nimmt ein Start und Ziel auf und versetzt den Stein, wenn er zu den 
-		 * den freien Nachbarfelder will.
-		 * @param data Start, Ziel
-		 * @param spieler der Spieler der gerade zieht.
-		 * @return Zug erfolgreich
-		 */
-		public boolean bewegSteinPhaseZwei(List<Feld> data, Spieler spieler) {
-			// Hole den ersten Stein und prüfe ob er zur Farbe des Spielers gehört.
-			boolean rueckgabe = false;
-			Feld startH = data.get(0);
-			Feld  endH = data.get(1);
-			// Prüfe Nachbarn des Startfelds
-			Feld start = this.gebeFeldZurueck(startH.getRingZahl(), startH.getxCord(), startH.getyCord());
-			List<Feld> nachbarn  = start.allefreienNachbarn(this);
-			
-			for(Feld f: nachbarn) {
-				if((f.getRingZahl() == start.getRingZahl()) && (f.getxCord() == start.getxCord()) && f.getyCord() == start.getyCord()) {
-					if(entferneStein(start, spieler)) {
-						Stein stein = new Stein(endH.getRingZahl(), endH.getxCord(), endH.getyCord(), spieler.getSpielFarbe());
-						setzeSteinUm(endH, stein);
-						rueckgabe = true;
-					} else {
-						
-						System.out.println("Der Stein gehört nicht dazu.");
-						
-						
-					}
-					break;
-				}
-			}
-				
-			return rueckgabe;	
-		}		
-				
-			
-				
-			
-			
-			
 		
 		/**
 		 * Diese Methode holt einen Stein vom Feld 
@@ -187,20 +147,6 @@ public class Board implements Serializable {
 			} else {
 				
 				return false;
-			}
-		}
-		
-		
-		private void setzeSteinUm(Feld feld, Stein stein) {
-			for(Feld f: felder) {
-				if((f.getRingZahl() == feld.getRingZahl()) && f.getxCord() == feld.getxCord()
-						&& f.getyCord() == feld.getyCord()) {
-					felder.remove(f);
-					f.setStein(stein);
-					felder.add(f);
-					break;
-				}
-				
 			}
 		}
 		

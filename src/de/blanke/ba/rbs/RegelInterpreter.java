@@ -96,8 +96,26 @@ public class RegelInterpreter {
 				dataBack.add(regel.getBewegungsFeld());
 				break;
 				
-			} else if(regel.getBesetztesFeld() == null){
-				// Wende später zufällige Regel an.
+			} else if(regel.getIfTeil().contains("zufall")){
+				for(int i = 0; i < spielData.size(); i++) {
+					Stein steineins = spielData.get(i);
+					if(steineins.getxCord() < 2) {
+						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord() + 1, steineins.getyCord(), null);
+						if(board.checkFeld(zwei.convertToFeld())) {
+							dataBack.add(steineins);
+							dataBack.add(zwei);
+							break;
+						}
+						
+					} else if(steineins.getyCord() <2 && steineins.getxCord() != 1) {
+						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord(), steineins.getyCord() + 1, null);
+						if(board.checkFeld(zwei.convertToFeld())) {
+							dataBack.add(steineins);
+							dataBack.add(zwei);
+							break;
+						}
+					}
+				}
 			}
 			
 		}
@@ -115,8 +133,26 @@ public class RegelInterpreter {
 				dataBack.add(regel.getBewegungsFeld());
 				break;
 				
-			} else if(regel.getBesetztesFeld() == null){
-				// Wende später zufällige Regel an.
+			} else if(regel.getIfTeil().contains("zufall")){
+				for(int i = 0; i < spielData.size(); i++) {
+					Stein steineins = spielData.get(i);
+					if(steineins.getxCord() < 2) {
+						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord() + 1, steineins.getyCord(), null);
+						if(board.checkFeld(zwei.convertToFeld())) {
+							dataBack.add(steineins);
+							dataBack.add(zwei);
+							break;
+						}
+						
+					} else if(steineins.getyCord() <2 && steineins.getxCord() != 1) {
+						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord(), steineins.getyCord() + 1, null);
+						if(board.checkFeld(zwei.convertToFeld())) {
+							dataBack.add(steineins);
+							dataBack.add(zwei);
+							break;
+						}
+					}
+				}
 			}
 			
 		}

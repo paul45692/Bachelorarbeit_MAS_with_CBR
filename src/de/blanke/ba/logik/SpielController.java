@@ -1,8 +1,5 @@
 package de.blanke.ba.logik;
 
-
-import java.util.List;
-
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
@@ -61,8 +58,6 @@ public class SpielController {
 		 Feld feld = helper.ermitteleFeld(x, y);
 		// 1. Spielphase
 		if(spieler.getAnzahlSteine() < 9 && spieler.getSpielPhase() == 0) {
-			System.out.println("Zug auf: " + feld.getRingZahl() + " , "
-					+ feld.getxCord() + ", " + feld.getyCord());
 			if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {
 				
 				spieler.setAnzahlSteine(spieler.getAnzahlSteine() + 1);
@@ -83,30 +78,44 @@ public class SpielController {
 			}
 			
 		} else  if(spieler.getSpielPhase() == 1)	{
-			// betrachte die Nachbarn Fkt.
-				System.out.println(this.feld.checkObFeldNachbarnIst(board, feld));
+		
 			
-				if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {
+				if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)
+						&& (this.feld.checkObFeldNachbarnIst(board, feld))) {
 				
 					spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 					Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
 					spieler.setzeSpielstein(stein);
 				
 					
-				return true;
+					return true;
 				
-			} else {
-				System.out.println("Das Feld ist belegt");
+				} else {
+					System.out.println("Das Feld ist belegt");
 				
-				return false;
-			}
+					return false;
+				}
 			
 			
 			
 		} else if(spieler.getSpielPhase() == 2)  {
+			if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {
+				
+				spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
+				Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
+				spieler.setzeSpielstein(stein);
 			
-			return false;
+				
+				return true;
+			
+			} else {
+				System.out.println("Das Feld ist belegt");
+			
+				return false;
+			}
+			
 		} else  {
+			// Fehler abfangen
 			return false;
 		}
 		
@@ -124,27 +133,11 @@ public class SpielController {
 		
 		feld = helper.ermitteleFeld(x, y);
 		Spielstein spielstein = board.entferneStein(feld);
+		
 		spieler.setAnzahlSteine(spieler.getAnzahlSteine() -1);
 		spieler.removeStein(feld.getStein());
 		
 		return spielstein;
-	}
-	
-	public boolean setzeSpielZugPhaseZweiUm(List<Spielstein> data, Spieler spieler) {
-		boolean rueckgabe = false;
-		Spielstein dataEins = data.get(0);
-		Spielstein dataZwei = data.get(1);
-		Feld startFeld = helper.ermitteleFeld(dataEins.getX(), dataZwei.getY());
-		Feld zielFeld = helper.ermitteleFeld(dataZwei.getX(), dataZwei.getY());
-		List<Feld> nachbarn = startFeld.allefreienNachbarn(board);
-		if(nachbarn.contains(zielFeld)) {
-			System.out.println("Das passt zu den Regeln");
-		} else  if(this.setSpielStein(dataZwei.getX(), dataZwei.getY(), spieler, dataZwei)) {
-			rueckgabe = true;
-		}
-		
-		
-		return rueckgabe;
 	}
 	/**
 	 * Diese Methode kontrolliert die Mühle Prüfung.
@@ -154,7 +147,7 @@ public class SpielController {
 		
 		if(spieler.getAnzahlSteine() > 2) {
 			boolean ergebnis = decting.findeMühle(spieler);
-			System.out.println("Mühlen Fund: " + ergebnis);
+			System.out.println("Eine Mühle wurde gefunden: " + ergebnis);
 		}
 	}
 	
