@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.MessageBox;
+import de.blanke.ba.mas.MessageBoxSteine;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 import jade.core.AID;
@@ -69,10 +70,11 @@ public class RBSAgent extends Agent {
 					msg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
 					msg.setContent("Zug beendet");
 					Stein eins = rueckgabe.get(0);
-					System.out.println("Zugvorschlag: " + eins.getRing() + " " + eins.getxCord() + eins.getyCord());
+					Stein zwei = rueckgabe.get(1);
+					MessageBoxSteine steine = new MessageBoxSteine(eins, zwei);
 					
 					try {
-						msg.setContentObject(eins);
+						msg.setContentObject(steine);
 						// msg.setContentObject(zwei);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block

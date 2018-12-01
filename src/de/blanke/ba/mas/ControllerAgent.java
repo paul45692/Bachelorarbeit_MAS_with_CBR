@@ -25,6 +25,7 @@ public class ControllerAgent extends Agent {
 	private Spieler spieler;
 	private MessageBox box;
 	private boolean rbsAmZug;
+	private boolean aufgabeFertig = false;
 	// Fixe Steine aus denen Spielsteine erzeugt werden
 	private List<Stein> fixeSteineRing1 = new ArrayList<>();
 	private List<Stein> fixeSteineRing2 = new ArrayList<>();
@@ -59,6 +60,16 @@ public class ControllerAgent extends Agent {
 
 	public void setSpieler(Spieler spieler) {
 		this.spieler = spieler;
+	}
+
+
+	public boolean isAufgabeFertig() {
+		return aufgabeFertig;
+	}
+
+
+	public void setAufgabeFertig(boolean aufgabeFertig) {
+		this.aufgabeFertig = aufgabeFertig;
 	}
 
 
@@ -183,10 +194,10 @@ public class ControllerAgent extends Agent {
 			msg = receive();
 			if(msg != null) {
 				try {
-					Stein eins = (Stein) msg.getContentObject();
-					data.add(eins);
+					MessageBoxSteine box = (MessageBoxSteine) msg.getContentObject();
+					data.add(box.getZielStein());
 					System.out.println("Die Nachricht ist angekommen!");
-					System.out.println("Zugvorschlag: " + eins.getRing() + " " + eins.getxCord() + eins.getyCord());
+					
 				} catch (UnreadableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -195,7 +206,7 @@ public class ControllerAgent extends Agent {
 				block();
 			}
 			
-			
+			setAufgabeFertig(true);
 			}
 	
 	}

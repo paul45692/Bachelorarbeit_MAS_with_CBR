@@ -14,41 +14,18 @@ import de.blanke.ba.model.Stein;
  *
  */
 public class Spieler implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7740050342688455840L;
-	/**
-	 * Diese Var. speichert die aktuelle Anzahl der Steine auf dem Spielfeld.
-	 */
-	private int anzahlSteine;
-	/**
-	 * Speichert die Anzahl der gemachten Spielzüge.
-	 */
-	private int anzahlSpielZüge;
-	/**
-	 * Weiss 0, Blau 1.
-	 */
-	private Color spielFarbe;
 	
-	/**
-	 * Das Attribute hält die SpielPhase des Spielers.
-	 */
+	private static final long serialVersionUID = -7740050342688455840L;
+	private int anzahlSteine;
+	private int anzahlSpielZüge;
+	private Color spielFarbe;
+	private String name;
 	private int spielPhase;
 	private int tempspielPhase;
-	
-	/**
-	 * Diese Liste zeigt die Position der eignen Spielsteine an.
-	 * 
-	 */
 	private List<Stein> posiSteine = new ArrayList<>();
-	
-	/**
-	 * Dieses Attribute hält die Mühlen des Spielers.
-	 */
 	private List<Mühle> vorhandeneMuehlen = new ArrayList<>();
 	
-	
+// Getter und Setter	
 	public int getAnzahlSteine() {
 		return anzahlSteine;
 	}
@@ -82,6 +59,14 @@ public class Spieler implements Serializable{
 		this.spielFarbe = spielFarbe;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<Mühle> getVorhandeneMuehlen() {
 		return vorhandeneMuehlen;
 	}
@@ -102,10 +87,6 @@ public class Spieler implements Serializable{
 		}
 	}
 	
-	
-	
-// Kontruktor
-	
 	public int getTempspielPhase() {
 		return tempspielPhase;
 	}
@@ -113,10 +94,11 @@ public class Spieler implements Serializable{
 	public void setTempspielPhase(int tempspielPhase) {
 		this.tempspielPhase = tempspielPhase;
 	}
-
-	public Spieler(Color farbe) {
+// Kontruktor
+	public Spieler(Color farbe, String name) {
 		this.anzahlSpielZüge = 0;
 		this.anzahlSteine = 0;
+		this.setName(name);
 	}
 	
 	

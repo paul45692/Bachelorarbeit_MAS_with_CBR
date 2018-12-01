@@ -22,8 +22,8 @@ public class SpielerAgent extends Spieler {
 	private boolean rbs;
 	
 	// Kontruktor
-	public SpielerAgent(Color farbe, boolean rbs) {
-		super(farbe);
+	public SpielerAgent(Color farbe,String name, boolean rbs) {
+		super(farbe, name);
 		this.rbs = rbs;
 		// TODO Auto-generated constructor stub
 	}
@@ -36,7 +36,14 @@ public class SpielerAgent extends Spieler {
 		
 			
 			agent.leiteZugEin(board, rbs, this);
-			return agent.sucheSteinRaus(agent.getData().get(0));
+			while(agent.isAufgabeFertig()== false) {
+				System.out.println("Warten auf eine fertige Aufgabe");
+				if(agent.isAufgabeFertig()) {
+					System.out.println("Aufgabe ist erfüllt");
+					break;
+				}
+			}
+			return null;
 			
 	}
 

@@ -1,6 +1,5 @@
 package de.blanke.ba.logik;
 
-import java.util.List;
 
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Feld;
@@ -70,7 +69,7 @@ public class SpielController {
 				
 				if(spieler.getAnzahlSteine() == 9) {
 					spieler.setSpielPhase(1);
-					System.out.print("Der Spieler hat die erste Spielphase verlassen!");
+					System.out.print("--> Der Spieler"  + spieler.getName() + "hat die erste Spielphase verlassen!");
 				}
 				///this.pruefeAufMuehle(spieler);
 				return true;
@@ -146,11 +145,14 @@ public class SpielController {
 	 * Diese Methode kontrolliert die Mühle Prüfung.
 	 * @param spieler
 	 */
-	public void pruefeAufMuehle(Spieler spieler) {
+	public boolean pruefeAufMuehle(Spieler spieler) {
 		
 		if(spieler.getAnzahlSteine() > 2) {
-			boolean ergebnis = decting.findeMühle(spieler);
-			System.out.println("Eine Mühle wurde gefunden: " + ergebnis);
+			System.out.print("(Mühle Prüfung!");
+			return decting.findeMühle(spieler);
+			
+		} else {
+			return false;
 		}
 	}
 	

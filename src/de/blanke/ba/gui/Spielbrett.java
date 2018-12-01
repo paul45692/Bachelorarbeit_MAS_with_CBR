@@ -66,33 +66,33 @@ public class Spielbrett extends JPanel implements MouseListener {
 		this.controller = controller;
 		// Diese Implementierung split nach Anzahl der übergebenen Agenten und setzt das Spiel entsprechend auf
 		switch(agenten_anzahl) {
-		case 0: 	this.spielerA = new Spieler(Color.WHITE);
+		case 0: 	this.spielerA = new Spieler(Color.WHITE,"Spieler A");
 					this.playerA = 0;
-					this.spielerB = new Spieler(Color.BLUE);
+					this.spielerB = new Spieler(Color.BLUE, "Spieler B");
 					this.playerB = 1;
 					break;
 					
-		case 1:		this.spielerA = new Spieler(Color.WHITE);
+		case 1:		this.spielerA = new Spieler(Color.WHITE, "Spieler A");
 					this.playerA = 0;
-					this.spielerB = new SpielerAgent(Color.BLUE, true);
+					this.spielerB = new SpielerAgent(Color.BLUE,"Spieler B(RBS)", true);
 					this.playerB = 3;
 					break;
 		
-		case 2:    	this.spielerA = new SpielerAgent(Color.WHITE, false);
-					this.spielerB = new SpielerAgent(Color.BLUE, true);
+		case 2:    	this.spielerA = new SpielerAgent(Color.WHITE,"Spieler A(CBR)", false);
+					this.spielerB = new SpielerAgent(Color.BLUE, "Spieler B(RBS)", true);
 					this.playerB = 3;
 					break;
 					
-		case 3:    	this.spielerA = new SpielerAgent(Color.WHITE, true);
-					this.spielerB = new SpielerAgent(Color.BLUE, false);
+		case 3:    	this.spielerA = new SpielerAgent(Color.WHITE,"Spieler A(RBS)", true);
+					this.spielerB = new SpielerAgent(Color.BLUE,"Spieler B(CBR)", false);
 					break;
 					
-		case 4: 	this.spielerA = new SpielerAgent(Color.WHITE, false);	
-					this.spielerB = new Spieler(Color.BLUE);
+		case 4: 	this.spielerA = new SpielerAgent(Color.WHITE,"Spieler A(RBS)", false);	
+					this.spielerB = new Spieler(Color.BLUE , "Spieler B");
 					break;
 					
-		default:    this.spielerA = new Spieler(Color.WHITE);
-					this.spielerB = new Spieler(Color.BLUE);
+		default:    this.spielerA = new Spieler(Color.WHITE,"Spieler A");
+					this.spielerB = new Spieler(Color.BLUE, "Spieler B");
 					break;			
 		}
 		
@@ -205,8 +205,17 @@ public class Spielbrett extends JPanel implements MouseListener {
 				
 			}
 			
-			spielController.pruefeAufMuehle(spielerB);
-			System.out.println("Der Spieler A (Weiss) ist am Zug!");
+			// Prüfe auf Mühlen Fund.
+			if(spielController.pruefeAufMuehle(spielerB)) {
+				System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+				player = playerB;
+				spielerB.setTempspielPhase(spielerB.getSpielPhase());
+				spielerB.setSpielPhase(3);
+				
+			} else {
+				System.out.println("Der Spieler A (Weiss) ist am Zug!");
+			}
+	
 			
 		} else if(player == 0)  {
 			
@@ -268,13 +277,17 @@ public class Spielbrett extends JPanel implements MouseListener {
 						break;	
 				
 			}
-			spielController.pruefeAufMuehle(spielerA);
-			System.out.println("Der Spieler B (Blau) ist am Zug!");
-		} else if(player == 3) {
-			macheWBSZug();
-			System.out.println("Zug abgeschlossen");
-		}
-	}
+			if(spielController.pruefeAufMuehle(spielerA)) {
+				System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+				player = playerA;
+				spielerA.setTempspielPhase(spielerA.getSpielPhase());
+				spielerA.setSpielPhase(3);
+				
+			} else {
+				System.out.println("Der Spieler B (Blau) ist am Zug!");
+			}
+		}	
+	}	
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -319,11 +332,5 @@ public class Spielbrett extends JPanel implements MouseListener {
 		}
 	}
 	
-	
-	private void  macheWBSZug() {
-		Spielstein data = spielController.excuteMASSpielzug((SpielerAgent) spielerB, controller);
-		System.out.println("Es funktioniert:" + data.toString());
-		
-	}
 	
 }
