@@ -5,6 +5,7 @@ import java.util.List;
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
+import de.dfki.mycbr.core.Project;
 
 /**
  * Diese Klasse stellt den Zugriff auf das System bereit
@@ -12,6 +13,10 @@ import de.blanke.ba.spieler.Spieler;
  *
  */
 public class CBRController {
+	
+	
+	private CBR_Engine engine = new CBR_Engine();
+	private Project project = engine.loadCBRProject();
 
 	
 	/**
