@@ -265,10 +265,13 @@ public class MuehleDecting {
 		List<Mühle> vorh_Data = spieler.getVorhandeneMuehlen();
 		// Wenn keine Mühlen vorhanden sind, dannn füge die erste dazu
 		if(vorh_Data.size() == 0 && tempGefunden.size() > 0) {
+			
 			spieler.addMuehle(tempGefunden.get(0));
 			rueckgabe = true;
+			
 		} else if(vorh_Data.size() > 0 && tempGefunden.size() > 0)  {
 			// Sonst vergleich die vorhanden Mühlen mit den gefundenen Mühlen
+			System.out.println("Test:" + vorh_Data.size() + "Gefunden:" + tempGefunden.size());
 			for(Mühle mühle: tempGefunden) {
 				for(Mühle vergleich:vorh_Data) {
 					if(mühle.getIndex() == vergleich.getIndex()) {
@@ -276,7 +279,18 @@ public class MuehleDecting {
 						vorh_Data.remove(vergleich);
 					}
 				}
-			}
+			} 
+			if(tempGefunden.size() > 0) {
+				
+				for(Mühle mühle: tempGefunden) {
+					spieler.addMuehle(mühle);
+					rueckgabe = true;
+				}
+				
+			} else if(tempGefunden.size() == 0 && vorh_Data.size()> 0) {
+				spieler.getVorhandeneMuehlen().clear();
+			} 
+			
 		}
 		// Das ist wichtig um eine leere Liste am Ende zu haben.
 		tempGefunden.clear();

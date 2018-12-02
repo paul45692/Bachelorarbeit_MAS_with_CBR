@@ -69,9 +69,9 @@ public class SpielController {
 				
 				if(spieler.getAnzahlSteine() == 9) {
 					spieler.setSpielPhase(1);
-					System.out.print("--> Der Spieler"  + spieler.getName() + "hat die erste Spielphase verlassen!");
+					System.out.print("Info: Der "  + spieler.getName() + "hat die erste Spielphase verlassen!");
 				}
-				///this.pruefeAufMuehle(spieler);
+				
 				return true;
 				
 			} else {
@@ -135,8 +135,10 @@ public class SpielController {
 		
 		feld = helper.ermitteleFeld(x, y);
 		Spielstein spielstein = board.entferneStein(feld);
+		if(spieler.getSpielPhase() != 0) {
+			spieler.setAnzahlSteine(spieler.getAnzahlSteine() -1);
+		}
 		
-		spieler.setAnzahlSteine(spieler.getAnzahlSteine() -1);
 		spieler.removeStein(feld.getStein());
 		
 		return spielstein;

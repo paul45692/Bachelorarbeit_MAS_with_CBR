@@ -161,6 +161,8 @@ public class Spielbrett extends JPanel implements MouseListener {
 								
 							} else {
 								System.out.println("Der Spieler A (Weiss) ist am Zug!");
+								int ausgabe = 9 - spielerA.getAnzahlSteine();
+								System.out.println("Info: Der Spieler" + spielerA.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 							}
 							break;
 						}
@@ -186,6 +188,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 								
 							} else {
 								System.out.println("Der Spieler A (Weiss) ist am Zug!");
+								
 							}
 							break;
 						} else {
@@ -256,6 +259,8 @@ public class Spielbrett extends JPanel implements MouseListener {
 								
 							} else {
 								System.out.println("Der Spieler B (Blau) ist am Zug!");
+								int ausgabe = 9 - spielerB.getAnzahlSteine();
+								System.out.println("Info: Der Spieler" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 							}
 							
 						}
@@ -366,10 +371,11 @@ public class Spielbrett extends JPanel implements MouseListener {
 	private void pruefeSpielEnde() {
 		if(spielerA.getAnzahlSteine() < 3 && spielerA.getSpielPhase() == 2) {
 			this.spielEnde = true;
-			System.out.println("Der Spieler " + spielerB.getSpielFarbe().toString() + "  gewinnt!");
+			System.out.println("!! Der Spieler " + spielerA.getName() + "  gewinnt!");
 			//logger.info("Der Spieler " + spielerB.getSpielFarbe().toString() + "  gewinnt!");
 		} else if(spielerB.getAnzahlSpielZüge() < 3 && spielerB.getSpielPhase() == 2) {
 			this.spielEnde = true;
+			System.out.println("!! Der Spieler " + spielerA.getName() + "  gewinnt!");
 		//	logger.info("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
 		}
 	}
