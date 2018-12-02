@@ -253,44 +253,34 @@ public class MuehleDecting {
 			}
 	
 		
-		
-		return untersucheMühleFund(spieler);
+		return pruefeAufvorHandeneMühlen(spieler);
 	}
 	/**
 	 * Diese Methode untersucht ob die gefundenen Mühlen schon zum Spieler gehören.
 	 * @param spieler
 	 * @return
 	 */
-	private boolean untersucheMühleFund(Spieler spieler) {
-		List<Mühle> alleVorhSpieler = spieler.getVorhandeneMuehlen();
-		
-		for(Mühle mühle: this.tempGefunden) {
-			for(Mühle vergleich:alleVorhSpieler) {
-				if(mühle.getIndex() == vergleich.getIndex()) {
-					this.tempGefunden.remove(mühle.getIndex());
-					alleVorhSpieler.remove(mühle.getIndex());
+	private boolean pruefeAufvorHandeneMühlen(Spieler spieler) {
+		boolean rueckgabe = false;
+		List<Mühle> vorh_Data = spieler.getVorhandeneMuehlen();
+		// Wenn keine Mühlen vorhanden sind, dannn füge die erste dazu
+		if(vorh_Data.size() == 0 && tempGefunden.size() > 0) {
+			spieler.addMuehle(tempGefunden.get(0));
+			rueckgabe = true;
+		} else if(vorh_Data.size() > 0 && tempGefunden.size() > 0)  {
+			// Sonst vergleich die vorhanden Mühlen mit den gefundenen Mühlen
+			for(Mühle mühle: tempGefunden) {
+				for(Mühle vergleich:vorh_Data) {
+					if(mühle.getIndex() == vergleich.getIndex()) {
+						tempGefunden.remove(mühle);
+						vorh_Data.remove(vergleich);
+					}
 				}
 			}
 		}
-		// Prüfe auf eine leere Liste, da dann keine Mühle gefunden wurde
-		if(tempGefunden.size() == 0 && alleVorhSpieler.size() == 0) {
-			
-			return false;
-			
-		} else if(alleVorhSpieler.size() == 0 && tempGefunden.size() >= 0) {
-			
-			spieler.setVorhandeneMuehlen(tempGefunden);
-			System.out.println("Eine neue Mühle wurde gefunden!");
-			return true;
-			
-		} else if(alleVorhSpieler.size() > 0 && tempGefunden.size() == 0) {
-			spieler.removeÜberflüssigeMühlen(alleVorhSpieler);
-			return false;
-			
-		} else {
-			System.out.println("Beim Mühle Tracking ist ein Fehler aufgetreten!");
-			return false;
-		}
+		// Das ist wichtig um eine leere Liste am Ende zu haben.
+		tempGefunden.clear();
+		return rueckgabe;
 	}
 	
 	/**

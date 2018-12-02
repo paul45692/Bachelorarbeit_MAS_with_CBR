@@ -147,26 +147,13 @@ public class SpielController {
 	 */
 	public boolean pruefeAufMuehle(Spieler spieler) {
 		
-		if(spieler.getAnzahlSteine() > 2) {
-			System.out.print("(Mühle Prüfung!");
+		if(spieler.getAnzahlSteine() > 2) { 
+			
 			return decting.findeMühle(spieler);
 			
 		} else {
+			
 			return false;
 		}
 	}
-	
-	/**
-	 * Diese Methode stellt den Einstiegspunkt ins MAS bereit.
-	 * @param spieler
-	 * @param controller
-	 * @return
-	 */
-	public Spielstein excuteMASSpielzug(SpielerAgent spieler, ControllerAgent controller) {
-		return spieler.calculateGameMove(controller, board);
-	}
-	
-	
-	
-	
 }

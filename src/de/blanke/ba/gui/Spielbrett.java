@@ -153,6 +153,15 @@ public class Spielbrett extends JPanel implements MouseListener {
 						if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein)) {
 							spielsteine.add(spielstein);
 							player = playerA;
+							if(spielController.pruefeAufMuehle(spielerB)) {
+								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								player = playerB;
+								spielerB.setTempspielPhase(spielerB.getSpielPhase());
+								spielerB.setSpielPhase(3);
+								
+							} else {
+								System.out.println("Der Spieler A (Weiss) ist am Zug!");
+							}
 							break;
 						}
 				
@@ -169,6 +178,15 @@ public class Spielbrett extends JPanel implements MouseListener {
 							spielsteine.add(spielstein);
 							player = playerA;
 							zugwechsel =! zugwechsel;
+							if(spielController.pruefeAufMuehle(spielerB)) {
+								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								player = playerB;
+								spielerB.setTempspielPhase(spielerB.getSpielPhase());
+								spielerB.setSpielPhase(3);
+								
+							} else {
+								System.out.println("Der Spieler A (Weiss) ist am Zug!");
+							}
 							break;
 						} else {
 						//	logger.error("Ein Fehler wurde gemacht");
@@ -187,6 +205,15 @@ public class Spielbrett extends JPanel implements MouseListener {
 							spielsteine.add(spielstein);
 							player = playerA;
 							zugwechsel =! zugwechsel;
+							if(spielController.pruefeAufMuehle(spielerB)) {
+								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								player = playerB;
+								spielerB.setTempspielPhase(spielerB.getSpielPhase());
+								spielerB.setSpielPhase(3);
+								
+							} else {
+								System.out.println("Der Spieler A (Weiss) ist am Zug!");
+							}
 							break;
 						} else {
 							System.out.println("Ein Fehler wurde gemacht");
@@ -199,6 +226,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 						// Der Spieler muss wieder in die Spielphase zurück
 						player  = playerA;
 						spielerB.setSpielPhase(spielerB.getTempspielPhase());
+						System.out.println("Der Spieler A (Weiss) ist nun am Zug!"); 
 						break;
 			default: 						
 						break;	
@@ -206,15 +234,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 			}
 			
 			// Prüfe auf Mühlen Fund.
-			if(spielController.pruefeAufMuehle(spielerB)) {
-				System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-				player = playerB;
-				spielerB.setTempspielPhase(spielerB.getSpielPhase());
-				spielerB.setSpielPhase(3);
-				
-			} else {
-				System.out.println("Der Spieler A (Weiss) ist am Zug!");
-			}
+			
 	
 			
 		} else if(player == 0)  {
@@ -228,21 +248,40 @@ public class Spielbrett extends JPanel implements MouseListener {
 						if(spielController.setSpielStein(xCord, yCord, spielerA, spielstein)) {
 							spielsteine.add(spielstein);
 							player = playerB;
+							if(spielController.pruefeAufMuehle(spielerA)) {
+								System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								player = playerA;
+								spielerA.setTempspielPhase(spielerA.getSpielPhase());
+								spielerA.setSpielPhase(3);
+								
+							} else {
+								System.out.println("Der Spieler B (Blau) ist am Zug!");
+							}
 							
 						}
-						
 						break;
-				
+						
 			case 1:     if(zugwechsel) {
 				
 							Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
 							spielsteine.remove(stein);
 							zugwechsel =! zugwechsel;
 							break;
+							
 						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
+							
 							spielsteine.add(spielstein);
 							player = playerB;
 							zugwechsel =! zugwechsel;
+							if(spielController.pruefeAufMuehle(spielerA)) {
+								System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								player = playerA;
+								spielerA.setTempspielPhase(spielerA.getSpielPhase());
+								spielerA.setSpielPhase(3);
+								
+							} else {
+								System.out.println("Der Spieler B (Blau) ist am Zug!");
+							}
 							break;
 						} else {
 							System.out.println("Ein Fehler wurde gemacht");
@@ -259,6 +298,16 @@ public class Spielbrett extends JPanel implements MouseListener {
 							spielsteine.add(spielstein);
 							player = playerB;
 							zugwechsel =! zugwechsel;
+							
+							if(spielController.pruefeAufMuehle(spielerA)) {
+								System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								player = playerA;
+								spielerA.setTempspielPhase(spielerA.getSpielPhase());
+								spielerA.setSpielPhase(3);
+								
+							} else {
+								System.out.println("Der Spieler B (Blau) ist am Zug!");
+							}
 							break;
 						} else {
 						//	logger.error("Ein Fehler wurde gemacht");
@@ -271,21 +320,14 @@ public class Spielbrett extends JPanel implements MouseListener {
 						// Der Spieler muss wieder in die Spielphase zurück
 						player = playerB;
 						spielerA.setSpielPhase(spielerA.getTempspielPhase());
+						System.out.println("Der Spieler B (Blau) ist am Zug!"); 
 				
 						break;
 			default: 						
 						break;	
 				
 			}
-			if(spielController.pruefeAufMuehle(spielerA)) {
-				System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-				player = playerA;
-				spielerA.setTempspielPhase(spielerA.getSpielPhase());
-				spielerA.setSpielPhase(3);
-				
-			} else {
-				System.out.println("Der Spieler B (Blau) ist am Zug!");
-			}
+			
 		}	
 	}	
 

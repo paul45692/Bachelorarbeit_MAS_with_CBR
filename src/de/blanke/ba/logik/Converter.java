@@ -1,19 +1,8 @@
 package de.blanke.ba.logik;
 
-import java.util.ArrayList;
-import java.util.List;
 import de.blanke.ba.model.Feld;
-import de.blanke.ba.model.Mühle;
-import de.blanke.ba.model.Spielstein;
-import de.blanke.ba.model.Stein;
-import de.blanke.ba.spieler.Spieler;
 
 public class Converter {
-	
-	/**
-	 * Diese Methode soll Mühlen erkennen und aufstellen
-	 */
-	
 	
 	public Feld ermitteleFeld(int xCord, int yCord) {
 		int ring = 0;
@@ -172,8 +161,5 @@ public class Converter {
 			return null;
 		}
 		
-	}
-	
-	
-	
+}
 }

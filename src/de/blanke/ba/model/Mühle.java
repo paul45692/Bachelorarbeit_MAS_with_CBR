@@ -3,8 +3,6 @@ package de.blanke.ba.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.blanke.ba.model.Feld;
 /**
  * Diese Klasse speichert eine vorhandene Mühle
  * @author paul4

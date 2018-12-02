@@ -16,7 +16,7 @@ public class CBRController {
 	
 	
 	private CBR_Engine engine = new CBR_Engine();
-	private Project project = engine.loadCBRProject();
+	//private Project project = engine.loadCBRProject();
 
 	
 	/**
