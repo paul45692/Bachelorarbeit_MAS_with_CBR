@@ -23,7 +23,12 @@ import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.spieler.Spieler;
 import de.blanke.ba.spieler.SpielerAgent;
 
-
+/**
+ * Diese Klasse stellt das Spielbrett für ein 1 vs 1 ohne den MAS
+ * Einsatz bereit.
+ * @author Paul Blanke
+ *
+ */
 public class Spielbrett extends JPanel implements MouseListener {
 	
 	/**
@@ -57,7 +62,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 	
 	
 	
-	public Spielbrett(ControllerAgent controller, int agenten_anzahl) {
+	public Spielbrett(ControllerAgent controller) {
 		PropertyConfigurator.configure(Test.class.getResource("log4j.info"));
 	//	logger.info("Programm gestarted");
 		this.setLayout(new BorderLayout());
@@ -65,36 +70,12 @@ public class Spielbrett extends JPanel implements MouseListener {
 		this.spielController = new SpielController();
 		this.controller = controller;
 		// Diese Implementierung split nach Anzahl der übergebenen Agenten und setzt das Spiel entsprechend auf
-		switch(agenten_anzahl) {
-		case 0: 	this.spielerA = new Spieler(Color.WHITE,"Spieler A");
-					this.playerA = 0;
-					this.spielerB = new Spieler(Color.BLUE, "Spieler B");
-					this.playerB = 1;
-					break;
-					
-		case 1:		this.spielerA = new Spieler(Color.WHITE, "Spieler A");
-					this.playerA = 0;
-					this.spielerB = new SpielerAgent(Color.BLUE,"Spieler B(RBS)", true);
-					this.playerB = 3;
-					break;
 		
-		case 2:    	this.spielerA = new SpielerAgent(Color.WHITE,"Spieler A(CBR)", false);
-					this.spielerB = new SpielerAgent(Color.BLUE, "Spieler B(RBS)", true);
-					this.playerB = 3;
-					break;
-					
-		case 3:    	this.spielerA = new SpielerAgent(Color.WHITE,"Spieler A(RBS)", true);
-					this.spielerB = new SpielerAgent(Color.BLUE,"Spieler B(CBR)", false);
-					break;
-					
-		case 4: 	this.spielerA = new SpielerAgent(Color.WHITE,"Spieler A(RBS)", false);	
-					this.spielerB = new Spieler(Color.BLUE , "Spieler B");
-					break;
-					
-		default:    this.spielerA = new Spieler(Color.WHITE,"Spieler A");
-					this.spielerB = new Spieler(Color.BLUE, "Spieler B");
-					break;			
-		}
+		this.spielerA = new Spieler(Color.WHITE,"Spieler A");
+		this.playerA = 0;
+		this.spielerB = new Spieler(Color.BLUE, "Spieler B");
+		this.playerB = 1;
+		
 		
 		try {
 			bi = ImageIO.read(this.getClass().getResource("/res/Muehlefeld.jpg"));
@@ -105,9 +86,11 @@ public class Spielbrett extends JPanel implements MouseListener {
 	
 		this.addMouseListener(this);
 		this.setVisible(true);
-		
 	}
-	
+	/**
+	 * Methoden zum Setzen der Spielparameter auf die GUI
+	 * @param interpol
+	 */
 	public void setInterpolation(float interpol) {
 		this.interpolation = interpol;
 	}

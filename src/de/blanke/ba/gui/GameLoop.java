@@ -20,12 +20,16 @@ public class GameLoop extends JFrame implements ActionListener {
 	 */
 	// Design Änderung
 	private static final long serialVersionUID = 1L;
-
+	// Normales Mühle Spiel
 	private Spielbrett spielbrett;
+	// MAS Mühle
+	private SpielbrettMAS spielbrettMAS;
+	boolean mas = false;
 	
 	private JButton startButton = new JButton("Neues Spiel");
 	private JButton endeButton = new JButton("Ende!");
 	private JButton pausedButton = new JButton("Pause");
+	private JLabel textLabel = new JLabel("Test");
 	private boolean running = false;
 	private boolean paused = false;
 	private int fps = 60;
@@ -42,10 +46,11 @@ public class GameLoop extends JFrame implements ActionListener {
 	/**
 	 * Konstruktor
 	 */
-	public GameLoop(ControllerAgent agent, int agenten_anzahl) {
+	public GameLoop(ControllerAgent agent, boolean mas) {
 		
 		super("Bachelorarbeit-Mühle mit KI");
-		this.spielbrett = new Spielbrett(agent, agenten_anzahl);
+		
+		
 		this.agent = agent;
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
@@ -54,8 +59,20 @@ public class GameLoop extends JFrame implements ActionListener {
 		p.add(startButton);
 		p.add(pausedButton);
 		p.add(endeButton);
+		
 		// Könnte man durch Spielfeld ersetzen?
-		cp.add(spielbrett, BorderLayout.CENTER);
+		
+		this.mas = mas;
+		if(mas) {
+			this.spielbrett = null;
+			this.spielbrettMAS = new SpielbrettMAS(agent);
+			cp.add(spielbrettMAS, BorderLayout.CENTER);
+		} else {
+			this.spielbrett = new Spielbrett(agent);
+			this.spielbrettMAS = null;
+			cp.add(spielbrett, BorderLayout.CENTER);
+		}
+		cp.add(textLabel, BorderLayout.NORTH);
 		cp.add(p, BorderLayout.SOUTH);
 		setSize(800, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -169,15 +186,26 @@ public class GameLoop extends JFrame implements ActionListener {
 		
 	}
 	/**
-	 * Diese Methode updatet das Game später
+	 * Diese Methode zeichnen ein Update auf das Spielfeld
 	 */
 	private void updateGame() {
-		 spielbrett.update();
+		if(mas) {
+			spielbrettMAS.update();
+			this.textLabel.setText(spielbrettMAS.getAusgabe());
+		} else {
+			spielbrett.update();
+		}
+		 
 		 
 	}
 	
 	private void drawGame(float interpolation) {
-		 spielbrett.repaint();
+		if(mas) {
+			spielbrettMAS.repaint();
+			this.textLabel.setText(spielbrettMAS.getAusgabe());
+		} else {
+			spielbrett.repaint();
+		}
 	}
 
 	public boolean isSpielEnde() {
