@@ -37,7 +37,6 @@ public class GameLoop extends JFrame implements ActionListener {
 	// Interene Spieleinstellung vornehmen
 	
 	private boolean spielEnde = false;
-	private ControllerAgent agent = null;
 	
 	
 	
@@ -46,12 +45,11 @@ public class GameLoop extends JFrame implements ActionListener {
 	/**
 	 * Konstruktor
 	 */
-	public GameLoop(ControllerAgent agent, boolean mas) {
+	public GameLoop(boolean mas) {
 		
 		super("Bachelorarbeit-Mühle mit KI");
 		
 		
-		this.agent = agent;
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 		JPanel p = new JPanel();
@@ -65,10 +63,10 @@ public class GameLoop extends JFrame implements ActionListener {
 		this.mas = mas;
 		if(mas) {
 			this.spielbrett = null;
-			this.spielbrettMAS = new SpielbrettMAS(agent);
+			this.spielbrettMAS = new SpielbrettMAS();
 			cp.add(spielbrettMAS, BorderLayout.CENTER);
 		} else {
-			this.spielbrett = new Spielbrett(agent);
+			this.spielbrett = new Spielbrett();
 			this.spielbrettMAS = null;
 			cp.add(spielbrett, BorderLayout.CENTER);
 		}

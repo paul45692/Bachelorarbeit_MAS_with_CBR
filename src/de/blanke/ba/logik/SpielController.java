@@ -1,12 +1,9 @@
 package de.blanke.ba.logik;
 
-
-import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
-import de.blanke.ba.spieler.SpielerAgent;
 
 /**
  * Diese Klasse untersucht mögliche Züge

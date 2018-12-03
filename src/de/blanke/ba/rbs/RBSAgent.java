@@ -53,6 +53,7 @@ public class RBSAgent extends Agent {
 					/**
 					 * Werte die Nachricht und sende eine Nachricht zurück.
 					 */
+					System.out.println("Der RBS Agent tut was");
 					List<Stein> rueckgabe = null;
 					try {
 						// Hole den Zwischenstand aus der Nachricht
@@ -70,7 +71,7 @@ public class RBSAgent extends Agent {
 					msg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
 					msg.setContent("Zug beendet");
 					Stein eins = rueckgabe.get(0);
-					Stein zwei = rueckgabe.get(1);
+					Stein zwei = null;
 					MessageBoxSteine steine = new MessageBoxSteine(eins, zwei);
 					
 					try {

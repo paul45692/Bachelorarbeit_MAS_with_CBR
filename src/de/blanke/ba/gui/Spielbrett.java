@@ -12,16 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import de.blanke.ba.logger.Test;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.spieler.Spieler;
-import de.blanke.ba.spieler.SpielerAgent;
+
 
 /**
  * Diese Klasse stellt das Spielbrett für ein 1 vs 1 ohne den MAS
@@ -57,18 +55,14 @@ public class Spielbrett extends JPanel implements MouseListener {
 	private Spieler spielerB;
 	private int playerB;
 	
-	// Spieler Agent wird eingesetzt
-	private ControllerAgent controller;
 	
 	
-	
-	public Spielbrett(ControllerAgent controller) {
+	public Spielbrett() {
 		PropertyConfigurator.configure(Test.class.getResource("log4j.info"));
 	//	logger.info("Programm gestarted");
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
 		this.spielController = new SpielController();
-		this.controller = controller;
 		// Diese Implementierung split nach Anzahl der übergebenen Agenten und setzt das Spiel entsprechend auf
 		
 		this.spielerA = new Spieler(Color.WHITE,"Spieler A");
