@@ -1,8 +1,11 @@
 package de.blanke.ba.cbr;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import de.blanke.ba.logik.Board;
+import de.blanke.ba.mas.AgentenOperations;
+import de.blanke.ba.mas.MessageBox;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 import jade.core.AID;
@@ -21,7 +24,14 @@ public class CBRAgent extends Agent{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private CBRController interpreter = new CBRController();
+	// CBR Controller
+	// private CBRController interpreter = new CBRController();
+	private CBRController interpreter = null;
+	/**
+	 * Für das Entkopplung der Logik vom Agenten wird an dieser Stelle
+	 * eine Instanz @AgentenOperations gebraucht.
+	 */
+	private AgentenOperations operations = new AgentenOperations();
 
 	@Override
 	protected void setup() {
@@ -39,20 +49,38 @@ public class CBRAgent extends Agent{
 				 * Warte auf Nachrichtenempfang
 				 */
 				ACLMessage msg = receive();
+				MessageBox box = null;
 				if(msg != null) {
 					/**
 					 * Werte die Nachricht und sende eine Nachricht zurück.
 					 */
-					List<Stein> rueckgabe = null;
+					List<Stein> rueckgabe = new ArrayList<>();
+					List<Integer> extractData = new ArrayList<>();
 					try {
-						// Hole den Zwischenstand aus der Nachricht
-						Board board = (Board) msg.getContentObject();
-						Spieler spieler = (Spieler) msg.getContentObject();
-						rueckgabe = interpreter.executeQuery(board, spieler);
+						box = (MessageBox) msg.getContentObject();
+						// Hole mir die Daten raus
+						
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					Board board = box.getBoard();
+					Spieler spieler = box.getSpieler();
+					// Fehlerhandling
+					if(board != null && spieler != null) {
+						extractData = interpreter.executeQuery(board, spieler);
+						for(Integer i: extractData) {
+							rueckgabe.add(operations.getSteineFuerCBRSystem(i));
+						}
+					} else {
+						System.out.println(" Übertragungsproblem !!");
+					}
+					
+					
+					// ---
+					
+					
 					// Beginne R&uecksendung!
 					msg = new ACLMessage(ACLMessage.INFORM);
 					msg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
