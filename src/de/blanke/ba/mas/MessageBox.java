@@ -37,5 +37,10 @@ public class MessageBox implements Serializable {
 		this.spieler = spieler;
 		this.board = board;
 	}
+	
+	public void cleartheBox() {
+		this.spieler = null;
+		this.board = null;
+	}
 
 }

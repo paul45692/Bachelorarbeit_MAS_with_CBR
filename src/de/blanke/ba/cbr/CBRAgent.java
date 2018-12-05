@@ -3,9 +3,13 @@ package de.blanke.ba.cbr;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.AgentenOperations;
 import de.blanke.ba.mas.MessageBox;
+import de.blanke.ba.mas.MessageBoxSteine;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 import jade.core.AID;
@@ -32,15 +36,15 @@ public class CBRAgent extends Agent{
 	 * eine Instanz @AgentenOperations gebraucht.
 	 */
 	private AgentenOperations operations = new AgentenOperations();
+	private static final Logger logger = Logger.getLogger(CBRAgent.class);
+	
 
 	@Override
 	protected void setup() {
 		System.out.print("CBR System aktiv!");
+		logger.info(" Das CBR System wurde aktiviert (@" + CBRAgent.class);
 		super.setup();
 		addBehaviour(new CyclicBehaviour() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -50,6 +54,8 @@ public class CBRAgent extends Agent{
 				 */
 				ACLMessage msg = receive();
 				MessageBox box = null;
+				
+				
 				if(msg != null) {
 					/**
 					 * Werte die Nachricht und sende eine Nachricht zurück.
@@ -59,6 +65,7 @@ public class CBRAgent extends Agent{
 					try {
 						box = (MessageBox) msg.getContentObject();
 						// Hole mir die Daten raus
+						System.out.println("Test: Integrationspunkt 1");
 						
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block
@@ -74,31 +81,36 @@ public class CBRAgent extends Agent{
 							rueckgabe.add(operations.getSteineFuerCBRSystem(i));
 						}
 					} else {
-						System.out.println(" Übertragungsproblem !!");
+						System.out.println("Error-AgentenEbene: Übertragungsproblem !!");
+						logger.error("CBR System: Übertragungsproblem");
 					}
-					
-					
-					// ---
-					
-					
-					// Beginne R&uecksendung!
-					msg = new ACLMessage(ACLMessage.INFORM);
-					msg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
-					msg.setContent("Zug beendet");
+					System.out.println("Test: Integrationspunkt 2");
+					box.cleartheBox();
+					// Rücktransport
+					 ACLMessage aclmsg = new ACLMessage(ACLMessage.INFORM);
+					aclmsg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
+					aclmsg.setContent("Zug beendet");
 					Stein eins = rueckgabe.get(0);
 					Stein zwei = null;
+					MessageBoxSteine steine = null;
+					
 					if(rueckgabe.get(1) != null) {
 						 zwei = rueckgabe.get(1);
+						 steine = new MessageBoxSteine(eins, zwei);
+					} else if(rueckgabe.isEmpty()) {
+						System.out.print("Error");
+						logger.error("CBR System: Übertragungsproblem");
+						steine = new MessageBoxSteine(null, null);
 					}
 					try {
-						msg.setContentObject(eins);
-						msg.setContentObject(zwei);
+						msg.setContentObject(steine);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					System.out.println("Test: Integrationspunkt 3");
 					send(msg);
-					msg = receive();
+					System.out.println("Test: Integrationspunkt 4: versendet");
 					
 					
 				} else {
