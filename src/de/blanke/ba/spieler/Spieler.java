@@ -103,6 +103,10 @@ public class Spieler implements Serializable{
 	
 	
 	
+public Spieler() {
+	// TODO Auto-generated constructor stub
+}
+
 // Methoden	
 	
 	
@@ -133,6 +137,20 @@ public class Spieler implements Serializable{
 	}
 	
 	
+	public Spieler copyInstance() {
+		
+		Spieler spielerCopy = new Spieler();
+		spielerCopy.setName(this.getName());
+		spielerCopy.setSpielFarbe(this.getSpielFarbe());
+		spielerCopy.setSpielPhase(this.getSpielPhase());
+		spielerCopy.setAnzahlSteine(this.getAnzahlSpielZüge());
+		spielerCopy.setAnzahlSpielZüge(this.getAnzahlSpielZüge());
+		spielerCopy.setPosiSteine(this.getPosiSteine());
+		spielerCopy.setTempspielPhase(this.getTempspielPhase());
+		spielerCopy.setVorhandeneMuehlen(this.getVorhandeneMuehlen());
+		
+		return spielerCopy;
+	}
 	
 
 	

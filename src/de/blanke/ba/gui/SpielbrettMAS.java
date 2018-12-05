@@ -115,7 +115,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		// pruefeSpielEnde();
 		
 		if(player == 1) {
-			Spielstein spielstein = this.executeSpielZug(spielerB);
+			Spielstein spielstein = this.executeSpielZug(spielerB.copyInstance());
 			spielstein.setColor(Color.BLUE);
 			int xCord = spielstein.getX();
 			int yCord = spielstein.getY();
@@ -223,7 +223,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			
 		} else if(player == 0)  {
 			
-			Spielstein spielstein = this.executeSpielZug(spielerA);
+			Spielstein spielstein = this.executeSpielZug(spielerA.copyInstance());
 			int xCord = spielstein.getX();
 			int yCord = spielstein.getY();
 			spielstein.setColor(Color.WHITE);
