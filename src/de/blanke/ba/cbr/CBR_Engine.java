@@ -1,7 +1,11 @@
 package de.blanke.ba.cbr;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import de.dfki.mycbr.core.DefaultCaseBase;
 import de.dfki.mycbr.core.Project;
@@ -9,6 +13,7 @@ import de.dfki.mycbr.core.casebase.Instance;
 import de.dfki.mycbr.core.model.Concept;
 import de.dfki.mycbr.core.model.SymbolDesc;
 import de.dfki.mycbr.core.retrieval.Retrieval;
+import de.dfki.mycbr.core.similarity.Similarity;
 
 /**
  * Diese Klasse stellt die notwendigen Daten bereit,
@@ -18,33 +23,19 @@ import de.dfki.mycbr.core.retrieval.Retrieval;
  */
 public class CBR_Engine {
 	
+	private String projectPfad = this.getClass().getResource("/res/*").toString();
+	private String projectName = "mühle.prj";
 	
 	
-	public Project createCBRProject() {
-			Project p = null;
-			Concept c = null;
+	
+	public Project loadCBRProject() {
+			Project  p = null;
 			
 			
 			try {
-				p = new Project();
-				c = p.createTopConcept("Mühle_Basis");
-				HashSet<String> data = new HashSet<String>();
-				String[] dataNames = {"A","B","C"};
-				data.addAll(Arrays.asList(dataNames));
-				SymbolDesc counter = new SymbolDesc(c,"Counter", data);
-				
-				DefaultCaseBase cb = p.createDefaultCB("myCaseBase");
-				Instance i = c.addInstance("Fall 1");
-				i.addAttribute(counter, "A");
-				cb.addCase(i);
-				System.out.print("Erfolgreich erstellt");
-				
-				Retrieval r = new Retrieval(c, cb);
-				Instance q = r.getQueryInstance();
-				q.addAttribute(counter.getName(),counter.getAttribute("A"));
-				r.start();
-				System.out.println("Abgeschickt: " + r.entrySet().size());
-				p.save();
+				p = new Project(projectPfad + projectName);
+				Thread.sleep(200);
+				System.out.println(" -> CBR System wird geladen ....");
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
