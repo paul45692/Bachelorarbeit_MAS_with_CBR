@@ -30,6 +30,7 @@ public class CBRController {
 	private String conceptName = "mühle";
 	private Concept concept = null;
 	private ICaseBase casebase = null;
+	private CBR_AdaptionProcess adaption = new CBR_AdaptionProcess();
 	
 	// Für die Fehlerbehandlung wird ein Logger eingesetzt. @log4j
 	private static final Logger logger = Logger.getLogger(CBRController.class);
@@ -122,19 +123,26 @@ public class CBRController {
 		List<Integer> dataResult = new ArrayList<>();
 		// Hole eine Instance aus dem ResultSet
 		Instance firstResult = concept.getInstance(result.get(0).getFirst().getName());
+		IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld A");
+		IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld B");
 		// Check for a error
 		if(firstResult != null) {
 			// extract the mapping fields from the result
-			IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld A");
-			IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld B");
 			int lösungfeldA = Integer.parseInt(firstResult.getAttForDesc(lösungADesc).getValueAsString());
 			int lösungfeldB = Integer.parseInt(firstResult.getAttForDesc(lösungBDesc).getValueAsString());
 			dataResult.add(lösungfeldA);
 			dataResult.add(lösungfeldB);
 			
 		} else {
+			// Überdenken!
 			System.out.println("Error-Log: Miss matches with no result @CBR Query!!");
 			logger.info("Error-Log: Miss matches with no result @CBR Query!!");
+			System.out.println("lets started the apdation process");
+			Instance secondResult = concept.getInstance(result.get(1).getFirst().getName());
+			Instance adapResult = adaption.provideNewCase(firstResult, secondResult, lösungADesc, lösungBDesc);
+			if(adapResult != null) {
+				casebase.addCase(adapResult);
+			}
 		}
 		
 		return dataResult;
