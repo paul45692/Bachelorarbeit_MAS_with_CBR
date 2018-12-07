@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import org.apache.log4j.Logger;
 import de.blanke.ba.logik.Board;
+import de.blanke.ba.mas.AgentenOperations;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 import de.dfki.mycbr.core.ICaseBase;
@@ -31,6 +32,9 @@ public class CBRController {
 	private Concept concept = null;
 	private ICaseBase casebase = null;
 	private CBR_AdaptionProcess adaption = new CBR_AdaptionProcess();
+	private CBR_Learning_Process_Prototyp learning = new CBR_Learning_Process_Prototyp();
+	private AgentenOperations operations = new AgentenOperations();
+	private Instance learnProblem = null;
 	
 	// Für die Fehlerbehandlung wird ein Logger eingesetzt. @log4j
 	private static final Logger logger = Logger.getLogger(CBRController.class);
@@ -94,6 +98,7 @@ public class CBRController {
 		try {
 			Retrieval retrieval = new Retrieval(concept, casebase);
 			Instance query = retrieval.getQueryInstance();
+			this.learnProblem = query;
 			query.addAttribute("Spielphase", spielphase);
 			query.addAttribute("Anzahl der eigenen Spielsteine", anzahlDerEigenenSpielsteine);
 			query.addAttribute("Spielsteine Ring 1", spielsteineR1);
@@ -103,7 +108,7 @@ public class CBRController {
 			retrieval.start();
 			logger.info("CBR Query execute with: " + spielphase + ", "+ anzahlDerEigenenSpielsteine + ", "
 					+ spielsteineR1 + ", "+ spielsteineR2 + ", " + spielsteineR3 + ","+ mühlen);
-			 resultSet = this.analyseResultQuery(retrieval.getResult());
+			 resultSet = this.analyseResultQuery(retrieval.getResult(), board, spieler);
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -117,37 +122,76 @@ public class CBRController {
 	 * @param result 
 	 * @return die beiden extrahierenden Felder als Rückgabeparameter.
 	 */
-	private List<Integer> analyseResultQuery(List<Pair<Instance, Similarity>> result) {
+	private List<Integer> analyseResultQuery(List<Pair<Instance, Similarity>> result, Board board, Spieler spieler) {
 		logger.info("Check the results:" + result.get(0).getFirst().getName() + "Ähnlichkeit:  "
 				+ result.get(0).getSecond().getValue() );
 		List<Integer> dataResult = new ArrayList<>();
-		// Hole eine Instance aus dem ResultSet
-		Instance firstResult = concept.getInstance(result.get(0).getFirst().getName());
+		boolean lösungAccept = false;
 		IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld A");
 		IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld B");
-		// Check for a error
-		if(firstResult != null) {
-			// extract the mapping fields from the result
-			int lösungfeldA = Integer.parseInt(firstResult.getAttForDesc(lösungADesc).getValueAsString());
-			int lösungfeldB = Integer.parseInt(firstResult.getAttForDesc(lösungBDesc).getValueAsString());
-			dataResult.add(lösungfeldA);
-			dataResult.add(lösungfeldB);
+		Instance adaptEins = concept.getInstance(result.get(0).getFirst().getName());
+		Instance selectForResult = null;
+		
+		// Durchlaufe die ersten 5 Fälle aus der Rückgabe.
+		while(!lösungAccept) {
+			// Durchlaufe alle 5 Fälle
+			for(int i = 0; i < 5; i++) {
+				Instance evaluateResult = concept.getInstance(result.get(i).getFirst().getName());
+				
+				if(evaluateResult != null) {
+					int lösungfeldA = Integer.parseInt(evaluateResult.getAttForDesc(lösungADesc).getValueAsString());
+					int lösungfeldB = Integer.parseInt(evaluateResult.getAttForDesc(lösungBDesc).getValueAsString());
+					
+					if(this.evaluateSolution(spieler, board, lösungfeldA, lösungfeldB)) {
+						lösungAccept = true;
+						dataResult.add(lösungfeldA);
+						dataResult.add(lösungfeldB);
+						selectForResult = evaluateResult;
+						break;
+					} else if(i== 4) {
+						lösungAccept = true;
+					}
+				}
+			}
 			
-		} else {
-			// Überdenken!
-			System.out.println("Error-Log: Miss matches with no result @CBR Query!!");
-			logger.info("Error-Log: Miss matches with no result @CBR Query!!");
-			System.out.println("lets started the apdation process");
-			Instance secondResult = concept.getInstance(result.get(1).getFirst().getName());
-			Instance adapResult = adaption.provideNewCase(firstResult, secondResult, lösungADesc, lösungBDesc);
-			if(adapResult != null) {
-				casebase.addCase(adapResult);
+			if(lösungAccept) {
+				break;
 			}
 		}
+		if(!dataResult.isEmpty()) {
+			// Versuche die Lösung zu adaptieren
+			if(Integer.parseInt(adaptEins.getAttForDesc(lösungADesc).getValueAsString()) != dataResult.get(0)) {
+				casebase.addCase(adaption.provideNewCase(adaptEins, selectForResult, lösungADesc, lösungBDesc));
+			}
+		} else if(dataResult.isEmpty()) {
+			System.out.println("Achtung: CBR System hat ein Problem erzeugt");
+			logger.error("CBR-System: Es muss gelernt werden.");
+			Instance gelernt = learning.letsTryToLearnANewCase(this.learnProblem, spieler, board, lösungADesc, lösungBDesc);
+			if(gelernt != null) {
+				System.out.println("CBR System: Ein neuer Fall wurde gelernt");
+				casebase.addCase(gelernt);
+				dataResult.add(learning.learningParameterA);
+				dataResult.add(learning.learningParameterB);
+			}
+			
+		}
+
+		// Check ob die Liste immer noch leer ist.
 		
 		return dataResult;
 	}
-	
-	
+	/**
+	 * Prüfe die Lösung für den Einsatz.
+	 * @param spieler Eingabeparameter
+	 * @param board Eingabeparameter
+	 * @param startF Startfeld der neuen Lsg.
+	 * @param zielF  Endfeld der neuen Lsg.
+	 * @return ja / nein
+	 */
+	private boolean evaluateSolution(Spieler spieler, Board board, int startF, int zielF) {
+		Stein start = operations.getSteineFuerCBRSystem(startF);
+		Stein ziel = operations.getSteineFuerCBRSystem(zielF);
+		return adaption.evaluateSolution(spieler, board, start, ziel);
+	}
 	
 }

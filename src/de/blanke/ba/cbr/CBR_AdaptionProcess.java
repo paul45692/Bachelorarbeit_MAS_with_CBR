@@ -35,8 +35,6 @@ public class CBR_AdaptionProcess {
 		return instance1;
 		
 	}
-	
-	
 	/**
 	 * Diese Methode untersucht die (vorgeschlagende) Lösung.
 	 * @return Lösung ist in Ordnung oder nicht.

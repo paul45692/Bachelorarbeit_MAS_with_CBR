@@ -321,4 +321,8 @@ public class Feld implements Serializable {
 		return wert;
 	}
 	
+	
+	public Stein convertToStein() {
+		return new Stein(this.getRingZahl(), this.getxCord(), this.getyCord(), null);
+	}
 }

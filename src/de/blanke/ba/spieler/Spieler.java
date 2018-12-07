@@ -136,6 +136,19 @@ public Spieler() {
 		this.posiSteine = posiSteine;
 	}
 	
+	public boolean steineIsVorhanden(Stein stein) {
+		boolean check = false;
+		for(Stein s: posiSteine) {
+			if((s.getRing() == stein.getRing()) && stein.getxCord() == s.getxCord() && stein.getyCord() == s.getyCord()) {
+				check = true;
+				break;
+			}
+		}
+		
+		return check;
+		
+	}
+	
 	
 	public Spieler copyInstance() {
 		

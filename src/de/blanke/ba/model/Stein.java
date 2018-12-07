@@ -16,6 +16,7 @@ public class Stein implements Serializable{
 	private int yCord;
 	private int isTeilVonMuehle;
 	private Spielstein spielstein;
+	private int index;
 	
 // Getter und Setter
 	public Color getFarbe() {
@@ -69,6 +70,14 @@ public class Stein implements Serializable{
 
 
 	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	// Kontruktor	
 	public Stein(int ring, int xCord, int yCord, Color farbe) {
 		this.ring = ring;
@@ -84,6 +93,17 @@ public class Stein implements Serializable{
 		this.yCord = yCord;
 		this.farbe = farbe;
 		this.setSpielstein(spielstein);
+		
+		
+	}
+	
+	public Stein(int ring, int xCord, int yCord, Color farbe, Spielstein spielstein, int index) {
+		this.ring = ring;
+		this.xCord = xCord;
+		this.yCord = yCord;
+		this.farbe = farbe;
+		this.setSpielstein(spielstein);
+		this.setIndex(index);
 		
 		
 	}
