@@ -2,6 +2,9 @@ package de.blanke.ba.cbr;
 
 import java.text.ParseException;
 
+import de.blanke.ba.logik.Board;
+import de.blanke.ba.model.Stein;
+import de.blanke.ba.spieler.Spieler;
 import de.dfki.mycbr.core.casebase.Instance;
 import de.dfki.mycbr.core.model.IntegerDesc;
 
@@ -30,6 +33,42 @@ public class CBR_AdaptionProcess {
 		}
 		
 		return instance1;
+		
+	}
+	
+	
+	/**
+	 * Diese Methode untersucht die (vorgeschlagende) Lösung.
+	 * @return Lösung ist in Ordnung oder nicht.
+	 */
+	protected boolean evaluateSolution(Spieler spieler, Board board, Stein start, Stein ziel) {
+		boolean rueckgabe = false;
+		// Analyse anhängig von der Spielphase
+		switch (spieler.getSpielPhase()) {
+		
+			case 0: 		if(board.checkFeld(start.convertToFeld()) || board.checkFeld(ziel.convertToFeld())) {
+								rueckgabe = true;
+							}
+							break;
+							
+			case 1:         if(spieler.getPosiSteine().contains(start) && board.checkFeld(ziel.convertToFeld())) {
+								rueckgabe = true;
+							}
+							break;
+							
+			case 2:         if(spieler.getPosiSteine().contains(start) && board.checkFeld(ziel.convertToFeld())) {
+								rueckgabe = true;
+							}
+							break;
+							
+			case 3:			if((!board.checkFeld(start.convertToFeld()) && !spieler.getPosiSteine().contains(start)) 
+							|| (!board.checkFeld(ziel.convertToFeld()) && !spieler.getPosiSteine().contains(ziel))) {
+								rueckgabe = true;
+							}
+							break;	
+		}
+			
+		return rueckgabe;
 		
 	}
 

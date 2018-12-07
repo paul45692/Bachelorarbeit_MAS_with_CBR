@@ -18,6 +18,7 @@ public class MessageBox implements Serializable {
 	// Attribute
 	private Spieler spieler;
 	private Board board;
+	
 	public Spieler getSpieler() {
 		return spieler;
 	}

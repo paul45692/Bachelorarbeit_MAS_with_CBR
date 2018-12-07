@@ -64,10 +64,10 @@ public class CBRController {
 	}
 	
 	/**
-	 * Diese Methode verarbeitet die Query an das System
-	 * @param board
-	 * @param spieler
-	 * @return
+	 * Diese Methode verarbeitet die Query an das System.
+	 * @param board Eingabeparameter.
+	 * @param spieler Eingabeparameter.
+	 * @return Liste von Integers als Ausgabeparameter.
 	 */
 	public List<Integer> executeQuery(Board board, Spieler spieler) {
 		// Werte die Daten aus:
@@ -78,7 +78,7 @@ public class CBRController {
 		int	spielsteineR2 = 0;
 		int spielsteineR3 = 0;
 		List<Stein> dataToCheck = spieler.getPosiSteine();
-		List<Stein> resultSet = new ArrayList<>();
+		List<Integer> resultSet = new ArrayList<>();
 		
 		for(Stein stein:dataToCheck) {
 			if(stein.getRing() == 0) {
@@ -103,19 +103,19 @@ public class CBRController {
 			retrieval.start();
 			logger.info("CBR Query execute with: " + spielphase + ", "+ anzahlDerEigenenSpielsteine + ", "
 					+ spielsteineR1 + ", "+ spielsteineR2 + ", " + spielsteineR3 + ","+ mühlen);
-			this.analyseResultQuery(retrieval.getResult());
+			 resultSet = this.analyseResultQuery(retrieval.getResult());
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return null;
+		return resultSet;
 	}
 	/**
 	 * Diese Methode bereitet das ResultSet für die spätere Verarbeitung vor.
-	 * @param result
-	 * @return
+	 * @param result 
+	 * @return die beiden extrahierenden Felder als Rückgabeparameter.
 	 */
 	private List<Integer> analyseResultQuery(List<Pair<Instance, Similarity>> result) {
 		logger.info("Check the results:" + result.get(0).getFirst().getName() + "Ähnlichkeit:  "
@@ -147,5 +147,7 @@ public class CBRController {
 		
 		return dataResult;
 	}
+	
+	
 	
 }

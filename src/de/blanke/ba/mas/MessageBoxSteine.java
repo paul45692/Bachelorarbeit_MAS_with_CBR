@@ -38,5 +38,10 @@ public class MessageBoxSteine implements Serializable {
 		this.setZielStein(zielStein);
 	}
 	
+	public void clear() {
+		this.entferneStein = null;
+		this.zielStein = null;
+	}
+	
 
 }
