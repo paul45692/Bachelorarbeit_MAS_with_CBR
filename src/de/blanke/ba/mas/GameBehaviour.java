@@ -1,11 +1,14 @@
 package de.blanke.ba.mas;
 
 import java.io.IOException;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
+import de.blanke.ba.cbr.CBRAgent;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
+
 /**
  * Diese Klasse leitet den Spielzug des Agenten ein.
  * @author Paul Blanke
@@ -17,6 +20,7 @@ public class GameBehaviour  extends OneShotBehaviour{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final Logger logger = Logger.getLogger(GameBehaviour.class);
 	
 	private MessageBox box;
 	private boolean rbsAmZug;
@@ -32,7 +36,14 @@ public class GameBehaviour  extends OneShotBehaviour{
 
 	public GameBehaviour(ControllerAgent agent, MessageBox box, boolean rbs) {
 		super(agent);
-		this.box = box;
+		PropertyConfigurator.configure(GameBehaviour.class.getResource("log4j.info"));
+		if(box != null) {
+			this.box = box;
+		} else {
+			this.box = box;
+			logger.info("Controller Agent (Hinweg) : Ein Problem ist aufgetreten");
+		}
+		
 		this.rbsAmZug = rbs;
 	}
 
@@ -52,7 +63,7 @@ public class GameBehaviour  extends OneShotBehaviour{
 			e.printStackTrace();
 		}
 		this.myAgent.send(msg);
-		System.out.println("Ich wurde versandet");
+		logger.info("Controller Agent (Hinweg): Eine Nachricht wurde auf den Weg gebracht!");
 		}
 		
 }

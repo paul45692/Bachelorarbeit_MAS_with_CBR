@@ -2,6 +2,10 @@ package de.blanke.ba.cbr;
 
 import java.text.ParseException;
 import java.util.Random;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.AgentenOperations;
 import de.blanke.ba.model.Feld;
@@ -22,9 +26,12 @@ public class CBR_Learning_Process_Prototyp {
 	int learningParameterB;
 	AgentenOperations operation = new AgentenOperations();
 	Random ran = new Random();
+	private static final Logger logger = Logger.getLogger(CBRAgent.class);
 	
 	
 	public Instance letsTryToLearnANewCase(Instance eingabe, Spieler spieler, Board board, IntegerDesc intA, IntegerDesc intB) {
+		PropertyConfigurator.configure(CBRAgent.class.getResource("log4j.info"));
+		logger.info(" CBR System: !! Ein neuer Fall wird versuchsweise angelernt!");
 		System.out.println("!!! --- >CBR-System: Ein neuer Fall wird angelernt!");
 		switch(spieler.getSpielPhase()) {
 		
@@ -46,10 +53,11 @@ public class CBR_Learning_Process_Prototyp {
 			eingabe.addAttribute(intB, this.learningParameterB);
 		} catch (ParseException e) {
 			System.out.println("CBR System: das Lernen eines neuen Falles ist fehlgeschlagen !!");
+			logger.info("CBR System-Learning: Anlernen ist fehl geschlagen!");
 			e.printStackTrace();
 		}
 		
-		return null;
+		return eingabe;
 	}
 	
 	/**

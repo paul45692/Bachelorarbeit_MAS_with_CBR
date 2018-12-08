@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+import de.blanke.ba.cbr.CBRAgent;
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.logik.SpielLogikErweChecks;
 import de.blanke.ba.model.Stein;
@@ -25,8 +29,17 @@ public class RegelInterpreter {
 	
 	// Rückgabe Liste von Steinen speziell für Spielphase 1 und 2.
 	private List<Stein> dataBack = new ArrayList<>();
-	
+	// Logger zum Auslesen
+	private static final Logger logger = Logger.getLogger(RegelInterpreter.class);
 
+	// Konstruktor für den Logger
+	public RegelInterpreter() {
+		PropertyConfigurator.configure(RegelInterpreter.class.getResource("log4j.info"));
+		logger.info("RBS Agent (Auswertung: Bereit!");
+	}
+	
+	
+	
 	/**
 	 * Diese Methode verarbeitet eine Anfrage an das System.
 	 * @param board
@@ -36,6 +49,7 @@ public class RegelInterpreter {
 	public List<Stein> sendQuery(Board board, Spieler spieler, Spieler spielerB) {
 		this.setzeColor(spieler.getSpielFarbe());
 		this.dataBack.clear();
+		logger.info("RBS Agent (Auswertung): Eine Anfrage wird beantwortet ....");
 		
 		switch(spieler.getSpielPhase()) {
 		
@@ -50,8 +64,16 @@ public class RegelInterpreter {
 					
 		case 3: 	analyseQuerySpielPhase3(board, spieler);
 					break;
+					
 		default:    break;
 		}
+		String ausgabeLog = "";
+		if(dataBack.size() < 2) {
+			ausgabeLog = "Leer";
+		} else {
+			ausgabeLog = dataBack.get(1).toString();
+		}
+		logger.info("RBS Agent (Auswertung): Ergebnis war: Start:" + dataBack.get(0).toString() + "  Ziel:" + ausgabeLog);
 		return this.dataBack;
 	}
 	

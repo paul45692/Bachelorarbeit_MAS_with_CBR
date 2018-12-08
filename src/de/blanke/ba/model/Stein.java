@@ -6,6 +6,11 @@ import jade.util.leap.Serializable;
 // Diese Klasse bildet die Spielsteine auf der Logikebene ab.
 public class Stein implements Serializable{
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	
+
 	/**
 	 * 
 	 */
@@ -135,6 +140,11 @@ public class Stein implements Serializable{
 		 } else {
 			 return false;
 		 }
+	}
+	
+	@Override
+	public String toString() {
+		return " Ring: " + this.ring + " X: " + this.xCord + " Y" + this.yCord ;
 	}
 
 }

@@ -68,6 +68,7 @@ public class CBRAgent extends Agent{
 						box = (MessageBox) msg.getContentObject();
 						// Hole mir die Daten raus
 						System.out.println("Test: Integrationspunkt 1");
+						logger.info("CBR-System: Eine Nachricht ist eingetroffen!");
 						
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block
@@ -87,6 +88,7 @@ public class CBRAgent extends Agent{
 						logger.error("CBR System: Übertragungsproblem");
 					}
 					System.out.println("Test: Integrationspunkt 2");
+					logger.info("CBR-System: Eine Nachricht wurde erzeugt und wird versendet");
 					box.cleartheBox();
 					// Rücktransport
 					 ACLMessage aclmsg = new ACLMessage(ACLMessage.INFORM);
@@ -113,6 +115,7 @@ public class CBRAgent extends Agent{
 					System.out.println("Test: Integrationspunkt 3");
 					send(msg);
 					System.out.println("Test: Integrationspunkt 4: versendet");
+					logger.info("CBR-System: Aufgabe wurde abgeschlossen!");
 					
 					
 				} else {

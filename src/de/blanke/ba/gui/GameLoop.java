@@ -3,7 +3,6 @@ package de.blanke.ba.gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import de.blanke.ba.mas.ControllerAgent;
 
 /**
  * Diese Klasse bildet das Herzstück des Spiel.

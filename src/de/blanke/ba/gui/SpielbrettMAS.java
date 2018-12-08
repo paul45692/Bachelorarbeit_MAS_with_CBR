@@ -13,6 +13,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import de.blanke.ba.cbr.CBRAgent;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
@@ -51,7 +54,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	private Spieler spielerB;
 	private int playerB = 1;
 	private int player = 0;
-	
+	private static final Logger logger = Logger.getLogger(SpielbrettMAS.class);
 	
 	
 	public SpielbrettMAS() {
@@ -60,6 +63,8 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.spielController = new SpielController();
 		this.spielerA = new Spieler(Color.WHITE,"Spieler A");
 		this.spielerB = new Spieler(Color.BLUE, "Spieler B");
+		PropertyConfigurator.configure(SpielbrettMAS.class.getResource("log4j.info"));
+		logger.info("Spiel (MAS): Variate mit MAS ! Der Spielverlauf wird eher weniger geloggt!");
 		
 		try {
 			bi = ImageIO.read(this.getClass().getResource("/res/Muehlefeld.jpg"));
@@ -109,7 +114,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	public void mouseClicked(MouseEvent arg0) {
 
 	boolean zugwechsel = false;
-	//	logger.info(" " + xCord + "- " + yCord);
+		
 		List<Spielstein> zugDoppel = new ArrayList<>();
 		// Checke ob das Spiel schon zu Ende ist.
 		// pruefeSpielEnde();
@@ -172,7 +177,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							}
 							break;
 						} else {
-						//	logger.error("Ein Fehler wurde gemacht");
+							logger.error("Ein Fehler wurde gemacht");
 							break;
 						}
 						
@@ -200,7 +205,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							}
 							break;
 						} else {
-							
+							logger.info("Spiel(MAS): Ein Fehler wurde gemacht auf dieser Ebene.");
 							System.out.println("Ein Fehler wurde gemacht");
 							break;
 						}
@@ -277,6 +282,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							break;
 						} else {
 							System.out.println("Ein Fehler wurde gemacht");
+							logger.info("Spiel(MAS): Ein Fehler wurde gemacht auf dieser Ebene.");
 							break;
 						}
 			
@@ -303,7 +309,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							}
 							break;
 						} else {
-						//	logger.error("Ein Fehler wurde gemacht");
+							logger.info("Spiel(MAS): Ein Fehler wurde gemacht auf dieser Ebene.");
 							break;
 						}
 						
@@ -378,7 +384,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			ac.start();
 			ac2.start();
 		} catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
+			logger.info("DAS MAS wurde nicht aufgesetzt!!!--Fehler");
 			e.printStackTrace();
 		}
 	}
@@ -387,11 +393,13 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	 * @return
 	 */
 	private Spielstein executeSpielZug(Spieler spieler, Spieler spielerB) {
+		logger.info("Spiel(MAS): Ein Spielzug beginnt!");
 		MessageBox box  = new MessageBox(spieler, spielerB, spielController.getBoard());
 		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, true);
 		this.controllerMAS.addBehaviour(spielZug);
 		try {
-			Thread.sleep(300);
+			Thread.sleep(500);
+			logger.info("Spiel(MAS): Warten...");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -399,12 +407,13 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		 GameDataGetBehaviour data = new GameDataGetBehaviour(this.controllerMAS);
 		this.controllerMAS.addBehaviour(data);
 		try {
-			Thread.sleep(300);
+			Thread.sleep(500);
+			logger.info("Spiel(MAS): Warten...");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		logger.info("Spielzug(MAS): Zug angefangen- Daten Eingang");
 		return data.getSpielstein();
 		
 		

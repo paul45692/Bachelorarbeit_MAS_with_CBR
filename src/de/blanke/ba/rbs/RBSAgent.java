@@ -2,6 +2,8 @@ package de.blanke.ba.rbs;
 
 import java.io.IOException;
 import java.util.List;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.MessageBox;
 import de.blanke.ba.mas.MessageBoxSteine;
@@ -17,22 +19,22 @@ import jade.lang.acl.UnreadableException;
  * Dieser Agent verwaltet das RBS System. Seine einzige Aufgabe ist es, 
  * auf den Nachrichtenempfang zu warten.
  * @author Paul Blanke
- * 25.11.18
+ * 08.12.2018.
  *
  */
 public class RBSAgent extends Agent {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Eine Instanz der Klasse @RegelInterpreter
 	 */
 	private RegelInterpreter interpreter = new RegelInterpreter();
+	private static final Logger logger = Logger.getLogger(RBSAgent.class);
 	
 	@Override
 	protected void setup() {
 		System.out.println("RBS System aktiv");
+		PropertyConfigurator.configure(RBSAgent.class.getResource("log4j.info"));
+		logger.info(" Das RBS System wurde aktiviert (@" + RBSAgent.class);
 		super.setup();
 		/**
 		 * Diese Methode stellt die Logik des Agenten bereit.
@@ -53,7 +55,7 @@ public class RBSAgent extends Agent {
 					/**
 					 * Werte die Nachricht und sende eine Nachricht zurück.
 					 */
-					System.out.println("Der RBS Agent tut was");
+					logger.info("RBS Agent: Eine Nachricht wurde empfangen!");
 					List<Stein> rueckgabe = null;
 					try {
 						// Hole den Zwischenstand aus der Nachricht
@@ -85,6 +87,7 @@ public class RBSAgent extends Agent {
 					send(msg);
 					msg = receive();
 					
+					logger.info("RBS Agent: Die Nachricht wurde beantwortet!");
 					
 				} else {
 					block();

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.AgentenOperations;
 import de.blanke.ba.model.Stein;
@@ -46,6 +48,7 @@ public class CBRController {
 	 * Diese Methode initalisiert die zentrale CBR Infrastruktur, die benötigt wird, und lädet alle Fälle.
 	 */
 	private void initCBRStrcuture() {
+		PropertyConfigurator.configure(CBRController.class.getResource("log4j.info"));
 		this.concept = project.getConceptByID(conceptName);
 		try {
 			this.concept = project.getConceptByID(conceptName);
@@ -169,6 +172,7 @@ public class CBRController {
 			Instance gelernt = learning.letsTryToLearnANewCase(this.learnProblem, spieler, board, lösungADesc, lösungBDesc);
 			if(gelernt != null) {
 				System.out.println("CBR System: Ein neuer Fall wurde gelernt");
+				logger.info("CBR-System: Ein neuer Fall wurde angelernt.");
 				casebase.addCase(gelernt);
 				dataResult.add(learning.learningParameterA);
 				dataResult.add(learning.learningParameterB);
