@@ -96,7 +96,7 @@ public class Stein implements Serializable{
 		
 		
 	}
-	
+	// Dieser Konstruktor wird für die Agentenoperationen verwendet.
 	public Stein(int ring, int xCord, int yCord, Color farbe, Spielstein spielstein, int index) {
 		this.ring = ring;
 		this.xCord = xCord;
@@ -108,17 +108,33 @@ public class Stein implements Serializable{
 		
 	}
 	
-	/**
-	 * Diese Methode kann nur durch einen validen Zug gemacht werden.
-	 */
-	public void bewegeStein(int ring, int xCord, int yCord) {
-		this.ring = ring;
-		this.xCord = xCord;
-		this.yCord = yCord;
-	}
-	
 	public Feld convertToFeld() {
 		return new Feld(this.ring, this.xCord, this.yCord);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 * @Override diese Methode überschreibt die Equals Methode und
+	 * prüft anhand der Positionen ob zwei Steine gleich sind.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		Stein stein = (Stein) obj;
+		 if((this.getRing() == stein.getRing()) && (this.getxCord() == stein.getxCord()) 
+				 && this.getyCord() == stein.getyCord()) {
+			 return true;
+		 } else {
+			 return false;
+		 }
+	}
+	
+	public boolean equalsReihe(Stein stein) {
+		if((this.getRing() == stein.getRing()) && (this.getxCord() == stein.getxCord()) 
+				 || this.getyCord() == stein.getyCord()) {
+			 return true;
+		 } else {
+			 return false;
+		 }
 	}
 
 }
