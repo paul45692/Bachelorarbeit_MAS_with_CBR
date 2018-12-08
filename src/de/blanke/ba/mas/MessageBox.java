@@ -17,6 +17,7 @@ public class MessageBox implements Serializable {
 	private static final long serialVersionUID = -5119553190580869433L;
 	// Attribute
 	private Spieler spieler;
+	private Spieler spielerB;
 	private Board board;
 	
 	public Spieler getSpieler() {
@@ -34,13 +35,24 @@ public class MessageBox implements Serializable {
 		this.board = board;
 	}
 	
-	public MessageBox(Spieler spieler, Board board) {
+	public Spieler getSpielerB() {
+		return spielerB;
+	}
+
+	public void setSpielerB(Spieler spielerB) {
+		this.spielerB = spielerB;
+	}
+
+	public MessageBox(Spieler spieler,Spieler spielerB, Board board) {
 		this.spieler = spieler;
+		this.spielerB = spielerB;
 		this.board = board;
+		
 	}
 	
 	public void cleartheBox() {
 		this.spieler = null;
+		this.spielerB = null;
 		this.board = null;
 	}
 

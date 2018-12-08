@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.AgentenOperations;
@@ -42,6 +43,7 @@ public class CBRAgent extends Agent{
 	@Override
 	protected void setup() {
 		System.out.print("CBR System aktiv!");
+		PropertyConfigurator.configure(CBRAgent.class.getResource("log4j.info"));
 		logger.info(" Das CBR System wurde aktiviert (@" + CBRAgent.class);
 		super.setup();
 		addBehaviour(new CyclicBehaviour() {

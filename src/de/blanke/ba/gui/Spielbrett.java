@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import de.blanke.ba.logger.Test;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.model.Spielstein;
@@ -34,7 +33,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 	 */
 	private static final long serialVersionUID = -3334802508888319034L;
 	
-	//private static final Logger logger = Logger.getLogger(Spielbrett.class);
+	private static final Logger logger = Logger.getLogger(Spielbrett.class);
 	float interpolation;
 	// Change the player
 	int player = 0;
@@ -58,7 +57,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 	
 	
 	public Spielbrett() {
-		PropertyConfigurator.configure(Test.class.getResource("log4j.info"));
+		PropertyConfigurator.configure(Spielbrett.class.getResource("log4j.info"));
 	//	logger.info("Programm gestarted");
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();

@@ -17,6 +17,7 @@ public class RegelSet {
 	protected List<RegelSpielPhase1u2> spielphase1 = new ArrayList<>();
 	protected List<RegelSpielPhase1u2> spielphase2 = new ArrayList<>();
 	protected List<RegelSpielPhase0> spielphase3 = new ArrayList<>();
+	protected List<Regel> ubergreifendeRegeln = new ArrayList<>();
 	
 // Getter und Setter	
 	protected List<RegelSpielPhase0> getSpielphase0() {
@@ -44,6 +45,18 @@ public class RegelSet {
 	}
 	public void setSpielphase2(List<RegelSpielPhase1u2> spielphase2) {
 		this.spielphase2 = spielphase2;
+	}
+	/**
+	 * @return the ubergreifendeRegeln
+	 */
+	public List<Regel> getUbergreifendeRegeln() {
+		return ubergreifendeRegeln;
+	}
+	/**
+	 * @param ubergreifendeRegeln the ubergreifendeRegeln to set
+	 */
+	public void setUbergreifendeRegeln(List<Regel> ubergreifendeRegeln) {
+		this.ubergreifendeRegeln = ubergreifendeRegeln;
 	}
 	// private Methoden 	
 	/**
@@ -131,6 +144,13 @@ public class RegelSet {
 		spielphase0.add(zufall);
 	}
 
+	private void setUpUeberGreifendeRegelnAuf() {
+		Regel eins = new Regel("Zwei  eigenen Steine in einer Reihe", "Einen Stein dazu");
+		ubergreifendeRegeln.add(eins);
+		Regel zwei = new Regel("Zwei gegenerische Steine in einer Reihe", "Einen Stein dazu");
+		ubergreifendeRegeln.add(zwei);
+	}
+	
 // konstruktor
 	
 	public RegelSet() {
@@ -138,6 +158,7 @@ public class RegelSet {
 		this.setUpSteineLoeschen();
 		this.setSteineVerschiebenZweiteSpielPhaseAuf();
 		this.setSteineVerschiebenDritteSpielPhaseAuf();
+		this.setUpUeberGreifendeRegelnAuf();
 	}
 	
 }

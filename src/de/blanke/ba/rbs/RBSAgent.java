@@ -59,8 +59,9 @@ public class RBSAgent extends Agent {
 						// Hole den Zwischenstand aus der Nachricht
 						MessageBox box = (MessageBox) msg.getContentObject();
 						Spieler spieler = box.getSpieler();
+						Spieler spielerB = box.getSpielerB();
 						Board board = box.getBoard();
-						rueckgabe = interpreter.sendQuery(board, spieler);
+						rueckgabe = interpreter.sendQuery(board, spieler, spielerB);
 						
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block

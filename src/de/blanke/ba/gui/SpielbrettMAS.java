@@ -115,7 +115,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		// pruefeSpielEnde();
 		
 		if(player == 1) {
-			Spielstein spielstein = this.executeSpielZug(spielerB.copyInstance());
+			Spielstein spielstein = this.executeSpielZug(spielerB.copyInstance(), spielerA.copyInstance());
 			spielstein.setColor(Color.BLUE);
 			int xCord = spielstein.getX();
 			int yCord = spielstein.getY();
@@ -223,7 +223,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			
 		} else if(player == 0)  {
 			
-			Spielstein spielstein = this.executeSpielZug(spielerA.copyInstance());
+			Spielstein spielstein = this.executeSpielZug(spielerA.copyInstance(), spielerB.copyInstance());
 			int xCord = spielstein.getX();
 			int yCord = spielstein.getY();
 			spielstein.setColor(Color.WHITE);
@@ -386,8 +386,8 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	 * Diese Methode hält das Script für das MAS bereit
 	 * @return
 	 */
-	private Spielstein executeSpielZug(Spieler spieler) {
-		MessageBox box  = new MessageBox(spieler, spielController.getBoard());
+	private Spielstein executeSpielZug(Spieler spieler, Spieler spielerB) {
+		MessageBox box  = new MessageBox(spieler, spielerB, spielController.getBoard());
 		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, true);
 		this.controllerMAS.addBehaviour(spielZug);
 		try {

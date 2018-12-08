@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.blanke.ba.logik.Board;
+import de.blanke.ba.logik.SpielLogikErweChecks;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 /**
@@ -19,6 +20,9 @@ public class RegelInterpreter {
 	private List<RegelSpielPhase1u2> spielphase1 = data.getSpielphase1();
 	private List<RegelSpielPhase1u2> spielphase2 = data.getSpielphase1();
 	private List<RegelSpielPhase0> spielphase3 = data.getSpielphase3();
+	private List<Regel> uebergreifendeRegeln = data.getUbergreifendeRegeln();
+	private SpielLogikErweChecks logikCheck = new SpielLogikErweChecks();
+	
 	// Rückgabe Liste von Steinen speziell für Spielphase 1 und 2.
 	private List<Stein> dataBack = new ArrayList<>();
 	
@@ -29,7 +33,7 @@ public class RegelInterpreter {
 	 * @param spieler
 	 * @return
 	 */
-	public List<Stein> sendQuery(Board board, Spieler spieler) {
+	public List<Stein> sendQuery(Board board, Spieler spieler, Spieler spielerB) {
 		this.setzeColor(spieler.getSpielFarbe());
 		this.dataBack.clear();
 		
@@ -73,7 +77,7 @@ public class RegelInterpreter {
 				// Solange wie nichts gefunden wurde, suche weiter:)
 				while(!board.checkFeld(regel.getIfStein().convertToFeld())) {
 					regel.erzeugeZufällig();
-					System.out.println("Suche!");
+					
 					if(board.checkFeld(regel.getIfStein().convertToFeld())) {
 						
 						this.dataBack.add(regel.getElseStein());
@@ -186,6 +190,33 @@ public class RegelInterpreter {
 	private void setzeColor(Color color) {
 		for(RegelSpielPhase0 regel: spielphase0) {
 			regel.setColor(color);
+		}
+	}
+	/**
+	 * Diese Methode verwendet einen Trick um die Regeln am Anfang auszuwerten.
+	 */
+	private void analyseQueryBefore(Spieler spieler,Spieler spielerB,  Board board) {
+		// Switch mit der Spielphase des Spielers
+		switch (spieler.getSpielPhase()) {
+			case 0: 	// Werte nur Regel 1 aus
+						List<Stein> rueckgabe = this.logikCheck.sucheZweiInGleicherReihe(spieler.getPosiSteine(), board);
+						if(!rueckgabe.isEmpty()) {
+							dataBack.add(rueckgabe.get(0));
+						}
+						break;
+						
+			case 1:		// Pruefe beide Regeln
+			case 2:		List<Stein> rueckgabe2 = this.logikCheck.sucheZweiGleicheReiheUnddrittenSteinDazu(spieler.getPosiSteine(), board);
+						if(!rueckgabe2.isEmpty()) {
+							dataBack.add(rueckgabe2.get(0));
+							dataBack.add(rueckgabe2.get(1));
+						}
+			break;
+						
+			case 3:  	// Später
+						break;
+			
+			default: break;	
 		}
 	}
 }
