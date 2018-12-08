@@ -53,5 +53,56 @@ public class SpielLogikErweChecks {
 		
 	}
 	
+	/**
+	 * Diese Methode liefert einen freies Feld + einen Stein in der Nähe dazu.
+	 * @param data Die Liste aller Steine
+	 * @param board Eingabeparameter
+	 * @return Liste von Steine: 0 freies Feld, 1  nächster Stein
+	 */
+	public List<Stein> sucheZweiGleicheReiheUnddrittenSteinDazu(List<Stein> data, Board board) {
 
+		List<Stein> rueckgabe = new ArrayList<>();
+		// Durchlaufe alle Steine, nehme den ersten aus der Liste und suche nach passenden.
+		for(int i = 0; i < data.size(); i++) {
+			Stein eins = data.remove(0);
+			for(Stein stein: data) {
+				if(eins.equalsReihe(stein)) {
+					rueckgabe.add(eins);
+					rueckgabe.add(stein);
+					data.remove(stein);
+					i= data.size();
+					break;
+				}
+			}
+		}
+		Stein eins = null;
+		if(!rueckgabe.isEmpty()) {
+			eins = rueckgabe.get(0);
+			List<Feld> freieFelder = rueckgabe.get(0).convertToFeld().allefreienNachbarn(board);
+			if(!freieFelder.isEmpty()) {
+				rueckgabe.clear();
+				rueckgabe.add(freieFelder.get(0).convertToStein());
+			} else {
+				freieFelder = rueckgabe.get(1).convertToFeld().allefreienNachbarn(board);
+				rueckgabe.clear();
+				rueckgabe.add(freieFelder.get(0).convertToStein());
+			}
+			for(Stein s: data) {
+				if(eins.getRing() == s.getRing()) {
+					rueckgabe.add(s);
+					break;
+				}
+			}
+			
+			
+		} else {
+			System.out.println("Es wurden keine zwei Steine in einer Reihe gefunden!");
+		}
+		
+		
+		
+		
+		return rueckgabe;
+	}
+	
 }
