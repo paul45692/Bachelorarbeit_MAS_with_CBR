@@ -1,5 +1,8 @@
 package de.blanke.ba.logik;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.model.Stein;
@@ -68,7 +71,6 @@ public class SpielController {
 					spieler.setSpielPhase(1);
 					System.out.print("Info: Der "  + spieler.getName() + "hat die erste Spielphase verlassen!");
 				}
-				
 				return true;
 				
 			} else {
@@ -77,24 +79,25 @@ public class SpielController {
 			}
 			
 		} else  if(spieler.getSpielPhase() == 1)	{
-		
-			
-				if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)
+				// Teste auf Fehler beim Spielzug
+				if(!this.testAufSpielEnde(spieler, board)) { 
+					if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)
 						&& (this.feld.checkObFeldNachbarnIst(board, feld))) {
 				
-					spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
-					Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
-					spieler.setzeSpielstein(stein);
+						spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
+						Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
+						spieler.setzeSpielstein(stein);
 				
-					
-					return true;
+						return true;
 				
+					} else {
+						System.out.println("Das Feld ist belegt");
+				
+						return false;
+					}
 				} else {
-					System.out.println("Das Feld ist belegt");
-				
-					return false;
+					return true;
 				}
-			
 			
 			
 		} else if(spieler.getSpielPhase() == 2)  {
@@ -154,5 +157,27 @@ public class SpielController {
 			
 			return false;
 		}
+	}
+	/**
+	 * Diese Methode prüft auf ein mögliches Spielende!
+	 * Sobald in der ersten Spielphase für einen Spieler keine Züge mehr möglich sind, wird
+	 * das Spiel beendet.
+	 * @return
+	 */
+	public boolean testAufSpielEnde(Spieler spieler, Board board) {
+		boolean check = false;
+		List<Feld> dataCheck = new ArrayList<>();
+		for(Stein stein:spieler.getPosiSteine()) {
+			Feld f = stein.convertToFeld();
+			if(!f.allefreienNachbarn(board).isEmpty()) {
+				dataCheck.add(f.allefreienNachbarn(board).get(0));
+			}
+		}
+		
+		if(dataCheck.isEmpty()) {
+			check = true;
+			System.out.println("Spiel Ende: Der Spieler:"+  spieler.getName() + "kann keine Züge mehr ausführen!");
+		}
+		return check;
 	}
 }

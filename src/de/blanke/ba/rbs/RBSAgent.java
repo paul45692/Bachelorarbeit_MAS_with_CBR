@@ -73,8 +73,20 @@ public class RBSAgent extends Agent {
 					msg = new ACLMessage(ACLMessage.INFORM);
 					msg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
 					msg.setContent("Zug beendet");
-					Stein eins = rueckgabe.get(0);
-					Stein zwei = null;
+					Stein eins, zwei = null;
+					if(!rueckgabe.isEmpty() & rueckgabe.size() >= 2) {
+						eins = rueckgabe.get(0);
+						zwei = rueckgabe.get(1);
+					} else if(!rueckgabe.isEmpty() & rueckgabe.size() < 2) {
+						eins = rueckgabe.get(0);
+						zwei = null;
+						logger.info("RBS Agent(Rückgabe): Nur ein Parameter!");
+					}  else {
+						eins = null;
+						zwei = null;
+						logger.info("RBS Agent(Rückgabe)-Error: keine Parameter!)");
+					}
+					
 					MessageBoxSteine steine = new MessageBoxSteine(eins, zwei);
 					
 					try {

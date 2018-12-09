@@ -51,13 +51,26 @@ public class RegelInterpreter {
 		
 		switch(spieler.getSpielPhase()) {
 		
-		case 0:    	analyseQuerySpielPhase0(board, spieler);
+		case 0:    	if(this.analyseQueryBefore(spieler, spielerB, board)) {
+						System.out.println("RBS Agent: Eine allegemeine Regel hat gefeuert!");
+					} else {
+						analyseQuerySpielPhase0(board, spieler);
+					}
+					
 					break;
 					
-		case 1:     analyseQuerySpielPhase1(board, spieler);
+		case 1:     if(this.analyseQueryBefore(spieler, spielerB, board)) {
+						System.out.println("RBS Agent: Eine allegemeine Regel hat gefeuert!");
+					} else {
+						analyseQuerySpielPhase1(board, spieler);
+					}
 					break;
 					
-		case 2:     analyseQuerySpielPhase2(board, spieler);
+		case 2:     if(this.analyseQueryBefore(spieler, spielerB, board)) {
+						System.out.println("RBS Agent: Eine allegemeine Regel hat gefeuert!");
+					} else {
+						analyseQuerySpielPhase2(board, spieler);
+					}
 					break;
 					
 		case 3: 	analyseQuerySpielPhase3(board, spieler);
@@ -214,13 +227,15 @@ public class RegelInterpreter {
 	/**
 	 * Diese Methode verwendet einen Trick um die Regeln am Anfang auszuwerten.
 	 */
-	private void analyseQueryBefore(Spieler spieler,Spieler spielerB,  Board board) {
+	private boolean analyseQueryBefore(Spieler spieler,Spieler spielerB,  Board board) {
 		// Switch mit der Spielphase des Spielers
+		boolean back = false;
 		switch (spieler.getSpielPhase()) {
 			case 0: 	// Werte nur Regel 1 aus
 						List<Stein> rueckgabe = this.logikCheck.sucheZweiInGleicherReihe(spieler.getPosiSteine(), board);
 						if(!rueckgabe.isEmpty()) {
 							dataBack.add(rueckgabe.get(0));
+							back = true;
 						}
 						break;
 						
@@ -234,6 +249,7 @@ public class RegelInterpreter {
 									List<Feld> moeglicheZuege = nachbarn.allefreienNachbarn(board);
 									if(!moeglicheZuege.isEmpty()) {
 										dataBack.add(moeglicheZuege.get(0).convertToStein());
+										back = true;
 									} else {
 										System.out.println("Keine Funde!");
 									}
@@ -250,6 +266,7 @@ public class RegelInterpreter {
 										List<Feld> moeglicheZuege = nachbarn.allefreienNachbarn(board);
 										if(!moeglicheZuege.isEmpty()) {
 											dataBack.add(moeglicheZuege.get(0).convertToStein());
+											back = true;
 										} else {
 											System.out.println("Keine Funde!");
 										}
@@ -263,6 +280,7 @@ public class RegelInterpreter {
 						if(!rueckgabe2.isEmpty()) {
 							dataBack.add(rueckgabe2.get(0));
 							dataBack.add(rueckgabe2.get(1));
+							back = true;
 						}
 						break;
 						
@@ -271,5 +289,6 @@ public class RegelInterpreter {
 			
 			default: break;	
 		}
+		return back;
 	}
 }

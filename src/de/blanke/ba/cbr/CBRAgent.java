@@ -94,14 +94,21 @@ public class CBRAgent extends Agent{
 					 ACLMessage aclmsg = new ACLMessage(ACLMessage.INFORM);
 					aclmsg.addReceiver(new AID("Controller Agent", AID.ISLOCALNAME));
 					aclmsg.setContent("Zug beendet");
-					Stein eins = rueckgabe.get(0);
+					Stein eins = null;
 					Stein zwei = null;
 					MessageBoxSteine steine = null;
-					
-					if(rueckgabe.get(1) != null) {
-						 zwei = rueckgabe.get(1);
+					// Fehlerhandling zur Sicherheit
+					if(!rueckgabe.isEmpty() && rueckgabe.size() < 2) {
+						 eins = rueckgabe.get(0);
 						 steine = new MessageBoxSteine(eins, zwei);
+						 logger.info("CBR System: Nur ein Rückgabeparameter!");
+					} else if(!rueckgabe.isEmpty() && rueckgabe.size() >= 2) {
+						
+							eins = rueckgabe.get(0);
+							zwei = rueckgabe.get(1);
+							
 					} else if(rueckgabe.isEmpty()) {
+						
 						System.out.print("Error");
 						logger.error("CBR System: Übertragungsproblem");
 						steine = new MessageBoxSteine(null, null);

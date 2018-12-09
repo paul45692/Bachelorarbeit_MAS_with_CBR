@@ -1,5 +1,7 @@
 package de.blanke.ba.mas;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import de.blanke.ba.model.Spielstein;
@@ -14,12 +16,29 @@ import jade.lang.acl.UnreadableException;
  */
 public class GameDataGetBehaviour  extends OneShotBehaviour{
 	/**
-	 * 
+	 * @return the spielstein
 	 */
+	
 	private static final long serialVersionUID = 1L;
-	private Spielstein spielstein; 
+	private List<Spielstein> spielstein = new ArrayList<>(); 
 	private AgentenOperations operations = new AgentenOperations();
 	private static final Logger logger = Logger.getLogger(GameDataGetBehaviour.class);
+	
+	public List<Spielstein> getSpielstein() {
+		return spielstein;
+	}
+
+	/**
+	 * @param spielstein the spielstein to set
+	 */
+	public void setSpielstein(List<Spielstein> spielstein) {
+		this.spielstein = spielstein;
+	}
+
+	/**
+	 * 
+	 */
+	
 	
 	public GameDataGetBehaviour(ControllerAgent agent) {
 		super(agent);
@@ -36,8 +55,13 @@ public class GameDataGetBehaviour  extends OneShotBehaviour{
 				
 				logger.info("Controller Agent (Auswertung): Eine Nachricht wurde angekommen.");
 				Stein stein = box.getEntferneStein();
-				if(stein != null) {
-					setSpielstein(operations.wandeleSteinzuSpielSteinUm(stein));
+				Stein ziel = box.getZielStein();
+				// Ein Fehler Handling bewusst gesteuert
+				if(stein != null && ziel == null) {
+					spielstein.add(operations.wandeleSteinzuSpielSteinUm(stein));
+				} else if(stein != null && ziel != null) {
+					spielstein.add(operations.wandeleSteinzuSpielSteinUm(stein));
+					spielstein.add(operations.wandeleSteinzuSpielSteinUm(ziel));
 				} else {
 					logger.info("Controller Agent (Auswertung): Ein technisches Problem ist aufgetreten.");
 				}
@@ -54,12 +78,5 @@ public class GameDataGetBehaviour  extends OneShotBehaviour{
 		
 	}
 
-	public Spielstein getSpielstein() {
-		return spielstein;
-	}
-
-	public void setSpielstein(Spielstein spielstein) {
-		this.spielstein = spielstein;
-	}
 
 }
