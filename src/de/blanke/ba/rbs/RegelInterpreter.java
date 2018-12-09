@@ -3,17 +3,15 @@ package de.blanke.ba.rbs;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
-import de.blanke.ba.cbr.CBRAgent;
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.logik.SpielLogikErweChecks;
+import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 /**
- * Diese Klasse stellt die Regel bereit und wertet eine Anfrage an das System aus.
+ * Diese Klasse stellt die Regeln bereit und wertet eine Anfrage an das System aus.
  * @author Paul Blanke
  *
  */
@@ -193,7 +191,6 @@ public class RegelInterpreter {
 				// Solange wie nichts gefunden wurde, suche weiter:)
 				while(board.checkFeld(regel.getIfStein().convertToFeld())) {
 					regel.erzeugeZufällig();
-					System.out.println("Suche!");
 					if(!board.checkFeld(regel.getIfStein().convertToFeld())) {
 						
 						this.dataBack.add(regel.getElseStein());
@@ -227,13 +224,47 @@ public class RegelInterpreter {
 						}
 						break;
 						
-			case 1:		// Pruefe beide Regeln
+			case 1:		for(Regel regel: uebergreifendeRegeln) {
+							if(regel.getIfTeil().contains("eigene Steine")) {
+								List<Stein> getDataBack = this.logikCheck.sucheZweiGleicheReiheUnddrittenSteinDazu(spieler.getPosiSteine(), board);
+								if(!getDataBack.isEmpty()) {
+									Stein stein = getDataBack.get(1);
+									dataBack.add(stein);
+									Feld nachbarn = stein.convertToFeld();
+									List<Feld> moeglicheZuege = nachbarn.allefreienNachbarn(board);
+									if(!moeglicheZuege.isEmpty()) {
+										dataBack.add(moeglicheZuege.get(0).convertToStein());
+									} else {
+										System.out.println("Keine Funde!");
+									}
+								}
+								
+							} else {
+								List<Stein> zweiGegner = this.logikCheck.sucheZweiInGleicherReihe(spielerB.getPosiSteine(), board);
+								if(!zweiGegner.isEmpty()) {
+									List<Stein> result = this.logikCheck.sucheSteinInderNäheUmGegnerZuBlocken(zweiGegner, spieler);
+									if(!result.isEmpty()) {
+										Stein stein = result.get(0);
+										dataBack.add(stein);
+										Feld nachbarn = stein.convertToFeld();
+										List<Feld> moeglicheZuege = nachbarn.allefreienNachbarn(board);
+										if(!moeglicheZuege.isEmpty()) {
+											dataBack.add(moeglicheZuege.get(0).convertToStein());
+										} else {
+											System.out.println("Keine Funde!");
+										}
+									}
+								}
+							}
+						}
+						break;
+						
 			case 2:		List<Stein> rueckgabe2 = this.logikCheck.sucheZweiGleicheReiheUnddrittenSteinDazu(spieler.getPosiSteine(), board);
 						if(!rueckgabe2.isEmpty()) {
 							dataBack.add(rueckgabe2.get(0));
 							dataBack.add(rueckgabe2.get(1));
 						}
-			break;
+						break;
 						
 			case 3:  	// Später
 						break;

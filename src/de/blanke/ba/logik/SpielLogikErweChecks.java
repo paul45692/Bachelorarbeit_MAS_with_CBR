@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Stein;
+import de.blanke.ba.spieler.Spieler;
 
 /**
  * Diese Klasse stellt Methoden zur Verfügung,
@@ -105,4 +106,21 @@ public class SpielLogikErweChecks {
 		return rueckgabe;
 	}
 	
+	/**
+	 * Diese Methode sucht einen Stein in im selben Ring heraus
+	 * @param data
+	 * @param spieler
+	 * @return Eine Liste aller Steine im selben Ring
+	 */
+	public List<Stein> sucheSteinInderNäheUmGegnerZuBlocken(List<Stein> data, Spieler spieler) {
+		List<Stein> rueckgabe = new ArrayList<>();
+		Stein toSearch = data.get(0);
+		for(Stein s: spieler.getPosiSteine()) {
+			if(toSearch.getRing() == s.getRing()) {
+				rueckgabe.add(s);
+				
+			}
+		}
+		return rueckgabe;
+	}
 }

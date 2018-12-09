@@ -145,7 +145,7 @@ public class RegelSet {
 	}
 
 	private void setUpUeberGreifendeRegelnAuf() {
-		Regel eins = new Regel("Zwei  eigenen Steine in einer Reihe", "Einen Stein dazu");
+		Regel eins = new Regel("Zwei  eigene Steine in einer Reihe", "Einen Stein dazu");
 		ubergreifendeRegeln.add(eins);
 		Regel zwei = new Regel("Zwei gegenerische Steine in einer Reihe", "Einen Stein dazu");
 		ubergreifendeRegeln.add(zwei);

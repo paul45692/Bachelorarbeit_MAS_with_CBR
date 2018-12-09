@@ -3,8 +3,6 @@ package de.blanke.ba.mas;
 import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
-import de.blanke.ba.cbr.CBRAgent;
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
