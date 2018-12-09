@@ -23,8 +23,8 @@ import de.dfki.mycbr.core.similarity.Similarity;
  */
 public class CBR_Engine {
 	
-	private String projectPfad = this.getClass().getResource("/res/*").toString();
-	private String projectName = "mühle.prj";
+	private String projectPfad = "C:\\Users\\paul4\\git\\bachelorarbeitAgentenCBR\\src\\res\\";
+	private String projectName = "mühle_spiel.prj";
 	
 	
 	
@@ -35,13 +35,13 @@ public class CBR_Engine {
 			try {
 				p = new Project(projectPfad + projectName);
 				Thread.sleep(200);
-				System.out.println(" -> CBR System wird geladen ....");
+				
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			System.out.println("Das System wurde geladen!");
 		
 		return p;
 	}
