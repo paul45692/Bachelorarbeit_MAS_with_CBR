@@ -25,6 +25,7 @@ import de.blanke.ba.mas.MessageBox;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.rbs.RBSAgent;
 import de.blanke.ba.spieler.Spieler;
+import de.blanke.ba.testszenarien.SetUpTestSzenarien;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -65,7 +66,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.spielerB = new Spieler(Color.BLUE, "Spieler B");
 		PropertyConfigurator.configure(SpielbrettMAS.class.getResource("log4j.info"));
 		logger.info("Spiel (MAS): Variate mit MAS ! Der Spielverlauf wird eher weniger geloggt!");
-		
+		this.prepareTestszenario(0);
 		try {
 			bi = ImageIO.read(this.getClass().getResource("/res/Muehlefeld.jpg"));
 		} catch (IOException e) {
@@ -418,5 +419,34 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		
 		
 	}
-	
+	/**
+	 * Diese Methode steuert den Einsatz von vorbereiten Spielszenen, die untersucht werden können.
+	 * @param szene
+	 */
+	private void prepareTestszenario(int szene) {
+		SetUpTestSzenarien setUp = new SetUpTestSzenarien();		
+		 switch(szene) {
+		 case 0:  // tue nichts -> Standartszenario
+			 		break;
+		 case 1: 	this.spielsteine = setUp.createSzenario02(spielerA, spielerB, spielController.getBoard());
+		 			this.spielerA = setUp.getSpielerA();
+		 			this.spielerB = setUp.getSpielerB();
+		 			this.spielController.setBoard(setUp.getVorbereitet());
+		 			System.out.print("Das zweite Testszenario wurde aktiviert!");
+		 			logger.info("Das zweite Testszenario wurde aktiviert!");
+		 			break;
+		 			
+		 case 2:	this.spielsteine = setUp.createSzenario03(spielerA, spielerB, spielController.getBoard());
+					this.spielerA = setUp.getSpielerA();
+					this.spielerB = setUp.getSpielerB();
+					this.spielController.setBoard(setUp.getVorbereitet());
+					System.out.print("Das dritte Testszenario wurde aktiviert!");
+		 			logger.info("Das dritte Testszenario wurde aktiviert!");
+					break;
+		 case 3:
+		default: break;	 
+		 }
+		
+		
+	}
 }
