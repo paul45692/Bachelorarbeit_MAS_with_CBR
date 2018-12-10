@@ -57,8 +57,7 @@ public class CBRController {
 			for(Instance ini:instances) {
 				casebase.addCase(ini);
 			}
-			logger.info("CBR System: Laden beendent: Es sind " + casebase.getCases().size()+  " vorhanden (Initalisierungsphase");
-			System.out.println("Laden beendent: Es sind " + casebase.getCases().size()+  " vorhanden (Initalisierungsphase");
+			logger.info("CBR System: Laden beendent: Es sind " + casebase.getCases().size()+  " vorhanden (Initalisierungsphase)");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,16 +102,17 @@ public class CBRController {
 			Instance query = retrieval.getQueryInstance();
 			this.learnProblem = query;
 			query.addAttribute("Spielphase", spielphase);
-			query.addAttribute("Anzahl der eigenen Spielsteine", anzahlDerEigenenSpielsteine);
-			query.addAttribute("Spielsteine Ring 1", spielsteineR1);
-			query.addAttribute("Spielsteine R2", spielsteineR2);
-			query.addAttribute("Spielsteine R3", spielsteineR3);
+			query.addAttribute("Anzahl_d_eigenen_Spielsteine", anzahlDerEigenenSpielsteine);
+			query.addAttribute("Spielsteine_Ring_1", spielsteineR1);
+			query.addAttribute("Spielsteine_Ring_2", spielsteineR2);
+			query.addAttribute("Spielsteine_Ring_3", spielsteineR3);
 			query.addAttribute("Mühlen", mühlen);
 			retrieval.start();
 			logger.info("CBR Query execute with: " + spielphase + ", "+ anzahlDerEigenenSpielsteine + ", "
 					+ spielsteineR1 + ", "+ spielsteineR2 + ", " + spielsteineR3 + ","+ mühlen);
-			 resultSet = this.analyseResultQuery(retrieval.getResult(), board, spieler);
-			
+			resultSet = this.analyseResultQuery(retrieval.getResult(), board, spieler);
+			List<Pair<Instance, Similarity>> result = retrieval.getResult();
+			System.out.println("Ergebnis" + result.get(0).getFirst().getName());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,8 +130,8 @@ public class CBRController {
 				+ result.get(0).getSecond().getValue() );
 		List<Integer> dataResult = new ArrayList<>();
 		boolean lösungAccept = false;
-		IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld A");
-		IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld B");
+		IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungfeld_Start");
+		IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld_Ziel");
 		Instance adaptEins = concept.getInstance(result.get(0).getFirst().getName());
 		Instance selectForResult = null;
 		
@@ -140,7 +140,6 @@ public class CBRController {
 			// Durchlaufe alle 5 Fälle
 			for(int i = 0; i < 5; i++) {
 				Instance evaluateResult = concept.getInstance(result.get(i).getFirst().getName());
-				
 				if(evaluateResult != null) {
 					int lösungfeldA = Integer.parseInt(evaluateResult.getAttForDesc(lösungADesc).getValueAsString());
 					int lösungfeldB = Integer.parseInt(evaluateResult.getAttForDesc(lösungBDesc).getValueAsString());

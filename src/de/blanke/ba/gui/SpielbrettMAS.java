@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -230,6 +231,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		} else if(player == 0)  {
 			
 			Spielstein spielstein = this.executeSpielZug(spielerA.copyInstance(), spielerB.copyInstance()).get(0);
+			
 			int xCord = spielstein.getX();
 			int yCord = spielstein.getY();
 			spielstein.setColor(Color.WHITE);
@@ -419,6 +421,8 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		
 		
 	}
+	
+	
 	/**
 	 * Diese Methode steuert den Einsatz von vorbereiten Spielszenen, die untersucht werden können.
 	 * @param szene

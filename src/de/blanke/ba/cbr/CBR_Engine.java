@@ -1,6 +1,5 @@
 package de.blanke.ba.cbr;
 
-
 import de.dfki.mycbr.core.Project;
 /**
  * Diese Klasse stellt die notwendigen Daten bereit,
@@ -17,18 +16,13 @@ public class CBR_Engine {
 	
 	public Project loadCBRProject() {
 			Project  p = null;
-			
-			
 			try {
 				p = new Project(projectPfad + projectName);
 				Thread.sleep(200);
-				
-				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("Das System wurde geladen!");
 		
 		return p;
 	}
