@@ -7,9 +7,8 @@ import de.blanke.ba.spieler.Spieler;
 
 public class CBR_Test {
 	
-		
-		
 		public static void main(String[]args) {
+			
 			 CBRController control = new CBRController();
 			 Spieler spielerA = new Spieler(Color.WHITE, "Spieler A");
 			 Board board = new Board();
