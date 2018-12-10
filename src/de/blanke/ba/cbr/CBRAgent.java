@@ -67,7 +67,6 @@ public class CBRAgent extends Agent{
 					try {
 						box = (MessageBox) msg.getContentObject();
 						// Hole mir die Daten raus
-						System.out.println("Test: Integrationspunkt 1");
 						logger.info("CBR-System: Eine Nachricht ist eingetroffen!");
 						
 					} catch (UnreadableException e) {
@@ -87,7 +86,7 @@ public class CBRAgent extends Agent{
 						System.out.println("Error-AgentenEbene: Übertragungsproblem !!");
 						logger.error("CBR System: Übertragungsproblem");
 					}
-					System.out.println("Test: Integrationspunkt 2");
+					
 					logger.info("CBR-System: Eine Nachricht wurde erzeugt und wird versendet");
 					box.cleartheBox();
 					// Rücktransport

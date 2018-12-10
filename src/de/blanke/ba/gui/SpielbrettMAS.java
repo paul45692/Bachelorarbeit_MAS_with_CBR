@@ -398,7 +398,11 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	private List<Spielstein> executeSpielZug(Spieler spieler, Spieler spielerB) {
 		logger.info("Spiel(MAS): Ein Spielzug beginnt!");
 		MessageBox box  = new MessageBox(spieler, spielerB, spielController.getBoard());
-		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, true);
+		boolean changeAgent = false;
+		if(spieler.getName().contains("A")) {
+			changeAgent = true;
+		} 
+		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, changeAgent);
 		this.controllerMAS.addBehaviour(spielZug);
 		try {
 			Thread.sleep(500);

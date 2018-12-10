@@ -22,15 +22,7 @@ public class GameBehaviour  extends OneShotBehaviour{
 	
 	private MessageBox box;
 	private boolean rbsAmZug;
-	private boolean finished;
-	
-	public boolean getFinished() {
-		return finished;
-	}
 
-	public void setFinished(boolean finished) {
-		this.finished = finished;
-	}
 
 	public GameBehaviour(ControllerAgent agent, MessageBox box, boolean rbs) {
 		super(agent);
