@@ -3,10 +3,8 @@ package de.blanke.ba.cbr;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.AgentenOperations;
 import de.blanke.ba.mas.MessageBox;
@@ -31,7 +29,7 @@ public class CBRAgent extends Agent{
 	private static final long serialVersionUID = 1L;
 	// CBR Controller
 	// private CBRController interpreter = new CBRController();
-	private CBRController interpreter = null;
+	private CBRController interpreter = new CBRController();
 	/**
 	 * Für das Entkopplung der Logik vom Agenten wird an dieser Stelle
 	 * eine Instanz @AgentenOperations gebraucht.
@@ -113,14 +111,13 @@ public class CBRAgent extends Agent{
 						steine = new MessageBoxSteine(null, null);
 					}
 					try {
-						msg.setContentObject(steine);
+						aclmsg.setContentObject(steine);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					System.out.println("Test: Integrationspunkt 3");
-					send(msg);
-					System.out.println("Test: Integrationspunkt 4: versendet");
+					send(aclmsg);
+					msg =  null;
 					logger.info("CBR-System: Aufgabe wurde abgeschlossen!");
 					
 					

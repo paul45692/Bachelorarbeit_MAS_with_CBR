@@ -264,7 +264,7 @@ public class MuehleDecting {
 		boolean rueckgabe = false;
 		List<Mühle> vorh_Data = spieler.getVorhandeneMuehlen();
 		// Wenn keine Mühlen vorhanden sind, dannn füge die erste dazu
-		if(vorh_Data.size() == 0 && tempGefunden.size() > 0) {
+		if(vorh_Data.isEmpty() && tempGefunden.size() > 0) {
 			
 			spieler.addMuehle(tempGefunden.get(0));
 			rueckgabe = true;
@@ -287,7 +287,7 @@ public class MuehleDecting {
 					rueckgabe = true;
 				}
 				
-			} else if(tempGefunden.size() == 0 && vorh_Data.size()> 0) {
+			} else if(tempGefunden.isEmpty() && vorh_Data.size()> 0) {
 				spieler.getVorhandeneMuehlen().clear();
 			} 
 			

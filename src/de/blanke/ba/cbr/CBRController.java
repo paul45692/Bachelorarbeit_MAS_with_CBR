@@ -112,13 +112,15 @@ public class CBRController {
 					+ spielsteineR1 + ", "+ spielsteineR2 + ", " + spielsteineR3 + ","+ mühlen);
 			resultSet = this.analyseResultQuery(retrieval.getResult(), board, spieler);
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
+			System.out.println();
 			System.out.println("Ergebnis" + result.get(0).getFirst().getName());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return resultSet;
+		List<Integer> test = new ArrayList<>();
+		test.add(3);
+		return test;
 	}
 	/**
 	 * Diese Methode bereitet das ResultSet für die spätere Verarbeitung vor.
