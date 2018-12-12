@@ -158,7 +158,7 @@ public class MuehleDecting {
 				counter = 0;
 			
 			
-		} else if(spielsteine.size() >= 3) {
+		} else if(alleRing3.size() >= 3) {
 			
 				for(Stein check: posiRing3A) {
 					for(Stein s:alleRing3) {
@@ -220,7 +220,7 @@ public class MuehleDecting {
 				
 				for(Stein check: posiRing4B) {
 					for(Stein s:spielsteine) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(13));
@@ -231,7 +231,7 @@ public class MuehleDecting {
 				
 				for(Stein check: posiRing4C) {
 					for(Stein s:spielsteine) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(14));
@@ -242,7 +242,7 @@ public class MuehleDecting {
 				
 				for(Stein check: posiRing4D) {
 					for(Stein s: spielsteine) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(15));
@@ -264,7 +264,7 @@ public class MuehleDecting {
 		boolean rueckgabe = false;
 		List<Mühle> vorh_Data = spieler.getVorhandeneMuehlen();
 		// Wenn keine Mühlen vorhanden sind, dannn füge die erste dazu
-		if(vorh_Data.isEmpty() && tempGefunden.size() > 0) {
+		if(vorh_Data.isEmpty() && !tempGefunden.isEmpty()) {
 			
 			spieler.addMuehle(tempGefunden.get(0));
 			rueckgabe = true;

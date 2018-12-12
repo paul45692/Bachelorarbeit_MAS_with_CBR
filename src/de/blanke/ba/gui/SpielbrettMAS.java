@@ -151,9 +151,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						}
 				
 			case 1:
-						/**
-						 * Dieses Feld muss noch angepasst werden.
-						 */
 						// zweite Spielphase(Steine auf Nachbarfelder)
 						if(zugwechsel) {
 							
@@ -406,7 +403,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.controllerMAS.addBehaviour(spielZug);
 		try {
 			Thread.sleep(500);
-			logger.info("Spiel(MAS): Warten...");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -415,7 +411,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.controllerMAS.addBehaviour(data);
 		try {
 			Thread.sleep(500);
-			logger.info("Spiel(MAS): Warten...");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
