@@ -110,10 +110,12 @@ public class CBRController {
 			retrieval.start();
 			logger.info("CBR Query execute with: " + spielphase + ", "+ anzahlDerEigenenSpielsteine + ", "
 					+ spielsteineR1 + ", "+ spielsteineR2 + ", " + spielsteineR3 + ","+ mühlen);
-			resultSet = this.analyseResultQuery(retrieval.getResult(), board, spieler);
+			//resultSet = this.analyseResultQuery(retrieval.getResult(), board, spieler);
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
 			System.out.println();
 			System.out.println("Ergebnis" + result.get(0).getFirst().getName());
+			System.out.println("Ergebnis" + result.get(1).getFirst().getName());
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
