@@ -11,9 +11,6 @@ public class CBR_Test {
 			
 			 CBRController control = new CBRController();
 			 Spieler spielerA = new Spieler(Color.WHITE, "Spieler A");
-			 spielerA.setAnzahlSteine(7);
-			 spielerA.setSpielPhase(1);
-			 
 			 Board board = new Board();
 			 List<Integer> data = control.executeQuery(board, spielerA);
 			 System.out.println("Ergebnis:" + data.get(0));

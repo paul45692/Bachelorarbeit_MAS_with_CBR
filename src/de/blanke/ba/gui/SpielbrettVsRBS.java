@@ -10,10 +10,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
 import de.blanke.ba.cbr.CBRAgent;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
@@ -23,19 +26,14 @@ import de.blanke.ba.mas.MessageBox;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.rbs.RBSAgent;
 import de.blanke.ba.spieler.Spieler;
-import de.blanke.ba.testszenarien.SetUpTestSzenarien;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
-/**
- * Diese Klasse repräsentiert den Versuch das MAS an die GUI anzubinden.
- * @author Paul Blanke
- *
- */
-public class SpielbrettMAS extends JPanel implements MouseListener {
+
+public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 	
 	private static final long serialVersionUID = 1L;
 	// Grafikeinstellungen
@@ -50,12 +48,10 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	private int playerA = 0;
 	private Spieler spielerB;
 	private int playerB = 1;
-	private int player = 0;
 	private boolean spielEnde = false;
 	private static final Logger logger = Logger.getLogger(SpielbrettMAS.class);
 	
-	
-	public SpielbrettMAS() {
+	public SpielbrettVsRBS() {
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
 		this.spielController = new SpielController();
@@ -107,118 +103,17 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	 * Diese Methode stellt eine modifizierte Version aus dem Spielbrett dar.
 	 */
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent me) {
 
-	boolean zugwechsel = false;
+		boolean zugwechsel = false;
 		
 		List<Spielstein> zugDoppel = new ArrayList<>();
 		// Checke ob das Spiel schon zu Ende ist.
 		// pruefeSpielEnde();
 		
-		if(player == 1) {
-			Spielstein spielstein = this.executeSpielZug(spielerB.copyInstance(), spielerA.copyInstance()).get(0);
-			spielstein.setColor(Color.BLUE);
-			int xCord = spielstein.getX();
-			int yCord = spielstein.getY();
-			
-			// Wechsele die Spielphasen durch
-			switch(spielerB.getSpielPhase()) {
-			
-			case 0:
-						// Erste Spielphase (Steine frei setzen)
-						if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein)) {
-							spielsteine.add(spielstein);
-							player = playerA;
-							if(spielController.pruefeAufMuehle(spielerB)) {
-								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								player = playerB;
-								spielerB.setTempspielPhase(spielerB.getSpielPhase());
-								spielerB.setSpielPhase(3);
-								
-							} else {
-								ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-								System.out.println("Der Spieler A (Weiss) ist am Zug!");
-								int ausgabe = 9 - spielerA.getAnzahlSteine();
-								System.out.println("Info: Der Spieler" + spielerA.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
-							}
-							break;
-						}
-				
-			case 1:
-						// zweite Spielphase(Steine auf Nachbarfelder)
-						if(zugwechsel) {
-							
-							Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
-							spielsteine.remove(stein);
-							zugDoppel.add(stein);
-							zugwechsel =! zugwechsel;
-							break;
-						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
-							spielsteine.add(spielstein);
-							player = playerA;
-							zugwechsel =! zugwechsel;
-							if(spielController.pruefeAufMuehle(spielerB)) {
-								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								player = playerB;
-								spielerB.setTempspielPhase(spielerB.getSpielPhase());
-								spielerB.setSpielPhase(3);
-								
-							} else {
-								ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-								System.out.println("Der Spieler A (Weiss) ist am Zug!");
-								
-							}
-							break;
-						} 
-						
-					
-			case 2:		if(zugwechsel) {
-				
-							Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
-							spielsteine.remove(stein);
-							zugDoppel.add(stein);
-							zugwechsel =! zugwechsel;
-							break;
-						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
-							spielsteine.add(spielstein);
-							player = playerA;
-							zugwechsel =! zugwechsel;
-							if(spielController.pruefeAufMuehle(spielerB)) {
-								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								player = playerB;
-								spielerB.setTempspielPhase(spielerB.getSpielPhase());
-								spielerB.setSpielPhase(3);
-								
-							} else {
-								ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-								System.out.println("Der Spieler A (Weiss) ist am Zug!");
-							}
-							break;
-						} 
-			case 3:		
-						// Mühle Spielphase! Gegener Stein darf geworfen werden.
-						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerA);
-						spielsteine.remove(stein);
-						// Der Spieler muss wieder in die Spielphase zurück
-						player  = playerA;
-						spielerB.setSpielPhase(spielerB.getTempspielPhase());
-						ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-						System.out.println("Der Spieler A (Weiss) ist nun am Zug!"); 
-						break;
-			default: 						
-						break;	
-				
-			}
-			
-		
-			
-		} else if(player == 0)  {
-			
-			Spielstein spielstein = this.executeSpielZug(spielerA.copyInstance(), spielerB.copyInstance()).get(0);
-			
-			int xCord = spielstein.getX();
-			int yCord = spielstein.getY();
-			spielstein.setColor(Color.WHITE);
+			int xCord = me.getX();
+			int yCord = me.getY();
+			Spielstein spielstein = new Spielstein(xCord, yCord, Color.WHITE);
 			
 			
 			
@@ -227,10 +122,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			case 0:
 						if(spielController.setSpielStein(xCord, yCord, spielerA, spielstein)) {
 							spielsteine.add(spielstein);
-							player = playerB;
+							
 							if(spielController.pruefeAufMuehle(spielerA)) {
 								System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								player = playerA;
 								spielerA.setTempspielPhase(spielerA.getSpielPhase());
 								spielerA.setSpielPhase(3);
 								
@@ -239,6 +133,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 								System.out.println("Der Spieler B (Blau) ist am Zug!");
 								int ausgabe = 9 - spielerB.getAnzahlSteine();
 								System.out.println("Info: Der Spieler" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
+								this.führeAgentenZugAus();
 							}
 							
 						}
@@ -254,11 +149,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
 							
 							spielsteine.add(spielstein);
-							player = playerB;
 							zugwechsel =! zugwechsel;
 							if(spielController.pruefeAufMuehle(spielerA)) {
 								System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								player = playerA;
 								spielerA.setTempspielPhase(spielerA.getSpielPhase());
 								spielerA.setSpielPhase(3);
 								
@@ -277,12 +170,11 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							break;
 						} else if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein))  {
 							spielsteine.add(spielstein);
-							player = playerB;
+				
 							zugwechsel =! zugwechsel;
 							
 							if(spielController.pruefeAufMuehle(spielerA)) {
 								System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								player = playerA;
 								spielerA.setTempspielPhase(spielerA.getSpielPhase());
 								spielerA.setSpielPhase(3);
 								
@@ -300,7 +192,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			case 3:		Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
 						spielsteine.remove(stein);
 						// Der Spieler muss wieder in die Spielphase zurück
-						player = playerB;
 						spielerA.setSpielPhase(spielerA.getTempspielPhase());
 						ausgabe = "Der Spieler B (Blau) ist am Zug!";
 						System.out.println("Der Spieler B (Blau) ist am Zug!"); 
@@ -310,9 +201,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;	
 				
 			}
-			
-		}	
 		
+			
+	
 	}	
 
 	@Override
@@ -387,9 +278,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		logger.info("Spiel(MAS): Ein Spielzug beginnt!");
 		MessageBox box  = new MessageBox(spieler, spielerB, spielController.getBoard());
 		boolean changeAgent = false;
-		if(spieler.getName().contains("A")) {
-			changeAgent = true;
-		} 
+		
 		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, changeAgent);
 		this.controllerMAS.addBehaviour(spielZug);
 		try {
@@ -422,4 +311,42 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			this.spielEnde = true;
 		}
 	}
+	
+	private void führeAgentenZugAus() {
+		
+		List<Spielstein> data = this.executeSpielZug(this.spielerB, spielerA);
+		
+		switch(this.spielerB.getSpielPhase()) {
+		
+			case 0:  Spielstein spielstein = data.get(0);	
+					int xCord = spielstein.getX();
+					int yCord = spielstein.getY();
+					
+				
+					if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein)) {
+							spielstein.setColor(Color.BLUE);
+							spielsteine.add(spielstein);
+	
+								if(spielController.pruefeAufMuehle(spielerB)) {
+									System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+									spielerB.setTempspielPhase(spielerB.getSpielPhase());
+									spielerB.setSpielPhase(3);
+					
+								} else {
+									ausgabe = "Der Spieler A (weiss) ist am Zug!";
+									System.out.println("Der Spieler A (weiss) ist am Zug!");
+									int ausgabe = 9 - spielerA.getAnzahlSteine();
+									System.out.println("Info: Der Spieler" + spielerA.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
+								}
+						}
+					System.out.println("Der Spielzug wurde ausgeführt:)");
+						break;	
+				
+				
+			case 1: 	break;
+			case 2:		break;
+			case 3: 	break;	
+		}
+	}
+	
 }

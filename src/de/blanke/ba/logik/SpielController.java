@@ -87,6 +87,10 @@ public class SpielController {
 						spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 						Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
 						spieler.setzeSpielstein(stein);
+						
+						if(spieler.getAnzahlSteine() == 3) {
+							spieler.setSpielPhase(2);
+						}
 				
 						return true;
 				
@@ -98,7 +102,8 @@ public class SpielController {
 				} else {
 					return true;
 				}
-			
+				
+				
 			
 		} else if(spieler.getSpielPhase() == 2)  {
 			if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {

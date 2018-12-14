@@ -23,8 +23,8 @@ public class GameLoop extends JFrame implements ActionListener {
 	private Spielbrett spielbrett;
 	// MAS Mühle
 	private SpielbrettMAS spielbrettMAS;
-	boolean mas = false;
-	
+	private SpielbrettVsRBS spielbrettRBS;
+	int mas = 0;
 	private JButton startButton = new JButton("Neues Spiel");
 	private JButton endeButton = new JButton("Ende!");
 	private JButton pausedButton = new JButton("Pause");
@@ -44,7 +44,7 @@ public class GameLoop extends JFrame implements ActionListener {
 	/**
 	 * Konstruktor
 	 */
-	public GameLoop(boolean mas) {
+	public GameLoop(int mas) {
 		
 		super("Bachelorarbeit-Mühle mit KI");
 		Container cp = getContentPane();
@@ -55,15 +55,27 @@ public class GameLoop extends JFrame implements ActionListener {
 		p.add(pausedButton);
 		p.add(endeButton);
 		this.mas = mas;
-		if(mas) {
-			this.spielbrett = null;
-			this.spielbrettMAS = new SpielbrettMAS();
-			cp.add(spielbrettMAS, BorderLayout.CENTER);
-		} else {
-			this.spielbrett = new Spielbrett();
-			this.spielbrettMAS = null;
-			cp.add(spielbrett, BorderLayout.CENTER);
+		switch(mas) {
+		case 0:			this.spielbrett = new Spielbrett();
+						this.spielbrettMAS = null;
+						this.spielbrettRBS = null;
+						cp.add(spielbrett, BorderLayout.CENTER);
+						break;
+						
+		case 1:     	this.spielbrett = null;
+						this.spielbrettMAS = new SpielbrettMAS();
+						this.spielbrettRBS = null;
+						cp.add(spielbrettMAS, BorderLayout.CENTER);
+						break;
+			
+		case 2:         this.spielbrett = null;
+						this.spielbrettMAS = null;
+						this.spielbrettRBS = new SpielbrettVsRBS();
+						cp.add(spielbrettRBS, BorderLayout.CENTER);
+						break;
+		default:        break;
 		}
+		
 		cp.add(textLabel, BorderLayout.NORTH);
 		cp.add(p, BorderLayout.SOUTH);
 		setSize(800, 800);
@@ -181,23 +193,35 @@ public class GameLoop extends JFrame implements ActionListener {
 	 * Diese Methode zeichnen ein Update auf das Spielfeld
 	 */
 	private void updateGame() {
-		if(mas) {
-			spielbrettMAS.update();
-			this.textLabel.setText(spielbrettMAS.getAusgabe());
-		} else {
-			spielbrett.update();
-		}
+		switch(mas) {
+		case 0:		spielbrett.update();
+					break;
+					
+		case 1:     spielbrettMAS.update();
+					this.textLabel.setText(spielbrettMAS.getAusgabe());
+					break;	
+					
+		case 2:     spielbrettRBS.update(); 
+					this.textLabel.setText(spielbrettRBS.getAusgabe());
+					break;
 		 
-		 
+		} 
 	}
 	
 	private void drawGame(float interpolation) {
-		if(mas) {
-			spielbrettMAS.repaint();
-			this.textLabel.setText(spielbrettMAS.getAusgabe());
-			this.spielEnde = spielbrettMAS.isSpielEnde();
-		} else {
-			spielbrett.repaint();
+		switch(mas) {
+		case 0:	  	this.spielbrett.repaint();
+					break;
+					
+		case 1:     this.spielbrettMAS.repaint();
+					this.textLabel.setText(spielbrettMAS.getAusgabe());
+					this.spielEnde = spielbrettMAS.isSpielEnde();
+					break; 
+					
+		case 2:     this.spielbrettRBS.repaint();
+					this.textLabel.setText(spielbrettRBS.getAusgabe());
+					this.spielEnde = spielbrettRBS.isSpielEnde();
+					break; 	
 		}
 	}
 

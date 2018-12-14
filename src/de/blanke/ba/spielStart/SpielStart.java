@@ -9,7 +9,7 @@ import de.blanke.ba.gui.GameLoop;
 public class SpielStart {
 	public static void main(String[] args) {
 		boolean masSpiel = true;      
-		GameLoop loop = new GameLoop(masSpiel);
+		GameLoop loop = new GameLoop(2);
 		loop.setVisible(true);	
 	}
 
