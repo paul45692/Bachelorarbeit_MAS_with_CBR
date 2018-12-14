@@ -12,11 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import de.blanke.ba.cbr.CBRAgent;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
@@ -56,6 +53,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	private Spieler spielerB;
 	private int playerB = 1;
 	private int player = 0;
+	private boolean spielEnde = false;
 	private static final Logger logger = Logger.getLogger(SpielbrettMAS.class);
 	
 	
@@ -67,14 +65,12 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.spielerB = new Spieler(Color.BLUE, "Spieler B");
 		PropertyConfigurator.configure(SpielbrettMAS.class.getResource("log4j.info"));
 		logger.info("Spiel (MAS): Variate mit MAS ! Der Spielverlauf wird eher weniger geloggt!");
-		this.prepareTestszenario(0);
+	//	this.prepareTestszenario(0);
 		try {
 			bi = ImageIO.read(this.getClass().getResource("/res/Muehlefeld.jpg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 		this.addMouseListener(this);
 		this.setVisible(true);
 		this.setUpMAS();
@@ -175,10 +171,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 								
 							}
 							break;
-						} else {
-							logger.error("Ein Fehler wurde gemacht");
-							break;
-						}
+						} 
 						
 					
 			case 2:		if(zugwechsel) {
@@ -203,11 +196,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 								System.out.println("Der Spieler A (Weiss) ist am Zug!");
 							}
 							break;
-						} else {
-							logger.info("Spiel(MAS): Ein Fehler wurde gemacht auf dieser Ebene.");
-							System.out.println("Ein Fehler wurde gemacht");
-							break;
-						}
+						} 
 			case 3:		
 						// Mühle Spielphase! Gegener Stein darf geworfen werden.
 						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerA);
@@ -279,10 +268,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 								ausgabe = "Der Spieler B (Blau) ist am Zug!";
 								System.out.println("Der Spieler B (Blau) ist am Zug!");
 							}
-							break;
-						} else {
-							System.out.println("Ein Fehler wurde gemacht");
-							logger.info("Spiel(MAS): Ein Fehler wurde gemacht auf dieser Ebene.");
 							break;
 						}
 			
@@ -364,6 +349,14 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.ausgabe = ausgabe;
 	}
 	
+	public boolean isSpielEnde() {
+		return spielEnde;
+	}
+
+	public void setSpielEnde(boolean spielEnde) {
+		this.spielEnde = spielEnde;
+	}
+
 	private void setUpMAS() {
 		Runtime runtime = Runtime.instance();
 	       Profile profile = new ProfileImpl();
@@ -402,7 +395,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, changeAgent);
 		this.controllerMAS.addBehaviour(spielZug);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -410,46 +403,25 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		 GameDataGetBehaviour data = new GameDataGetBehaviour(this.controllerMAS);
 		this.controllerMAS.addBehaviour(data);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		logger.info("Spielzug(MAS): Zug angefangen- Daten Eingang");
 		return data.getSpielstein();
-		
-		
 	}
-	
-	
 	/**
-	 * Diese Methode steuert den Einsatz von vorbereiten Spielszenen, die untersucht werden können.
-	 * @param szene
+	 * Diese Methode überprüft das Spielende.
 	 */
-	private void prepareTestszenario(int szene) {
-		SetUpTestSzenarien setUp = new SetUpTestSzenarien();		
-		 switch(szene) {
-		 case 0:  // tue nichts -> Standartszenario
-			 		break;
-		 case 1: 	this.spielsteine = setUp.createSzenario02(spielerA, spielerB, spielController.getBoard());
-		 			this.spielerA = setUp.getSpielerA();
-		 			this.spielerB = setUp.getSpielerB();
-		 			this.spielController.setBoard(setUp.getVorbereitet());
-		 			System.out.print("Das zweite Testszenario wurde aktiviert!");
-		 			logger.info("Das zweite Testszenario wurde aktiviert!");
-		 			break;
-		 			
-		 case 2:	this.spielsteine = setUp.createSzenario03(spielerA, spielerB, spielController.getBoard());
-					this.spielerA = setUp.getSpielerA();
-					this.spielerB = setUp.getSpielerB();
-					this.spielController.setBoard(setUp.getVorbereitet());
-					System.out.print("Das dritte Testszenario wurde aktiviert!");
-		 			logger.info("Das dritte Testszenario wurde aktiviert!");
-					break;
-		 case 3:
-		default: break;	 
-		 }
-		
-		
+	private void pruefeAufSpielEnde() {
+		if(spielerA.getAnzahlSteine() == 2 && spielerA.getSpielPhase() == 3) {
+			System.out.println("Spieler B gewinnt das Spiel!");
+			this.spielEnde = true;
+			System.out.println("Spieler B gewinnt das Spiel!");
+		} else if(spielerB.getAnzahlSteine() == 2 && spielerB.getSpielPhase() == 3) {
+			System.out.println("Spieler A gewinnt das Spiel!");
+			this.spielEnde = true;
+		}
 	}
 }

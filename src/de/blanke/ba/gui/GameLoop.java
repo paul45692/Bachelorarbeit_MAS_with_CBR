@@ -47,8 +47,6 @@ public class GameLoop extends JFrame implements ActionListener {
 	public GameLoop(boolean mas) {
 		
 		super("Bachelorarbeit-Mühle mit KI");
-		
-		
 		Container cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 		JPanel p = new JPanel();
@@ -56,9 +54,6 @@ public class GameLoop extends JFrame implements ActionListener {
 		p.add(startButton);
 		p.add(pausedButton);
 		p.add(endeButton);
-		
-		// Könnte man durch Spielfeld ersetzen?
-		
 		this.mas = mas;
 		if(mas) {
 			this.spielbrett = null;
@@ -200,6 +195,7 @@ public class GameLoop extends JFrame implements ActionListener {
 		if(mas) {
 			spielbrettMAS.repaint();
 			this.textLabel.setText(spielbrettMAS.getAusgabe());
+			this.spielEnde = spielbrettMAS.isSpielEnde();
 		} else {
 			spielbrett.repaint();
 		}
