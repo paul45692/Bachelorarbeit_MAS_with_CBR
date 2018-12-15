@@ -79,7 +79,7 @@ public class CBRController {
 		// Werte die Daten aus:
 		int spielphase = spieler.getSpielPhase();
 		int anzahlDerEigenenSpielsteine = spieler.getAnzahlSteine();
-		int mühlen = spieler.getVorhandeneMuehlen().size();
+		int mühlen = spieler.getAnzahlMühlen();
 		int spielsteineR1 = 0;
 		int	spielsteineR2 = 0;
 		int spielsteineR3 = 0;
@@ -112,9 +112,10 @@ public class CBRController {
 					+ spielsteineR1 + ", "+ spielsteineR2 + ", " + spielsteineR3 + ","+ mühlen);
 			//resultSet = this.analyseResultQuery(retrieval.getResult(), board, spieler);
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
-			System.out.println();
-			System.out.println("Ergebnis" + result.get(0).getFirst().getName());
-			System.out.println("Ergebnis" + result.get(1).getFirst().getName());
+			
+			
+		//	System.out.println("Ergebnis" + result.get(0).getFirst().getName());
+		//	System.out.println("Ergebnis" + result.get(1).getFirst().getName());
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

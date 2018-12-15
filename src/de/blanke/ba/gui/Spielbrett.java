@@ -365,7 +365,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 			this.spielEnde = true;
 			System.out.println("!! Der Spieler " + spielerA.getName() + "  gewinnt!");
 			logger.info("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
-		}
+		} 
 	}
 	
 	

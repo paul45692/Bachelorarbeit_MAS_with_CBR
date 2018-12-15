@@ -94,11 +94,22 @@ public class Spieler implements Serializable{
 	public void setTempspielPhase(int tempspielPhase) {
 		this.tempspielPhase = tempspielPhase;
 	}
+	
+	public int getAnzahlMühlen() {
+		if(this.vorhandeneMuehlen.isEmpty()) {
+			return 0;
+		} else {
+			return this.vorhandeneMuehlen.size();
+		}
+	}
 // Kontruktor
 	public Spieler(Color farbe, String name) {
 		this.anzahlSpielZüge = 0;
 		this.anzahlSteine = 0;
 		this.setName(name);
+		this.spielFarbe = farbe;
+		this.spielPhase = 0;
+		
 	}
 	
 	

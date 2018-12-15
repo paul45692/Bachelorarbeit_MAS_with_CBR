@@ -7,9 +7,8 @@ import de.blanke.ba.gui.GameLoop;
  *
  */
 public class SpielStart {
-	public static void main(String[] args) {
-		boolean masSpiel = true;      
-		GameLoop loop = new GameLoop(2);
+	public static void main(String[] args) {     
+		GameLoop loop = new GameLoop(1);
 		loop.setVisible(true);	
 	}
 

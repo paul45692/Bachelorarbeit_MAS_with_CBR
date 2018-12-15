@@ -80,7 +80,7 @@ public class SpielController {
 			
 		} else  if(spieler.getSpielPhase() == 1)	{
 				// Teste auf Fehler beim Spielzug
-				if(!this.testAufSpielEnde(spieler, board)) { 
+				if(!this.testAufSpielEnde(spieler)) { 
 					if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)
 						&& (this.feld.checkObFeldNachbarnIst(board, feld))) {
 				
@@ -106,21 +106,21 @@ public class SpielController {
 				
 			
 		} else if(spieler.getSpielPhase() == 2)  {
-			if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {
+			if(!this.testAufSpielEnde(spieler)) {
+				if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {
 				
-				spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
-				Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
-				spieler.setzeSpielstein(stein);
+					spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
+					Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
+					spieler.setzeSpielstein(stein);
+					return true;
 			
-				
-				return true;
-			
+				} else {
+					System.out.println("Spiellogik: Das Feld ist belegt");
+					return false;
+				}
 			} else {
-				System.out.println("Das Feld ist belegt");
-			
 				return false;
 			}
-			
 		} else  {
 			// Fehler abfangen
 			return false;
@@ -169,7 +169,7 @@ public class SpielController {
 	 * das Spiel beendet.
 	 * @return
 	 */
-	public boolean testAufSpielEnde(Spieler spieler, Board board) {
+	public boolean testAufSpielEnde(Spieler spieler) {
 		boolean check = false;
 		List<Feld> dataCheck = new ArrayList<>();
 		for(Stein stein:spieler.getPosiSteine()) {
