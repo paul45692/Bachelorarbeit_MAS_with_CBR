@@ -14,7 +14,6 @@ public class CBR_Test {
 			 Board board = new Board();
 			 List<Integer> data = control.executeQuery(board, spielerA);
 			 System.out.println("Ergebnis:" + data.get(0));
-			 
 		}
 	
 		

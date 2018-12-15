@@ -3,15 +3,12 @@
 <svs>
   <sv name="_unknown_"/>
   <sv name="_undefined_"/>
-  <sv name="_others_"/>
 <fct name="default function" type="Symbol" mt="PARTNER_QUERY" r="REUSE" t="MAX" symm="true">
 <qsym name="_unknown_">
 <csym name="_undefined_" sim="1.0"/>
 </qsym>
 <qsym name="_undefined_">
 <csym name="_unknown_" sim="1.0"/>
-</qsym>
-<qsym name="_others_">
 </qsym>
 </fct>
 </svs>
@@ -27,8 +24,7 @@
       <fct name="default function" type="Integer" ltype="CONSTANT" lparam="0.0" rtype="CONSTANT" rparam="0.0" mode="DIFFERENCE" symm="true" mt="PARTNER_QUERY" r="REUSE" t="MAX" />
     </desc>
     <desc name="M&#252;hlen" type="Integer" min="0" max="3" mult="false" >
-      <fct name="Sim_Fct" type="Integer" ltype="POLYNOMIAL_WITH" lparam="1.0" rtype="POLYNOMIAL_WITH" rparam="1.0" mode="DIFFERENCE" symm="true" mt="PARTNER_QUERY" r="REUSE" t="MAX" />
-      <fct name="default function" type="Integer" ltype="CONSTANT" lparam="1.0" rtype="CONSTANT" rparam="1.0" mode="DIFFERENCE" symm="true" mt="PARTNER_QUERY" r="REUSE" t="MAX" />
+      <fct name="default function" type="Integer" ltype="POLYNOMIAL_WITH" lparam="1.0" rtype="POLYNOMIAL_WITH" rparam="1.0" mode="DIFFERENCE" symm="true" mt="PARTNER_QUERY" r="REUSE" t="MAX" />
     </desc>
     <desc name="Spielsteine_Ring_3" type="Integer" min="0" max="9" mult="false" >
       <fct name="adv_sim" type="AdvancedInteger" mode="DIFFERENCE" symm="true" mt="PARTNER_QUERY" r="REUSE" t="MAX">
@@ -48,14 +44,14 @@
       <fct name="default function" type="Integer" ltype="POLYNOMIAL_WITH" lparam="1.0" rtype="POLYNOMIAL_WITH" rparam="1.0" mode="DIFFERENCE" symm="true" mt="PARTNER_QUERY" r="REUSE" t="MAX" />
     </desc>
     <amalgam name="test_fk" type="WEIGHTED_SUM" active="true" >
-      <entry name="Anzahl_d_eignen_Spielsteine" active="true" fct="default function" weight="3.0"/>
+      <entry name="Anzahl_d_eignen_Spielsteine" active="true" fct="default function" weight="1.0"/>
       <entry name="L&#246;sungsfeld_Ziel" active="false" fct="default function" weight="1.0"/>
       <entry name="L&#246;sungfeld_Start" active="false" fct="default function" weight="1.0"/>
-      <entry name="M&#252;hlen" active="true" fct="Sim_Fct" weight="1.0"/>
+      <entry name="M&#252;hlen" active="true" fct="default function" weight="1.0"/>
       <entry name="Spielsteine_Ring_3" active="true" fct="default function" weight="1.0"/>
       <entry name="Spielsteine_Ring_2" active="true" fct="default function" weight="1.0"/>
       <entry name="Spielsteine_Ring_1" active="true" fct="default function" weight="1.0"/>
-      <entry name="Spielphase" active="true" fct="default function" weight="6.0"/>
+      <entry name="Spielphase" active="true" fct="default function" weight="1.0"/>
     </amalgam>
   </concept>
 </model>
