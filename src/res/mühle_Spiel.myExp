@@ -2,38 +2,38 @@
 <Project name="m&#252;hle_Spiel" author="" >
 <exp obj="m&#252;hle" type="Concept" >
   <desc>
-              </desc>
-</exp>
-<exp obj="M&#252;hlen" c="m&#252;hle" type="AttributeDesc" >
-  <desc>
-              </desc>
-</exp>
-<exp obj="Anzahl_d_eignen_Spielsteine" c="m&#252;hle" type="AttributeDesc" >
-  <desc>
-              </desc>
-</exp>
-<exp obj="Spielsteine_Ring_1" c="m&#252;hle" type="AttributeDesc" >
-  <desc>
-              </desc>
-</exp>
-<exp obj="Spielsteine_Ring_3" c="m&#252;hle" type="AttributeDesc" >
-  <desc>
-              </desc>
-</exp>
-<exp obj="Spielsteine_Ring_2" c="m&#252;hle" type="AttributeDesc" >
-  <desc>
-              </desc>
-</exp>
-<exp obj="Spielphase" c="m&#252;hle" type="AttributeDesc" >
-  <desc>
-              </desc>
+                          </desc>
 </exp>
 <exp obj="L&#246;sungfeld_Start" c="m&#252;hle" type="AttributeDesc" >
   <desc>
-              </desc>
+                          </desc>
+</exp>
+<exp obj="M&#252;hlen" c="m&#252;hle" type="AttributeDesc" >
+  <desc>
+                          </desc>
 </exp>
 <exp obj="L&#246;sungsfeld_Ziel" c="m&#252;hle" type="AttributeDesc" >
   <desc>
-              </desc>
+                          </desc>
+</exp>
+<exp obj="Spielsteine_Ring_3" c="m&#252;hle" type="AttributeDesc" >
+  <desc>
+                          </desc>
+</exp>
+<exp obj="Anzahl_d_eignen_Spielsteine" c="m&#252;hle" type="AttributeDesc" >
+  <desc>
+                          </desc>
+</exp>
+<exp obj="Spielsteine_Ring_1" c="m&#252;hle" type="AttributeDesc" >
+  <desc>
+                          </desc>
+</exp>
+<exp obj="Spielsteine_Ring_2" c="m&#252;hle" type="AttributeDesc" >
+  <desc>
+                          </desc>
+</exp>
+<exp obj="Spielphase" c="m&#252;hle" type="AttributeDesc" >
+  <desc>
+                          </desc>
 </exp>
 </Project>

@@ -17,6 +17,7 @@ import de.dfki.mycbr.core.casebase.Instance;
 import de.dfki.mycbr.core.model.Concept;
 import de.dfki.mycbr.core.model.IntegerDesc;
 import de.dfki.mycbr.core.retrieval.Retrieval;
+import de.dfki.mycbr.core.similarity.AmalgamationFct;
 import de.dfki.mycbr.core.similarity.Similarity;
 import de.dfki.mycbr.util.Pair;
 
@@ -55,6 +56,11 @@ public class CBRController {
 			for(Instance ini:instances) {
 				casebase.addCase(ini);
 			}
+			List<AmalgamationFct> alleFKt = concept.getAvailableAmalgamFcts();
+			System.out.println(alleFKt.get(0).getName());
+			System.out.println(alleFKt.get(1).getName());
+			concept.setActiveAmalgamFct(alleFKt.get(0));
+			
 			logger.info("CBR System: Laden beendent: Es sind " + casebase.getCases().size()+  " vorhanden (Initalisierungsphase)");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -113,6 +119,8 @@ public class CBRController {
 			List<Instance> dataResult = new ArrayList<>();
 			for(int i = 0; i <= 10; i++) {
 				dataResult.add(result.get(i).getFirst());
+				System.out.println("Es wurde ausgewählt: " + result.get(i).getFirst().getName());
+				System.out.println("Sim: " + result.get(i).getSecond().getValue());
 			}
 			this.analyseQuery(spieler, board, dataResult);
 			
@@ -138,6 +146,8 @@ public class CBRController {
 		// Zielparameter
 		List<Instance> relevant = new ArrayList<>();
 		int check = spieler.getSpielPhase();
+	
+		
 		// Processing
 		for(Instance a: data) {
 			int ergebnis = Integer.parseInt(a.getAttForDesc(spQuery).getValueAsString());
