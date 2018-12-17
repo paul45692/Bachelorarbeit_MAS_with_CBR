@@ -35,9 +35,10 @@ public class CBRController {
 	private Concept concept = null;
 	private ICaseBase casebase = null;
 	private AgentenOperations operations = new AgentenOperations();
-	private List<Integer> resultSet = new ArrayList<>();
+	private CBR_AdaptionProcess process = new CBR_AdaptionProcess();
+	private List<Stein> resultSet = new ArrayList<>();
 	
-	// Für die Fehlerbehandlung wird ein Logger eingesetzt. @log4j
+	// Für die Fehlerbehandlung wird ein Logger eingesetzt.
 	private static final Logger logger = Logger.getLogger(CBRController.class);
 	
 	
@@ -57,8 +58,6 @@ public class CBRController {
 				casebase.addCase(ini);
 			}
 			List<AmalgamationFct> alleFKt = concept.getAvailableAmalgamFcts();
-			System.out.println(alleFKt.get(0).getName());
-			System.out.println(alleFKt.get(1).getName());
 			concept.setActiveAmalgamFct(alleFKt.get(0));
 			
 			logger.info("CBR System: Laden beendent: Es sind " + casebase.getCases().size()+  " vorhanden (Initalisierungsphase)");
@@ -79,7 +78,7 @@ public class CBRController {
 	 * @param spieler Eingabeparameter.
 	 * @return Liste von Integers als Ausgabeparameter.
 	 */
-	public List<Integer> executeQuery(Board board, Spieler spieler) {
+	public List<Stein> executeQuery(Board board, Spieler spieler) {
 		// Werte die Daten aus:
 		this.resultSet.clear();
 		int spielphase = spieler.getSpielPhase();
@@ -117,10 +116,10 @@ public class CBRController {
 			// Result auswerten 
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
 			List<Instance> dataResult = new ArrayList<>();
-			for(int i = 0; i <= 10; i++) {
+			for(int i = 0; i < 5; i++) {
 				dataResult.add(result.get(i).getFirst());
-				System.out.println("Es wurde ausgewählt: " + result.get(i).getFirst().getName());
-				System.out.println("Sim: " + result.get(i).getSecond().getValue());
+				logger.info("Fall: " + i +  " :" + result.get(i).getFirst().getName()
+				+ "Sim: " + result.get(i).getSecond().getValue());
 			}
 			this.analyseQuery(spieler, board, dataResult);
 			
@@ -133,7 +132,7 @@ public class CBRController {
 	}
 	
 	/**
-	 * Diese Methode verarbeitet die Anfrage und passt sie enstsprechend an.
+	 * Diese Methode verarbeitet die Anfrage und passt sie entsprechend an.
 	 * @param spieler der aktuelle Spieler
 	 * @param board Spielsituation
 	 * @param data Eingabeparameter
@@ -146,20 +145,34 @@ public class CBRController {
 		// Zielparameter
 		List<Instance> relevant = new ArrayList<>();
 		int check = spieler.getSpielPhase();
-	
-		
-		// Processing
+		List<Integer> evaluateData = new ArrayList<>();
+		// Preprocessing - Suche alle passenden Fälle über die richtige Spielphase
 		for(Instance a: data) {
 			int ergebnis = Integer.parseInt(a.getAttForDesc(spQuery).getValueAsString());
 			if(ergebnis == check) {
 				relevant.add(a);
 			}
 		}
-		System.out.println("Size: " + relevant.size());
-		
+		logger.info("Es wurden: " + relevant.size() + " relevante Fälle gefunden!");
+		// Processing 1 a - Hole die konkreten Instanzen
 		for(Instance r: relevant) {
-			this.resultSet.add(Integer.parseInt(r.getAttForDesc(lösungADesc).getValueAsString()));
-			this.resultSet.add(Integer.parseInt(r.getAttForDesc(lösungBDesc).getValueAsString()));
+			evaluateData.add(Integer.parseInt(r.getAttForDesc(lösungADesc).getValueAsString()));
+			evaluateData.add(Integer.parseInt(r.getAttForDesc(lösungBDesc).getValueAsString()));
 		}
+		// Processing 1 b - Wandle auf Steine um 
+		List<Stein> caculateSol = new ArrayList<>();
+		for(Integer a: evaluateData) {
+			caculateSol.add(operations.getSteineFuerCBRSystem(a));
+		}
+		for(int i = 0; i < caculateSol.size(); i++) {
+			Stein eins = caculateSol.get(i);
+			Stein zwei = caculateSol.get(i+1);
+			if(process.evaluateSolution(spieler, board, eins, zwei)) {
+				this.resultSet.add(eins);
+				this.resultSet.add(zwei);
+				break;
+			}
+		}
+		
 	}
 }	

@@ -41,7 +41,7 @@ public class CBR_AdaptionProcess {
 	 */
 	protected boolean evaluateSolution(Spieler spieler, Board board, Stein start, Stein ziel) {
 		boolean rueckgabe = false;
-		// Analyse anhängig von der Spielphase
+		// Analyse abhängig von der Spielphase
 		switch (spieler.getSpielPhase()) {
 		
 			case 0: 		if(board.checkFeld(start.convertToFeld()) || board.checkFeld(ziel.convertToFeld())) {

@@ -28,11 +28,6 @@ public class CBRAgent extends Agent{
 	 */
 	private static final long serialVersionUID = 1L;
 	private CBRController interpreter = new CBRController();
-	/**
-	 * Für das Entkopplung der Logik vom Agenten wird an dieser Stelle
-	 * eine Instanz @AgentenOperations gebraucht.
-	 */
-	private AgentenOperations operations = new AgentenOperations();
 	private static final Logger logger = Logger.getLogger(CBRAgent.class);
 	
 
@@ -59,7 +54,7 @@ public class CBRAgent extends Agent{
 					 * Werte die Nachricht und sende eine Nachricht zurück.
 					 */
 					List<Stein> rueckgabe = new ArrayList<>();
-					List<Integer> extractData = new ArrayList<>();
+					
 					try {
 						box = (MessageBox) msg.getContentObject();
 						// Hole mir die Daten raus
@@ -74,9 +69,9 @@ public class CBRAgent extends Agent{
 					Spieler spieler = box.getSpieler();
 					// Fehlerhandling
 					if(board != null && spieler != null) {
-						extractData = interpreter.executeQuery(board, spieler);
-						for(Integer i: extractData) {
-							rueckgabe.add(operations.getSteineFuerCBRSystem(i));
+						List <Stein> extractData = interpreter.executeQuery(board, spieler);
+						for(Stein i: extractData) {
+							rueckgabe.add(i);
 						}
 					} else {
 						System.out.println("Error-AgentenEbene: Übertragungsproblem !!");
@@ -93,7 +88,7 @@ public class CBRAgent extends Agent{
 					Stein zwei = null;
 					MessageBoxSteine steine = null;
 					// Fehlerhandling zur Sicherheit
-					if(!rueckgabe.isEmpty() && rueckgabe.size() < 2) {
+					if(!rueckgabe.isEmpty() && spieler.getSpielPhase() == 0) {
 						 eins = rueckgabe.get(0);
 						 steine = new MessageBoxSteine(eins, zwei);
 						 System.out.print("Parameter gesetzt");
