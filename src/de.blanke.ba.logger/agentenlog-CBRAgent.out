@@ -1,2 +1,3 @@
-2018-12-15 16:56:09,003 CBR System: Laden beendent: Es sind 20 vorhanden (Initalisierungsphase)
-2018-12-15 16:56:09,047 CBR Query execute with: 0, 0, 0, 0, 0,0
+2018-12-16 16:31:19,828  Das RBS System wurde aktiviert (@class de.blanke.ba.rbs.RBSAgent
+2018-12-16 16:31:19,828  Das CBR System wurde aktiviert (@class de.blanke.ba.cbr.CBRAgent
+2018-12-16 16:31:23,190 Spiel(MAS): Ein Spielzug beginnt!

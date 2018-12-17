@@ -45,9 +45,7 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 	private SpielController spielController;
 	private ControllerAgent controllerMAS;
 	private Spieler spielerA;
-	private int playerA = 0;
 	private Spieler spielerB;
-	private int playerB = 1;
 	private boolean spielEnde = false;
 	private static final Logger logger = Logger.getLogger(SpielbrettMAS.class);
 	
@@ -277,7 +275,7 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 	private List<Spielstein> executeSpielZug(Spieler spieler, Spieler spielerB) {
 		logger.info("Spiel(MAS): Ein Spielzug beginnt!");
 		MessageBox box  = new MessageBox(spieler, spielerB, spielController.getBoard());
-		boolean changeAgent = false;
+		boolean changeAgent = true;
 		
 		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, changeAgent);
 		this.controllerMAS.addBehaviour(spielZug);

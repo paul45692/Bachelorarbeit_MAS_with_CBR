@@ -110,9 +110,10 @@ public class CBRController {
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
 			IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungfeld_Start");
 			IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld_Ziel");
+			IntegerDesc spQuery = (IntegerDesc) concept.getAllAttributeDescs().get("Spielphase");
 			List<Instance> dataResult = new ArrayList<>();
 			List<Integer> dataQuery = new ArrayList<>();
-			for(int i = 0; i <= 5; i++) {
+			for(int i = 0; i <= 10; i++) {
 				dataResult.add(result.get(i).getFirst());
 				dataQuery.add(Integer.parseInt(result.get(i).getFirst().getAttForDesc(lösungBDesc).getValueAsString()));
 			}
@@ -124,6 +125,10 @@ public class CBRController {
 		}
 		
 		return resultSet;
+	}
+	
+	private void pruefeAufEinBelegtesFeld() {
+		
 	}
 	
 	

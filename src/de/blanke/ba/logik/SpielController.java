@@ -122,7 +122,7 @@ public class SpielController {
 				return false;
 			}
 		} else  {
-			// Fehler abfangen
+			System.out.print("Ein Fehler ist passiert");
 			return false;
 		}
 		
