@@ -13,7 +13,9 @@ public class CBR_Test {
 			 Spieler spielerA = new Spieler(Color.WHITE, "Spieler A");
 			 Board board = new Board();
 			 List<Integer> data = control.executeQuery(board, spielerA);
-			 System.out.println("Ergebnis:" + data.get(0));
+			 for(int x: data) {
+				 System.out.println("Ergebnisse (besser): " + x);
+			 }
 		}
 	
 		

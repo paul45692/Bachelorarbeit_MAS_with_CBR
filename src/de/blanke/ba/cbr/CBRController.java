@@ -104,21 +104,18 @@ public class CBRController {
 			query.addAttribute("Spielsteine_Ring_2", spielsteineR2);
 			query.addAttribute("Spielsteine_Ring_3", spielsteineR3);
 			query.addAttribute("Mühlen", mühlen);
+			retrieval.setRetrievalMethod(Retrieval.RetrievalMethod.RETRIEVE_SORTED );
 			retrieval.start();
 			logger.info("CBR Query execute with: " + spielphase + ", "+ anzahlDerEigenenSpielsteine + ", "
 					+ spielsteineR1 + ", "+ spielsteineR2 + ", " + spielsteineR3 + ","+ mühlen);
+			// Result auswerten 
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
-			IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungfeld_Start");
-			IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld_Ziel");
-			IntegerDesc spQuery = (IntegerDesc) concept.getAllAttributeDescs().get("Spielphase");
 			List<Instance> dataResult = new ArrayList<>();
-			List<Integer> dataQuery = new ArrayList<>();
 			for(int i = 0; i <= 10; i++) {
 				dataResult.add(result.get(i).getFirst());
-				dataQuery.add(Integer.parseInt(result.get(i).getFirst().getAttForDesc(lösungBDesc).getValueAsString()));
 			}
+			this.analyseQuery(spieler, board, dataResult);
 			
-			resultSet.add(Integer.parseInt(dataResult.get(0).getAttForDesc(lösungBDesc).getValueAsString()));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,9 +124,32 @@ public class CBRController {
 		return resultSet;
 	}
 	
-	private void pruefeAufEinBelegtesFeld() {
+	/**
+	 * Diese Methode verarbeitet die Anfrage und passt sie enstsprechend an.
+	 * @param spieler der aktuelle Spieler
+	 * @param board Spielsituation
+	 * @param data Eingabeparameter
+	 */
+	private void analyseQuery(Spieler spieler, Board board, List<Instance> data) {
+		// Ausleseparameter
+		IntegerDesc spQuery = (IntegerDesc) concept.getAllAttributeDescs().get("Spielphase");
+		IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungfeld_Start");
+		IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld_Ziel");
+		// Zielparameter
+		List<Instance> relevant = new ArrayList<>();
+		int check = spieler.getSpielPhase();
+		// Processing
+		for(Instance a: data) {
+			int ergebnis = Integer.parseInt(a.getAttForDesc(spQuery).getValueAsString());
+			if(ergebnis == check) {
+				relevant.add(a);
+			}
+		}
+		System.out.println("Size: " + relevant.size());
 		
+		for(Instance r: relevant) {
+			this.resultSet.add(Integer.parseInt(r.getAttForDesc(lösungADesc).getValueAsString()));
+			this.resultSet.add(Integer.parseInt(r.getAttForDesc(lösungBDesc).getValueAsString()));
+		}
 	}
-	
-	
 }	

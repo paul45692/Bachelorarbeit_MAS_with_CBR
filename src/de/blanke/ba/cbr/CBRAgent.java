@@ -27,8 +27,6 @@ public class CBRAgent extends Agent{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	// CBR Controller
-	// private CBRController interpreter = new CBRController();
 	private CBRController interpreter = new CBRController();
 	/**
 	 * Für das Entkopplung der Logik vom Agenten wird an dieser Stelle
@@ -84,7 +82,7 @@ public class CBRAgent extends Agent{
 						System.out.println("Error-AgentenEbene: Übertragungsproblem !!");
 						logger.error("CBR System: Übertragungsproblem");
 					}
-					
+					System.out.println("Es sind : " + rueckgabe.size() + " Steine bereit");
 					logger.info("CBR-System: Eine Nachricht wurde erzeugt und wird versendet");
 					box.cleartheBox();
 					// Rücktransport
@@ -98,12 +96,13 @@ public class CBRAgent extends Agent{
 					if(!rueckgabe.isEmpty() && rueckgabe.size() < 2) {
 						 eins = rueckgabe.get(0);
 						 steine = new MessageBoxSteine(eins, zwei);
+						 System.out.print("Parameter gesetzt");
 						 logger.info("CBR System: Nur ein Rückgabeparameter!");
 					} else if(!rueckgabe.isEmpty() && rueckgabe.size() >= 2) {
 						
 							eins = rueckgabe.get(0);
 							zwei = rueckgabe.get(1);
-							
+							System.out.print("Parameter gesetzt:" + eins.getRing() + eins.getxCord());
 					} else if(rueckgabe.isEmpty()) {
 						
 						System.out.print("Error");
