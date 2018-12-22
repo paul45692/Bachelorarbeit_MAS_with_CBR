@@ -28,7 +28,7 @@ public class GameLoop extends JFrame implements ActionListener {
 	private JButton startButton = new JButton("Neues Spiel");
 	private JButton endeButton = new JButton("Ende!");
 	private JButton pausedButton = new JButton("Pause");
-	private JLabel textLabel = new JLabel("Test");
+	private JLabel textLabel = new JLabel(" ");
 	private boolean running = false;
 	private boolean paused = false;
 	private int fps = 60;
@@ -60,19 +60,23 @@ public class GameLoop extends JFrame implements ActionListener {
 						this.spielbrettMAS = null;
 						this.spielbrettRBS = null;
 						cp.add(spielbrett, BorderLayout.CENTER);
+						this.textLabel.setText("normaler Spielmodus: Klicke auf Start!");
 						break;
 						
 		case 1:     	this.spielbrett = null;
 						this.spielbrettMAS = new SpielbrettMAS();
 						this.spielbrettRBS = null;
 						cp.add(spielbrettMAS, BorderLayout.CENTER);
+						this.textLabel.setText("MAS-Spielmodus (CBR & RBS): Klicke auf Start!");
 						break;
 			
 		case 2:         this.spielbrett = null;
 						this.spielbrettMAS = null;
 						this.spielbrettRBS = new SpielbrettVsRBS();
 						cp.add(spielbrettRBS, BorderLayout.CENTER);
+						this.textLabel.setText("regelbasierter Modus(vs. RBS Agent): Klicke auf Start!");
 						break;
+						
 		default:        break;
 		}
 		

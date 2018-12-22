@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import de.blanke.ba.logik.Board;
-import de.blanke.ba.mas.AgentenOperations;
 import de.blanke.ba.mas.MessageBox;
 import de.blanke.ba.mas.MessageBoxSteine;
 import de.blanke.ba.model.Stein;

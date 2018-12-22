@@ -88,11 +88,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			
 			for(Spielstein k :spielsteine) {
 				Graphics2D g2d = (Graphics2D) g;
-			//	g2d.setColor(Color.BLUE);
 				g2d.drawOval(k.getX(), k.getY(), 50, 50);
 				// Steuert die Farbe.
 				g2d.setColor(k.getColor());
-				
 				g2d.fillOval(k.getX(), k.getY(), 50, 50);
 				
 			}
@@ -110,9 +108,12 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		System.out.println("Das Spiel hat begonnen");
 		Spieler spieler = this.spielerB;
 		Spieler spielerB = this.spielerA;
+		this.führeZugDurch(spieler, spielerB);
+		this.repaint();
+		spieler = this.spielerA;
+		spielerB = this.spielerB;
 		this.führeZugDurch(spieler, spielerB);
 	}
 	
@@ -158,6 +159,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							}
 							break;
 						}
+						break;
 				
 			case 1:		// zweite Spielphase(Steine auf Nachbarfelder)
 						spielstein = this.executeSpielZug(spieler.copyInstance(), spielerB.copyInstance()).get(0);
@@ -197,6 +199,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							}
 							break;
 						} 
+						break;
 						
 					
 			case 2:		// zweite Spielphase(Steine auf Nachbarfelder)
@@ -237,6 +240,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							}
 							break;
 						} 
+						break;
 						
 			case 3:		// Hier ein problem
 						spielstein = this.executeSpielZug(spieler.copyInstance(), spielerB.copyInstance()).get(0);
@@ -306,7 +310,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		 GameDataGetBehaviour data = new GameDataGetBehaviour(this.controllerMAS);
 		this.controllerMAS.addBehaviour(data);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
