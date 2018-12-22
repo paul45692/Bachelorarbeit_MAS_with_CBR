@@ -108,13 +108,16 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		Spieler spieler = this.spielerB;
-		Spieler spielerB = this.spielerA;
+		Spieler spieler = this.spielerA;
+		Spieler spielerB = this.spielerB;
 		this.führeZugDurch(spieler, spielerB);
-		this.repaint();
-		spieler = this.spielerA;
-		spielerB = this.spielerB;
+		this.paint(getGraphics());
+		spieler = this.spielerB;
+		spielerB = this.spielerA;
 		this.führeZugDurch(spieler, spielerB);
+		this.paint(getGraphics());
+		
+		System.out.print("Spielphasen: " + spieler.getSpielPhase() + " mit :" + spielerB.getSpielPhase());
 	}
 	
 	
@@ -123,7 +126,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			switch(spieler.getSpielPhase()) {
 			case 0:
 						// Erste Spielphase (Steine frei setzen)
-						Spielstein spielstein = this.executeSpielZug(spieler.copyInstance(), spielerB.copyInstance()).get(0);
+						Spielstein spielstein = this.executeSpielZug(spieler, spielerB).get(0);
 						if(spieler.getName().contains("B")) {
 							spielstein.setColor(Color.BLUE);
 						} else {
@@ -147,7 +150,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 									System.out.println("Der Spieler A (Weiss) ist am Zug!");
 									int ausgabe = 9 - spielerA.getAnzahlSteine();
 									this.pruefeAufSpielEnde();
-									System.out.println("Info: Der Spieler" + spielerA.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
+									System.out.println("Info: Der Spieler" + spieler.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 								} else {
 									ausgabe = "Der Spieler B (Blau) ist am Zug!";
 									System.out.println("Der Spieler B (Blau) ist am Zug!");
@@ -158,12 +161,14 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 								
 							}
 							break;
+						} else {
+							System.out.println("-->Der Spielzug ist fehlgeschlagen");
 						}
 						break;
 				
 			case 1:		// zweite Spielphase(Steine auf Nachbarfelder)
-						spielstein = this.executeSpielZug(spieler.copyInstance(), spielerB.copyInstance()).get(0);
-						Spielstein spielstein2 = this.executeSpielZug(spieler.copyInstance(), spieler.copyInstance()).get(1);
+						spielstein = this.executeSpielZug(spieler, spielerB).get(0);
+						Spielstein spielstein2 = this.executeSpielZug(spieler, spieler).get(1);
 						
 						if(spieler.getName().contains("B")) {
 							spielstein2.setColor(Color.BLUE);
@@ -203,8 +208,8 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						
 					
 			case 2:		// zweite Spielphase(Steine auf Nachbarfelder)
-						spielstein = this.executeSpielZug(spieler.copyInstance(), spielerB.copyInstance()).get(0);
-						spielstein2 = this.executeSpielZug(spieler.copyInstance(), spieler.copyInstance()).get(1);
+						spielstein = this.executeSpielZug(spieler, spielerB).get(0);
+						spielstein2 = this.executeSpielZug(spieler, spieler).get(1);
 						if(spieler.getName().contains("B")) {
 							spielstein2.setColor(Color.BLUE);
 						} else {
@@ -243,7 +248,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;
 						
 			case 3:		// Hier ein problem
-						spielstein = this.executeSpielZug(spieler.copyInstance(), spielerB.copyInstance()).get(0);
+						spielstein = this.executeSpielZug(spieler, spielerB).get(0);
 						// Keine Farbe muss gesetzt werden :)
 						xCord = spielstein.getX();
 						yCord = spielstein.getY();
@@ -259,7 +264,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;	
 				
 			}
+			
 		}
+		
 	}	
 // MAS wird aufgesetzt.	
 	/**

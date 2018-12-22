@@ -37,13 +37,7 @@ public class CBRController {
 	private AgentenOperations operations = new AgentenOperations();
 	private CBR_AdaptionProcess process = new CBR_AdaptionProcess();
 	private List<Stein> resultSet = new ArrayList<>();
-	
-	// Für die Fehlerbehandlung wird ein Logger eingesetzt.
 	private static final Logger logger = Logger.getLogger(CBRController.class);
-	
-	
-	
-
 	/**
 	 * Diese Methode initalisiert die zentrale CBR Infrastruktur, die benötigt wird, und lädet alle Fälle.
 	 */
@@ -71,7 +65,8 @@ public class CBRController {
 	public CBRController() {
 		this.initCBRStrcuture();
 	}
-	
+
+// Methoden 
 	/**
 	 * Diese Methode verarbeitet die Query an das System.
 	 * @param board Eingabeparameter.
