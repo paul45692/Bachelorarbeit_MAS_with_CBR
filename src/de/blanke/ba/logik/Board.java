@@ -177,22 +177,20 @@ public class Board implements Serializable {
 		}
 		
 		/**
-		 * Diese Methode überprüft ein Feld ob es frei ist.
-		 * @param feld
-		 * @return
+		 * Diese Methode überprüft ob ein Feld belegt ist.
+		 * @param feld das zu prüfende Feld
+		 * @return True, wenn das Feld belegt ist, sonst false
 		 */
-		public boolean checkFeld(Feld feld) {
+		public boolean checkAufBelegtFeld(Feld feld) {
 			boolean check = false;
-			
 			for(Feld f: felder) {
-				
-				if((f.getRingZahl() == feld.getRingZahl()) && (f.getxCord() == feld.getxCord()) 
-						&& (f.getyCord() == feld.getyCord()) ) {
-					if(f.getBelegt() == false) {
-						check = true;
-					}
+				if(f.equals(feld)) {
+					feld = f;
 					break;
 				}
+			}
+			if(feld.getBelegt()) {
+				check = true;
 			}
 			return check;
 		}

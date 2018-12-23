@@ -103,12 +103,10 @@ public class Feld implements Serializable {
 		
 	}
 	
-	
-	
 	/**
-	 * Diese Methode muss erst bei der entsprechenden Stelle aufgerufen werden!
-	 * Sonst sind die Daten nicht aktuell!
-	 * @param board
+	 * Diese Methode untersucht bei einen bestimmten Spielstand die Nachbarn 
+	 * des Eingabeparametern.
+	 * @param board Spielsituation
 	 */
 	private void sucheAlleNachbarn(Board board) {
 		// Felder mussen aus der Board Klasse geholt werden ?
@@ -275,8 +273,8 @@ public class Feld implements Serializable {
 	
 	/**
 	 * Diese Methode gibt zu einem Feld alle freien Nachbarn an.
-	 * @param board
-	 * @return
+	 * @param board Spielsituation
+	 * @return alle freien Nachbarnfelder.
 	 */
 	public List<Feld> allefreienNachbarn(Board board) {
 		List<Feld> frei = new ArrayList<>();
@@ -291,7 +289,12 @@ public class Feld implements Serializable {
 		return frei;
 		
 	}
-
+	/**
+	 * Diese Methode sucht alle Nachbarn der gleichen Farbe heraus.
+	 * @param board Spielstand
+	 * @param color Spielerfarbe
+	 * @return passende Nachbarn.
+	 */
 	public List<Feld> alleGleichFarbenNachbarn(Board board, Color color) {
 		
 		sucheAlleNachbarn(board);
@@ -325,4 +328,22 @@ public class Feld implements Serializable {
 	public Stein convertToStein() {
 		return new Stein(this.getRingZahl(), this.getxCord(), this.getyCord(), null);
 	}
+
+	/**
+	 *@Override Diese Methode überschreibt die Prüfung auf 
+	 *	Gleichheit zweier Objekte.Hier wird auf Gleicheit über die
+	 *  Position geprüft.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		boolean rueckgabe = false;
+		Feld feld = (Feld) obj;
+		if(this.ringZahl == feld.getRingZahl() && this.xCord == feld.getxCord() 
+				&& this.yCord == feld.getyCord()) {
+			rueckgabe = true;
+		}
+		return rueckgabe;
+	}
+	
+	
 }

@@ -185,4 +185,8 @@ public class SpielController {
 		}
 		return check;
 	}
+	
+	public void testData() {
+		System.out.println(board.getAnzahlFreiFelder());
+	}
 }

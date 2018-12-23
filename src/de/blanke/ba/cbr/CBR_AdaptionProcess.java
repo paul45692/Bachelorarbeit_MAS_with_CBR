@@ -1,13 +1,11 @@
 package de.blanke.ba.cbr;
 
 import java.text.ParseException;
-
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 import de.dfki.mycbr.core.casebase.Instance;
 import de.dfki.mycbr.core.model.IntegerDesc;
-
 /**
  * Diese Klasse versucht bei einer ungültigen Lösung oder gar keiner Lösung
  * eine Fallanpassung zu provozieren.
@@ -44,23 +42,23 @@ public class CBR_AdaptionProcess {
 		// Analyse abhängig von der Spielphase
 		switch (spieler.getSpielPhase()) {
 		
-			case 0: 		if(board.checkFeld(start.convertToFeld()) || board.checkFeld(ziel.convertToFeld())) {
+			case 0: 		if(!board.checkAufBelegtFeld(start.convertToFeld()) || !board.checkAufBelegtFeld(ziel.convertToFeld())) {
 								rueckgabe = true;
 							}
 							break;
 							
-			case 1:         if(spieler.getPosiSteine().contains(start) && board.checkFeld(ziel.convertToFeld())) {
+			case 1:         if(spieler.getPosiSteine().contains(start) && !board.checkAufBelegtFeld(ziel.convertToFeld())) {
 								rueckgabe = true;
 							}
 							break;
 							
-			case 2:         if(spieler.getPosiSteine().contains(start) && board.checkFeld(ziel.convertToFeld())) {
+			case 2:         if(spieler.getPosiSteine().contains(start) && !board.checkAufBelegtFeld(ziel.convertToFeld())) {
 								rueckgabe = true;
 							}
 							break;
 							
-			case 3:			if((!board.checkFeld(start.convertToFeld()) && !spieler.getPosiSteine().contains(start)) 
-							|| (!board.checkFeld(ziel.convertToFeld()) && !spieler.getPosiSteine().contains(ziel))) {
+			case 3:			if((board.checkAufBelegtFeld(start.convertToFeld()) && !spieler.getPosiSteine().contains(start)) 
+							|| (board.checkAufBelegtFeld(ziel.convertToFeld()) && !spieler.getPosiSteine().contains(ziel))) {
 								rueckgabe = true;
 							}
 							break;	

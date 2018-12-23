@@ -97,21 +97,21 @@ public class RegelInterpreter {
 	private void analyseQuerySpielPhase0(Board board, Spieler spieler) {
 		
 		for(RegelSpielPhase0 regel: spielphase0) {
-			if(regel.getIfTeil().contains("Frei") && board.checkFeld(regel.getIfStein().convertToFeld())) {
+			if(regel.getIfTeil().contains("Frei") && !board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 				this.dataBack.add(regel.getElseStein());
 				spielphase0.remove(regel);
 				break;
-			} else  if(regel.getIfTeil().contains("Belegt") && !board.checkFeld(regel.getIfStein().convertToFeld()) &&
-						board.checkFeld(regel.getElseStein().convertToFeld())){
+			} else  if(regel.getIfTeil().contains("Belegt") && !board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) &&
+						!board.checkAufBelegtFeld(regel.getElseStein().convertToFeld())){
 				this.dataBack.add(regel.getElseStein());
 				spielphase0.remove(regel);
 				break;
 			} else if(regel.getIfTeil().contains("Zufall")) {
 				// Solange wie nichts gefunden wurde, suche weiter:)
-				while(!board.checkFeld(regel.getIfStein().convertToFeld())) {
+				while(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 					regel.erzeugeZufällig();
 					
-					if(board.checkFeld(regel.getIfStein().convertToFeld())) {
+					if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 						
 						this.dataBack.add(regel.getElseStein());
 						regel.erzeugeZufällig();
@@ -128,7 +128,7 @@ public class RegelInterpreter {
 		
 		for(RegelSpielPhase1u2 regel: spielphase1) {
 			// Wenn der Spieler das Feld besetzt dann werte Regel weiter aus.
-			if(spielData.contains(regel.getBesetztesFeld()) && board.checkFeld(regel.getBewegungsFeld().convertToFeld())) {
+			if(spielData.contains(regel.getBesetztesFeld()) && board.checkAufBelegtFeld(regel.getBewegungsFeld().convertToFeld())) {
 				dataBack.add(regel.getBesetztesFeld());
 				dataBack.add(regel.getBewegungsFeld());
 				break;
@@ -138,7 +138,7 @@ public class RegelInterpreter {
 					Stein steineins = spielData.get(i);
 					if(steineins.getxCord() < 2) {
 						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord() + 1, steineins.getyCord(), null);
-						if(board.checkFeld(zwei.convertToFeld())) {
+						if(board.checkAufBelegtFeld(zwei.convertToFeld())) {
 							dataBack.add(steineins);
 							dataBack.add(zwei);
 							break;
@@ -146,7 +146,7 @@ public class RegelInterpreter {
 						
 					} else if(steineins.getyCord() <2 && steineins.getxCord() != 1) {
 						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord(), steineins.getyCord() + 1, null);
-						if(board.checkFeld(zwei.convertToFeld())) {
+						if(board.checkAufBelegtFeld(zwei.convertToFeld())) {
 							dataBack.add(steineins);
 							dataBack.add(zwei);
 							break;
@@ -165,7 +165,7 @@ public class RegelInterpreter {
 		
 		for(RegelSpielPhase1u2 regel: spielphase2) {
 			// Wenn der Spieler das Feld besetzt dann werte Regel weiter aus.
-			if(spielData.contains(regel.getBesetztesFeld()) && board.checkFeld(regel.getBewegungsFeld().convertToFeld())) {
+			if(spielData.contains(regel.getBesetztesFeld()) && board.checkAufBelegtFeld(regel.getBewegungsFeld().convertToFeld())) {
 				dataBack.add(regel.getBesetztesFeld());
 				dataBack.add(regel.getBewegungsFeld());
 				break;
@@ -175,7 +175,7 @@ public class RegelInterpreter {
 					Stein steineins = spielData.get(i);
 					if(steineins.getxCord() < 2) {
 						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord() + 1, steineins.getyCord(), null);
-						if(board.checkFeld(zwei.convertToFeld())) {
+						if(board.checkAufBelegtFeld(zwei.convertToFeld())) {
 							dataBack.add(steineins);
 							dataBack.add(zwei);
 							break;
@@ -183,7 +183,7 @@ public class RegelInterpreter {
 						
 					} else if(steineins.getyCord() <2 && steineins.getxCord() != 1) {
 						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord(), steineins.getyCord() + 1, null);
-						if(board.checkFeld(zwei.convertToFeld())) {
+						if(board.checkAufBelegtFeld(zwei.convertToFeld())) {
 							dataBack.add(steineins);
 							dataBack.add(zwei);
 							break;
@@ -197,14 +197,14 @@ public class RegelInterpreter {
 	
 	private void analyseQuerySpielPhase3(Board board, Spieler spieler) {
 		for(RegelSpielPhase0 regel: spielphase3) {
-			if(regel.getIfTeil().contains("Besetzt") && !board.checkFeld(regel.getIfStein().convertToFeld())) {
+			if(regel.getIfTeil().contains("Besetzt") && !board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 				this.dataBack.add(regel.getElseStein());
 				break;
 			}  else if(regel.getIfTeil().contains("zufall")) {
 				// Solange wie nichts gefunden wurde, suche weiter:)
-				while(board.checkFeld(regel.getIfStein().convertToFeld())) {
+				while(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 					regel.erzeugeZufällig();
-					if(!board.checkFeld(regel.getIfStein().convertToFeld())) {
+					if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 						
 						this.dataBack.add(regel.getElseStein());
 						regel.erzeugeZufällig();

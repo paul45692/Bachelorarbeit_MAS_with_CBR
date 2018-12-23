@@ -21,6 +21,7 @@ import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.mas.GameBehaviour;
 import de.blanke.ba.mas.GameDataGetBehaviour;
 import de.blanke.ba.mas.MessageBox;
+import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.rbs.RBSAgent;
 import de.blanke.ba.spieler.Spieler;
@@ -114,12 +115,14 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		Board board = this.spielController.getBoard();
 		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
+		this.spielController.testData();
 		board = null;
 		spieler = this.spielerB;
 		spielerB = this.spielerA;
 		board = this.spielController.getBoard();
 		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
+		
 	}
 	
 	
