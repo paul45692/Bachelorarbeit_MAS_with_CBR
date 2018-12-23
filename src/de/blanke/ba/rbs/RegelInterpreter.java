@@ -95,7 +95,6 @@ public class RegelInterpreter {
  * @param spieler
  */
 	private void analyseQuerySpielPhase0(Board board, Spieler spieler) {
-		
 		for(RegelSpielPhase0 regel: spielphase0) {
 			if(regel.getIfTeil().contains("Frei") && !board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 				this.dataBack.add(regel.getElseStein());

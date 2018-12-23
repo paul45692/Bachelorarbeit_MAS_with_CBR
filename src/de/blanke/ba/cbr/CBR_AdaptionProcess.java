@@ -1,6 +1,9 @@
 package de.blanke.ba.cbr;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
@@ -13,7 +16,6 @@ import de.dfki.mycbr.core.model.IntegerDesc;
  *
  */
 public class CBR_AdaptionProcess {
-	
 	/**
 	 * Diese Methode versucht eine Verbesserung an einen vorhanden Fall vorzunehmen
 	 * @return
@@ -37,35 +39,38 @@ public class CBR_AdaptionProcess {
 	 * Diese Methode untersucht die (vorgeschlagende) Lösung.
 	 * @return Lösung ist in Ordnung oder nicht.
 	 */
-	protected boolean evaluateSolution(Spieler spieler, Board board, Stein start, Stein ziel) {
-		boolean rueckgabe = false;
+	protected List<Stein> evaluateSolution(Spieler spieler, Board board, Stein start, Stein ziel) {
+		List<Stein> rueckgabe = new ArrayList<>();
 		// Analyse abhängig von der Spielphase
 		switch (spieler.getSpielPhase()) {
 		
-			case 0: 		if(!board.checkAufBelegtFeld(start.convertToFeld()) || !board.checkAufBelegtFeld(ziel.convertToFeld())) {
-								rueckgabe = true;
+			case 0: 		if(!board.checkAufBelegtFeld(start.convertToFeld())) {
+								rueckgabe.add(start);
+							} else if(!board.checkAufBelegtFeld(ziel.convertToFeld())) {
+								rueckgabe.add(ziel);
 							}
 							break;
 							
 			case 1:         if(spieler.getPosiSteine().contains(start) && !board.checkAufBelegtFeld(ziel.convertToFeld())) {
-								rueckgabe = true;
+								rueckgabe.add(start);
+								rueckgabe.add(ziel);
 							}
 							break;
 							
 			case 2:         if(spieler.getPosiSteine().contains(start) && !board.checkAufBelegtFeld(ziel.convertToFeld())) {
-								rueckgabe = true;
+								rueckgabe.add(start);
+								rueckgabe.add(ziel);
 							}
 							break;
 							
-			case 3:			if((board.checkAufBelegtFeld(start.convertToFeld()) && !spieler.getPosiSteine().contains(start)) 
-							|| (board.checkAufBelegtFeld(ziel.convertToFeld()) && !spieler.getPosiSteine().contains(ziel))) {
-								rueckgabe = true;
+			case 3:			if(board.checkAufBelegtFeld(start.convertToFeld()) && !spieler.getPosiSteine().contains(start))  {
+								rueckgabe.add(start);
+							}
+							else if (board.checkAufBelegtFeld(ziel.convertToFeld()) && !spieler.getPosiSteine().contains(ziel)) {
+								rueckgabe.add(ziel);
 							}
 							break;	
-		}
-			
+		}	
 		return rueckgabe;
-		
 	}
-
 }

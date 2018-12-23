@@ -111,10 +111,16 @@ public class CBRController {
 			// Result auswerten 
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
 			List<Instance> dataResult = new ArrayList<>();
+			
 			for(int i = 0; i < 5; i++) {
-				dataResult.add(result.get(i).getFirst());
+				double simResult = result.get(i).getSecond().getValue();
 				logger.info("Fall: " + i +  " :" + result.get(i).getFirst().getName()
 				+ "Sim: " + result.get(i).getSecond().getValue());
+				System.out.println("Ähnlichkeit ist: " + result.get(i).getFirst().getName()
+				+ "Sim: " + result.get(i).getSecond().getValue());
+				if(simResult >= 0.60) {
+					dataResult.add(result.get(i).getFirst());
+				}
 			}
 			this.analyseQuery(spieler, board, dataResult);
 			
@@ -162,9 +168,10 @@ public class CBRController {
 		for(int i = 0; i < caculateSol.size(); i++) {
 			Stein eins = caculateSol.get(i);
 			Stein zwei = caculateSol.get(i+1);
-			if(process.evaluateSolution(spieler, board, eins, zwei)) {
+			Stein result = process.evaluateSolution(spieler, board, eins, zwei).get(0);
+			if(result!= null) {
 				this.resultSet.add(eins);
-				this.resultSet.add(zwei);
+			// 	this.resultSet.add(zwei);
 				break;
 			}
 		}
