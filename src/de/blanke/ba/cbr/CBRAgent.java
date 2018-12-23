@@ -90,16 +90,11 @@ public class CBRAgent extends Agent{
 					if(!rueckgabe.isEmpty() && spieler.getSpielPhase() == 0) {
 						 eins = rueckgabe.get(0);
 						 steine = new MessageBoxSteine(eins, zwei);
-						 System.out.print("Parameter gesetzt");
 						 logger.info("CBR System: Nur ein Rückgabeparameter!");
 					} else if(!rueckgabe.isEmpty() && rueckgabe.size() >= 2) {
-						
 							eins = rueckgabe.get(0);
 							zwei = rueckgabe.get(1);
-							System.out.print("Parameter gesetzt:" + eins.getRing() + eins.getxCord());
 					} else if(rueckgabe.isEmpty()) {
-						
-						System.out.print("Error");
 						logger.error("CBR System: Übertragungsproblem");
 						steine = new MessageBoxSteine(null, null);
 					}
@@ -112,8 +107,6 @@ public class CBRAgent extends Agent{
 					send(aclmsg);
 					msg =  null;
 					logger.info("CBR-System: Aufgabe wurde abgeschlossen!");
-					
-					
 				} else {
 					block();
 				}

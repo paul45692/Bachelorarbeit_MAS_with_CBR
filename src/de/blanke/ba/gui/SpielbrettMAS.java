@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import de.blanke.ba.cbr.CBRAgent;
+import de.blanke.ba.logik.Board;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.mas.GameBehaviour;
@@ -110,23 +111,24 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	public void	beginneSpiel() {
 		Spieler spieler = this.spielerA;
 		Spieler spielerB = this.spielerB;
-		this.führeZugDurch(spieler, spielerB);
+		Board board = this.spielController.getBoard();
+		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
+		board = null;
 		spieler = this.spielerB;
 		spielerB = this.spielerA;
-		this.führeZugDurch(spieler, spielerB);
+		board = this.spielController.getBoard();
+		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
-		
-		System.out.print("Spielphasen: " + spieler.getSpielPhase() + " mit :" + spielerB.getSpielPhase());
 	}
 	
 	
-	private void führeZugDurch(Spieler spieler, Spieler spielerB) {
+	private void führeZugDurch(Spieler spieler, Spieler spielerB, Board board) {
 		if(!spielEnde) {
 			switch(spieler.getSpielPhase()) {
 			case 0:
 						// Erste Spielphase (Steine frei setzen)
-						Spielstein spielstein = this.executeSpielZug(spieler, spielerB).get(0);
+						Spielstein spielstein = this.executeSpielZug(spieler, spielerB, board).get(0);
 						if(spieler.getName().contains("B")) {
 							spielstein.setColor(Color.BLUE);
 						} else {
@@ -139,7 +141,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							spielsteine.add(spielstein);
 							
 							if(spielController.pruefeAufMuehle(spieler)) {
-								System.out.println("-->  Der Spieler "+ spieler.getName() + " hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								System.out.println("-->  Der "+ spieler.getName() + " hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
 								spieler.setTempspielPhase(spieler.getSpielPhase());
 								spieler.setSpielPhase(3);
 								
@@ -150,13 +152,13 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 									System.out.println("Der Spieler A (Weiss) ist am Zug!");
 									int ausgabe = 9 - spielerA.getAnzahlSteine();
 									this.pruefeAufSpielEnde();
-									System.out.println("Info: Der Spieler" + spieler.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
+									System.out.println("Info:" + spieler.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 								} else {
 									ausgabe = "Der Spieler B (Blau) ist am Zug!";
 									System.out.println("Der Spieler B (Blau) ist am Zug!");
 									int ausgabe = 9 - spielerB.getAnzahlSteine();
 									this.pruefeAufSpielEnde();
-									System.out.println("Info: Der Spieler" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
+									System.out.println("Info: Der" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 								}
 								
 							}
@@ -167,14 +169,22 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;
 				
 			case 1:		// zweite Spielphase(Steine auf Nachbarfelder)
-						spielstein = this.executeSpielZug(spieler, spielerB).get(0);
-						Spielstein spielstein2 = this.executeSpielZug(spieler, spieler).get(1);
-						
-						if(spieler.getName().contains("B")) {
+						List<Spielstein> dataResult = this.executeSpielZug(spieler, spielerB, board);
+						spielstein = null;
+						Spielstein spielstein2 = null;
+						if(!dataResult.isEmpty()) {
+							spielstein = dataResult.get(0);
+							spielstein2 = dataResult.get(1);	
+						} else if(dataResult.isEmpty()) {
+							dataResult = this.executeSpielZug(spieler, spielerB, board);
+							spielstein = dataResult.get(0);
+							spielstein2 = dataResult.get(1);
+						} else if(spieler.getName().contains("B")) {
 							spielstein2.setColor(Color.BLUE);
 						} else {
 							spielstein2.setColor(Color.WHITE);
 						}
+						
 						xCord = spielstein.getX();
 						yCord = spielstein.getY();
 						spielController.entferneSteinVonFeld(xCord, yCord, spieler);
@@ -207,10 +217,17 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;
 						
 					
-			case 2:		// zweite Spielphase(Steine auf Nachbarfelder)
-						spielstein = this.executeSpielZug(spieler, spielerB).get(0);
-						spielstein2 = this.executeSpielZug(spieler, spieler).get(1);
-						if(spieler.getName().contains("B")) {
+			case 2:		dataResult = this.executeSpielZug(spieler, spielerB, board);
+						spielstein = null;
+						spielstein2 = null;
+						if(!dataResult.isEmpty()) {
+							spielstein = dataResult.get(0);
+							spielstein2 = dataResult.get(1);	
+						} else if(dataResult.isEmpty()) {
+							dataResult = this.executeSpielZug(spieler, spielerB, board);
+							spielstein = dataResult.get(0);
+							spielstein2 = dataResult.get(1);
+						} else if(spieler.getName().contains("B")) {
 							spielstein2.setColor(Color.BLUE);
 						} else {
 							spielstein2.setColor(Color.WHITE);
@@ -248,7 +265,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;
 						
 			case 3:		// Hier ein problem
-						spielstein = this.executeSpielZug(spieler, spielerB).get(0);
+						spielstein = this.executeSpielZug(spieler, spielerB, board).get(0);
 						// Keine Farbe muss gesetzt werden :)
 						xCord = spielstein.getX();
 						yCord = spielstein.getY();
@@ -299,9 +316,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	
 	
-	private List<Spielstein> executeSpielZug(Spieler spieler, Spieler spielerB) {
+	private List<Spielstein> executeSpielZug(Spieler spieler, Spieler spielerB, Board board) {
 		logger.info("Spiel(MAS): Ein Spielzug beginnt!");
-		MessageBox box  = new MessageBox(spieler, spielerB, spielController.getBoard());
+		MessageBox box  = new MessageBox(spieler, spielerB, board);
 		boolean changeAgent = false;
 		if(spieler.getName().contains("A")) {
 			changeAgent = true;
