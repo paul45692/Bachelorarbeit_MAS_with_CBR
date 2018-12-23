@@ -115,7 +115,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		Board board = this.spielController.getBoard();
 		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
-		this.spielController.testData();
 		board = null;
 		spieler = this.spielerB;
 		spielerB = this.spielerA;

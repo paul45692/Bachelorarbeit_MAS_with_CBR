@@ -9,25 +9,20 @@ import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 
 /**
- * Diese Klasse untersucht mögliche Züge
- * @author paul4
- * Die Klasse übernimmt die Züge auf der Logik-Ebene.
+ * Diese Klasse stellt die Logik Controlle bereit und
+ * validiert Spielzüge auf ihre Umsetzung.
+ * Erst nach der endgültigen Freigabe werden die Züge umgesetzt.
+ * @author Paul Blanke, 23.12.2018.
+ *
  */
 public class SpielController {
-	// Attribute
-	private Board board;
-	private boolean muehle;
-	// Diese Klasse übernimmt das Erkennung von Mühlen.
-	private MuehleDecting decting;
-	
-	// Getter und Setter
-	/**
-	 * Eine Instanz der Klasse @Schiedsrichter 
-	 * die prüft wann das Spiel beendet wurde.
-	 */
+// Attribute
+	private Board board = new Board();
+	private boolean muehle = false;
+	private MuehleDecting decting = new MuehleDecting();
 	private Converter helper = new Converter();
 	private Feld feld = null;
-	
+// Getter und Setter	
 	public Board getBoard() {
 		return board;
 	}
@@ -43,17 +38,15 @@ public class SpielController {
 	public void setMuehle(boolean muehle) {
 		this.muehle = muehle;
 	}
-	
-	
-	// Kontruktor
-	public SpielController() {
-		this.board = new Board();
-		this.decting = new MuehleDecting();
-	}
-	
+
+// Methoden	
 	/**
-	 * Erste Phase
-	 * 
+	 * Diese Methode stellt die Umsetzung der Aktion Spielstein setzen dar.
+	 * @param x Koordinaten
+	 * @param y "
+	 * @param spieler Der aktuelle Spieler am Zug.
+	 * @param steinGUI Der Spielstein von der Oberfläche.
+	 * @return Der Stein wurde erfolgreich gesetzt / nicht gesetzt.
 	 */
 	public boolean setSpielStein(int x, int y, Spieler spieler, Spielstein steinGUI) {
 	
@@ -79,7 +72,6 @@ public class SpielController {
 			}
 			
 		} else  if(spieler.getSpielPhase() == 1)	{
-				// Teste auf Fehler beim Spielzug
 				if(!this.testAufSpielEnde(spieler)) { 
 					if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)
 						&& (this.feld.checkObFeldNachbarnIst(board, feld))) {
@@ -89,6 +81,7 @@ public class SpielController {
 						spieler.setzeSpielstein(stein);
 						
 						if(spieler.getAnzahlSteine() == 3) {
+							System.out.print("Der " + spieler.getName() + "wechselt in die dritte Spielphase!");
 							spieler.setSpielPhase(2);
 						}
 				
@@ -125,13 +118,11 @@ public class SpielController {
 			System.out.print("Ein Fehler ist passiert");
 			return false;
 		}
-		
-		
 	}
 	
 	
 	/**
-	 * Diese Methode entfernt jeden beliebigen Stein.
+	 * Diese Methode entfernt eine Stein vom Spielfeld.
 	 * @param x
 	 * @param y
 	 * @return
@@ -164,10 +155,10 @@ public class SpielController {
 		}
 	}
 	/**
-	 * Diese Methode prüft auf ein mögliches Spielende!
-	 * Sobald in der ersten Spielphase für einen Spieler keine Züge mehr möglich sind, wird
+	 * Diese Methode prüft auf ein mögliches Spielende.
+	 * Sobald in der ersten und zweiten Spielphase für einen Spieler keine Züge mehr möglich sind, wird
 	 * das Spiel beendet.
-	 * @return
+	 * @return Spielende ja / nein.
 	 */
 	public boolean testAufSpielEnde(Spieler spieler) {
 		boolean check = false;
@@ -178,7 +169,6 @@ public class SpielController {
 				dataCheck.add(f.allefreienNachbarn(board).get(0));
 			}
 		}
-		
 		if(dataCheck.isEmpty()) {
 			check = true;
 			System.out.println("Spiel Ende: Der Spieler:"+  spieler.getName() + "kann keine Züge mehr ausführen!");
@@ -186,7 +176,7 @@ public class SpielController {
 		return check;
 	}
 	
-	public void testData() {
-		System.out.println(board.getAnzahlFreiFelder());
+	public void test() {
+		System.out.println("Das Feld ist belegt: " + board.checkAufBelegtFeld(new Feld(0,0,0)));
 	}
 }

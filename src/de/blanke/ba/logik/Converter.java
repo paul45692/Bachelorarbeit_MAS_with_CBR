@@ -1,7 +1,12 @@
 package de.blanke.ba.logik;
 
 import de.blanke.ba.model.Feld;
-
+/**
+ * Diese Klasse stellt eine Funktion bereit, um 
+ * Koordinaten von der Oberfläche in ein Feld umzuwandeln.
+ * @author Paul Blanke, 23.12.2018.
+ *
+ */
 public class Converter {
 	
 	public Feld ermitteleFeld(int xCord, int yCord) {

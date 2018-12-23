@@ -7,15 +7,9 @@ import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
-
 /**
- * Diese Klasse enthaeltet die technischen Daten des Boards.
- * 
- * @author paul4
- * 0 Platz ist frei
- * 1 Schwarz
- * 2 weiss
- * 
+ * Diese Klasse präsentiert die Datenhaltung über eine Liste von @Feldern.
+ * @author Paul Blanke, 23.12.2018.
  *
  */
 public class Board implements Serializable {
@@ -23,12 +17,9 @@ public class Board implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * Dieses Attribute stellt die Felder dar.
-	 */
 	private List<Feld> felder;
-	private int anzahlFreiFelder = 24;
-	
+	private int anzahlFreiFelder = 0;
+// Getter und Setter	
 	public List<Feld> getFelder() {
 		return felder;
 	}
@@ -36,9 +27,6 @@ public class Board implements Serializable {
 	public void setFelder(List<Feld> felder) {
 		this.felder = felder;
 	}
-	
-	
-
 	public int getAnzahlFreiFelder() {
 		return anzahlFreiFelder;
 	}
@@ -51,41 +39,36 @@ public class Board implements Serializable {
 		felder = new ArrayList<>();
 		erzeugeFelder();
 	}
-	// Diese methode stellt das Feld bereit.
+	
+// Methoden	
+	/**
+	 * Diese Methode initalisiert das Board mit 24 Feldern.
+	 */
 	private void erzeugeFelder() {
-		int anzahlFelder = 0;
-		
 		for(int r = 0; r < 3; r++) {
-			
 			for(int x = 0; x < 3; x++) {
-				
 				for(int y = 0; y < 3; y++) {
 					Feld feld = new Feld(r,x, y);
 					felder.add(feld);
-					anzahlFelder++;
+					this.anzahlFreiFelder++;
 					// Loesche unnötige Felder :)
 					if(x== 1 && y== 1 && ( r== 0 || r == 1 || r == 2)) {
 						felder.remove(feld);
-						anzahlFelder--;
+						this.anzahlFreiFelder--;
 					} 
-					
-				
 				}
 			}
 		}
-		
-		System.out.println(anzahlFelder);
 	}	
 		
-		
-		/**
-		 * Diese Methode setzt ein Stein auf das Feld, falls @Feld getbelegt false ist.
-		 * @param r
-		 * @param x
-		 * @param y
-		 * @return war erfolgreich?
-		 */
-		public boolean setzteStein(int r, int x, int y, Spieler spieler, Spielstein spielstein) {
+/**
+* Diese Methode setzt ein Stein auf das Feld, falls @Feld getbelegt false ist.
+* @param r Koordinaten
+* @param x "
+* @param y "
+* @return  Der Stein wurde gesetzt ja / Nein.
+ */
+	public boolean setzteStein(int r, int x, int y, Spieler spieler, Spielstein spielstein) {
 			Stein stein = new Stein(r,x,y, spieler.getSpielFarbe(), spielstein);
 			boolean rueckgabe = false;
 			// Durchläuft alle felder
@@ -101,14 +84,10 @@ public class Board implements Serializable {
 						rueckgabe = true;
 						
 					} else {
-						
-						System.out.println("Dieser Zug ist nicht erlaubt! - Logik-Fehler ist belegt");
+						System.out.println("Das Feld ist belegt!");
 					}
-					
-					break;
-					
+					break;	
 				}
-				
 			}
 			return rueckgabe;
 			
@@ -128,30 +107,11 @@ public class Board implements Serializable {
 			}
 			return feld;
 		}
-		
 		/**
-		 * Diese Methode holt einen Stein vom Feld 
-		 * @param feld
-		 * @param spieler
-		 * @return
+		 * Diese Methode löscht einen Spielstein vom Feld herunter.
+		 * @param feld Das Ziel, welches gelöscht werden soll.
+		 * @return Der Spielstein auf dem Feld.
 		 */
-		public boolean entferneStein(Feld feld, Spieler spieler) {
-			
-			
-			if((feld.getStein().getFarbe() == spieler.getSpielFarbe()) && feld.getBelegt()) {
-				felder.remove(feld);
-				feld.entferneStein();
-				felder.add(feld);
-				return true;
-				
-			} else {
-				
-				return false;
-			}
-		}
-		
-		
-		
 		public Spielstein entferneStein(Feld feld) {
 			Stein stein = null;
 			Spielstein spielstein = null;
@@ -172,7 +132,6 @@ public class Board implements Serializable {
 			} else {
 				System.out.println("Fehler auf der Logik Ebene");
 			}
-			
 			return spielstein;
 		}
 		
@@ -194,10 +153,5 @@ public class Board implements Serializable {
 			}
 			return check;
 		}
-		
-		
-		
-		
-		
 }
 
