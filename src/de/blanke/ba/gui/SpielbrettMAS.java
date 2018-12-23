@@ -110,18 +110,17 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		Spieler spieler = this.spielerA;
-		Spieler spielerB = this.spielerB;
+		Spieler spieler = this.spielerB;
+		Spieler spielerB = this.spielerA;
 		Board board = this.spielController.getBoard();
 		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
 		board = null;
-		spieler = this.spielerB;
-		spielerB = this.spielerA;
+		spieler = this.spielerA;
+		spielerB = this.spielerB;
 		board = this.spielController.getBoard();
 		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
-		
 	}
 	
 	
@@ -181,7 +180,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							dataResult = this.executeSpielZug(spieler, spielerB, board);
 							spielstein = dataResult.get(0);
 							spielstein2 = dataResult.get(1);
-						} else if(spieler.getName().contains("B")) {
+						}
+						// Farbe steuern.
+						if(spieler.getName().contains("B")) {
 							spielstein2.setColor(Color.BLUE);
 						} else {
 							spielstein2.setColor(Color.WHITE);
@@ -229,7 +230,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							dataResult = this.executeSpielZug(spieler, spielerB, board);
 							spielstein = dataResult.get(0);
 							spielstein2 = dataResult.get(1);
-						} else if(spieler.getName().contains("B")) {
+						}
+						// Farbe steuern.
+						if(spieler.getName().contains("B")) {
 							spielstein2.setColor(Color.BLUE);
 						} else {
 							spielstein2.setColor(Color.WHITE);

@@ -34,7 +34,7 @@ public class RBSAgent extends Agent {
 	protected void setup() {
 		System.out.println("RBS System aktiv");
 		PropertyConfigurator.configure(RBSAgent.class.getResource("log4j.info"));
-		logger.info(" Das RBS System wurde aktiviert (@" + RBSAgent.class);
+		logger.info(" Das RBS System wurde aktiviert");
 		super.setup();
 		/**
 		 * Diese Methode stellt die Logik des Agenten bereit.

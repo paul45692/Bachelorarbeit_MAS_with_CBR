@@ -52,7 +52,7 @@ public class RegelInterpreter {
 		switch(spieler.getSpielPhase()) {
 		
 		case 0:    	if(this.analyseQueryBefore(spieler, spielerB, board)) {
-						System.out.println("RBS Agent: Eine allegemeine Regel hat gefeuert!");
+						System.out.println("RBS Agent: Eine allgemeine Regel hat gefeuert!");
 					} else {
 						analyseQuerySpielPhase0(board, spieler);
 					}
@@ -60,7 +60,7 @@ public class RegelInterpreter {
 					break;
 					
 		case 1:     if(this.analyseQueryBefore(spieler, spielerB, board)) {
-						System.out.println("RBS Agent: Eine allegemeine Regel hat gefeuert!");
+						System.out.println("RBS Agent: Eine allgemeine Regel hat gefeuert!");
 					} else {
 						analyseQuerySpielPhase1(board, spieler);
 					}
@@ -101,7 +101,7 @@ public class RegelInterpreter {
 				this.dataBack.add(regel.getElseStein());
 				spielphase0.remove(regel);
 				break;
-			} else  if(regel.getIfTeil().contains("Belegt") && !board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) &&
+			} else  if(regel.getIfTeil().contains("Belegt") && board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) &&
 						!board.checkAufBelegtFeld(regel.getElseStein().convertToFeld())){
 				this.dataBack.add(regel.getElseStein());
 				spielphase0.remove(regel);
@@ -138,7 +138,7 @@ public class RegelInterpreter {
 					Stein steineins = spielData.get(i);
 					if(steineins.getxCord() < 2) {
 						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord() + 1, steineins.getyCord(), null);
-						if(board.checkAufBelegtFeld(zwei.convertToFeld())) {
+						if(!board.checkAufBelegtFeld(zwei.convertToFeld())) {
 							dataBack.add(steineins);
 							dataBack.add(zwei);
 							break;
@@ -146,7 +146,7 @@ public class RegelInterpreter {
 						
 					} else if(steineins.getyCord() <2 && steineins.getxCord() != 1) {
 						Stein zwei = new Stein(steineins.getRing(), steineins.getxCord(), steineins.getyCord() + 1, null);
-						if(board.checkAufBelegtFeld(zwei.convertToFeld())) {
+						if(!board.checkAufBelegtFeld(zwei.convertToFeld())) {
 							dataBack.add(steineins);
 							dataBack.add(zwei);
 							break;

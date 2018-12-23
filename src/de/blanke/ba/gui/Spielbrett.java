@@ -18,8 +18,8 @@ import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.spieler.Spieler;
 /**
- * Diese Klasse stellt das Spielbrett für ein 1 vs 1 ohne den MAS
- * Einsatz bereit.
+ * Diese Klasse stellt das Spielbrett für ein 1 vs 1 
+ * ohne den MAS-Einsatz bereit.
  * @author Paul Blanke
  *
  */
