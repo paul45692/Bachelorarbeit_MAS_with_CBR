@@ -17,8 +17,6 @@ public class AgentenOperations {
 	private List<Stein> fixeSteineRing2 = new ArrayList<>();
 	private List<Stein> fixeSteineRing3 = new ArrayList<>();
 	private List<Stein> alleSteineFesteReihenFolge = new ArrayList<>();
-	
-	
 	/**
 	 * Setzte die Steine auf für das MAS.
 	 */
@@ -29,7 +27,7 @@ public class AgentenOperations {
 		fixeSteineRing1.add(new Stein(0,2,0,null, new Spielstein(730, 12, null)));
 		fixeSteineRing1.add(new Stein(0,0,1,null, new Spielstein( 14, 347, null)));
 		fixeSteineRing1.add(new Stein(0,0,2,null, new Spielstein(15, 681, null)));
-		fixeSteineRing1.add(new Stein(0,1,2,null, new Spielstein( 371, 682, null)));
+		fixeSteineRing1.add(new Stein(0,1,2,null, new Spielstein(371, 682, null)));
 		fixeSteineRing1.add(new Stein(0,2,2,null, new Spielstein(731, 678, null)));
 		fixeSteineRing1.add(new Stein(0,2,1,null, new Spielstein(731, 350, null)));
 		// Add fixe Spielsteine für den ersten Ring
@@ -88,19 +86,18 @@ public class AgentenOperations {
 	}
 	
 	public Spielstein wandeleSteinzuSpielSteinUm(Stein stein) {
-
 		Spielstein rueckgabe = null;
 		if(stein.getRing() == 0) {
 			for(Stein s: fixeSteineRing1) {
-				if((s.getxCord() == stein.getxCord())&& (s.getyCord() == s.getyCord())) {
+				if(s.equals(stein)) {
 					rueckgabe = s.getSpielstein();
 					break;
 				}
 			}
 			
-		}else if(stein.getRing() == 1) {
+		} else if(stein.getRing() == 1) {
 			for(Stein s: fixeSteineRing2) {
-				if((s.getxCord() == stein.getxCord())&& (s.getyCord() == s.getyCord())) {
+				if(s.equals(stein)) {
 					rueckgabe = s.getSpielstein();
 					break;
 				}
@@ -108,13 +105,12 @@ public class AgentenOperations {
 			}	
 		} else {
 			for(Stein s: fixeSteineRing3) {
-				if((s.getxCord() == stein.getxCord())&& (s.getyCord() == s.getyCord())) {
+				if(s.equals(stein)) {
 					rueckgabe = s.getSpielstein();
 					break;
 				}
 			}	
 		}
-		
 		return rueckgabe;
 	}
 	

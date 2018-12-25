@@ -106,23 +106,17 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		Spieler spieler = this.spielerB;
-		Spieler spielerB = this.spielerA;
-		Board board = this.spielController.getBoard();
-		this.führeZugDurch(spieler, spielerB, board);
-		this.paint(getGraphics());
-		board = null;
-		spieler = this.spielerA;
-		spielerB = this.spielerB;
-		board = this.spielController.getBoard();
-		this.führeZugDurch(spieler, spielerB, board);
-		this.paint(getGraphics());
-		board = null;
-		spieler = this.spielerB;
-		spielerB = this.spielerA;
-		board = this.spielController.getBoard();
-		this.führeZugDurch(spieler, spielerB, board);
-		this.paint(getGraphics());
+		for(int i = 0; i < 5; i++) {
+			Spieler spieler = this.spielerA;
+			Spieler spielerB = this.spielerB;
+			if(i % 2 == 0) {
+				spieler = this.spielerB;
+				spielerB = this.spielerA;
+			}
+			Board board = this.spielController.getBoard();
+			this.führeZugDurch(spieler, spielerB, board);
+			this.paint(getGraphics());
+		}
 	}
 	/**
 	 * Diese Methode führt einen Spielzug des Agenten durch.
@@ -134,7 +128,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		if(!spielEnde) {
 			switch(spieler.getSpielPhase()) {
 			case 0:
-						// Erste Spielphase (Steine frei setzen)
 						Spielstein spielstein = this.executeSpielZug(spieler, spielerB, board).get(0);
 						if(spieler.getName().contains("B")) {
 							spielstein.setColor(Color.BLUE);
@@ -159,20 +152,17 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 									System.out.println("Der Spieler A (Weiss) ist am Zug!");
 									int ausgabe = 9 - spielerA.getAnzahlSteine();
 									this.pruefeAufSpielEnde();
-									System.out.println("Info:" + spieler.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
+									System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 								} else {
 									ausgabe = "Der Spieler B (Blau) ist am Zug!";
 									System.out.println("Der Spieler B (Blau) ist am Zug!");
-									int ausgabe = 9 - spielerB.getAnzahlSteine();
+									int ausgabe = 9 - this.spielerA.getAnzahlSteine();
 									this.pruefeAufSpielEnde();
 									System.out.println("Info: Der" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 								}
-								
 							}
 							break;
-						} else {
-							System.out.println("-->Der Spielzug ist fehlgeschlagen");
-						}
+						} 
 						break;
 				
 			case 1:		// zweite Spielphase(Steine auf Nachbarfelder)
@@ -275,18 +265,22 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						} 
 						break;
 						
-			case 3:		// Hier ein problem
+			case 3:		
 						spielstein = this.executeSpielZug(spieler, spielerB, board).get(0);
-						// Keine Farbe muss gesetzt werden :)
 						xCord = spielstein.getX();
 						yCord = spielstein.getY();
-						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerA);
+						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
 						spielsteine.remove(stein);
-						// Der Spieler muss wieder in die Spielphase zurück
-						spielerB.setSpielPhase(spielerB.getTempspielPhase());
+						spieler.setSpielPhase(spieler.getTempspielPhase());
 						ausgabe = "Der Spieler A (Weiss) ist am Zug!";
+						if(spieler.getName().contains("A")) {
+							ausgabe = "Der Spieler B (Blau) ist nun am Zug!";
+							System.out.println("Der Spieler B ist nun am Zug!");
+						} else {
+							ausgabe = "Der Spieler A (Weiss) ist nun am Zug!";
+							System.out.println("Der Spieler A ist nun am Zug!");
+						}
 						this.pruefeAufSpielEnde();
-						System.out.println("Der Spieler A (Weiss) ist nun am Zug!"); 
 						break;
 			default: 						
 						break;	
@@ -326,7 +320,13 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		}
 	}
 	
-	
+	/**
+	 * Diese Methode sorgt für die Ausführung eines Spielzuges über das MAS.
+	 * @param spieler		aktueller Spieler
+	 * @param spielerB      zweiter Spieler
+	 * @param board			Spielsituation
+	 * @return   eine Liste mit Spielzügen.
+	 */
 	private List<Spielstein> executeSpielZug(Spieler spieler, Spieler spielerB, Board board) {
 		logger.info("Spiel(MAS): Ein Spielzug beginnt!");
 		MessageBox box  = new MessageBox(spieler, spielerB, board);

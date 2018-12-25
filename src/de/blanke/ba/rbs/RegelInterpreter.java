@@ -75,6 +75,7 @@ public class RegelInterpreter {
 		} else {
 			ausgabeLog = dataBack.get(1).toString();
 		}
+		System.out.println("RBS-Resultat:" + dataBack.get(0).toString());
 		logger.info("RBS Agent (Auswertung): Ergebnis war: Start:" + dataBack.get(0).toString() + "  Ziel:" + ausgabeLog);
 		return this.dataBack;
 	}	
@@ -268,9 +269,6 @@ public class RegelInterpreter {
 							dataBack.add(rueckgabe2.get(1));
 							back = true;
 						}
-						break;
-						
-			case 3:  	// Später
 						break;
 			
 			default: break;	

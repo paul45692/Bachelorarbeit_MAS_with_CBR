@@ -34,7 +34,6 @@ public class SpielLogikErweChecks {
 				}
 			}
 		}
-		// Für Funde:
 		if(!rueckgabe.isEmpty()) {
 			List<Feld> freieFelder = rueckgabe.get(0).convertToFeld().allefreienNachbarn(board);
 			if(!freieFelder.isEmpty()) {
@@ -44,7 +43,6 @@ public class SpielLogikErweChecks {
 				freieFelder = rueckgabe.get(1).convertToFeld().allefreienNachbarn(board);
 				rueckgabe.clear();
 				rueckgabe.add(freieFelder.get(0).convertToStein());
-				
 			}
 		} else {
 			System.out.println("Es wurden keine zwei Steine in einer Reihe gefunden!");

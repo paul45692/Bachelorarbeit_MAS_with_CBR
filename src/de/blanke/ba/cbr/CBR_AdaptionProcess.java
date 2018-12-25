@@ -42,8 +42,10 @@ public class CBR_AdaptionProcess {
 		
 			case 0: 		if(board.checkAufBelegtFeld(start.convertToFeld()) == false) {
 								rueckgabe.add(start);
+								System.out.println("Start ist frei");
 							} else if(board.checkAufBelegtFeld(ziel.convertToFeld()) == false) {
 								rueckgabe.add(ziel);
+								System.out.print("Das Ziel ist frei");
 							}
 							break;
 							

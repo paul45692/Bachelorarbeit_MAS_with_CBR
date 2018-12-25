@@ -126,8 +126,6 @@ public class CBRController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(resultSet.get(0).toString());
-		System.out.println(resultSet.get(1).toString());
 		return resultSet;
 	}
 	/**
@@ -158,7 +156,7 @@ public class CBRController {
 			evaluateData.add(Integer.parseInt(r.getAttForDesc(lösungADesc).getValueAsString()));
 			evaluateData.add(Integer.parseInt(r.getAttForDesc(lösungBDesc).getValueAsString()));
 		}
-		// Processing 1 b - Wandle auf Steine um 
+		// Processing 1 b - Wandle auf Steine um
 		List<Stein> caculateSol = new ArrayList<>();
 		for(Integer a: evaluateData) {
 			caculateSol.add(operations.getSteineFuerCBRSystem(a));
@@ -166,13 +164,19 @@ public class CBRController {
 		for(int i = 0; i < caculateSol.size(); i++) {
 			Stein eins = caculateSol.get(i);
 			Stein zwei = caculateSol.get(i+1);
-			Stein result = process.evaluateSolution(spieler, board, eins, zwei).get(0);
+			List<Stein> result = process.evaluateSolution(spieler, board, eins, zwei);
 			if(result!= null) {
-				this.resultSet.add(eins);
-			 	this.resultSet.add(zwei);
+				if(spieler.getSpielPhase() == 0 || spieler.getSpielPhase() == 3) {
+					this.resultSet.add(result.get(0));
+				} else {
+					this.resultSet.add(result.get(0));
+					this.resultSet.add(result.get(1));
+				}
 				break;
 			}
 		}
-		
 	}
+
 }	
+
+
