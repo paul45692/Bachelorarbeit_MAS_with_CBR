@@ -10,41 +10,32 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 /**
- * Diese Klasse fügt eine Methode für den Empfang von Nachrichten hinzu.
- * @author Paul Blanke
+ * Diese Klasse fügt eine Behaviour für den Empfang von Nachrichten hinzu.
+ * @author Paul Blanke-
  *
  */
-public class GameDataGetBehaviour  extends OneShotBehaviour{
-	/**
-	 * @return the spielstein
-	 */
-	
+public class GameDataGetBehaviour extends OneShotBehaviour{
+// Attribute
 	private static final long serialVersionUID = 1L;
 	private List<Spielstein> spielstein = new ArrayList<>(); 
 	private AgentenOperations operations = new AgentenOperations();
 	private static final Logger logger = Logger.getLogger(GameDataGetBehaviour.class);
-	
-	public List<Spielstein> getSpielstein() {
-		return spielstein;
-	}
-
-	/**
-	 * @param spielstein the spielstein to set
-	 */
+// getter und setter
 	public void setSpielstein(List<Spielstein> spielstein) {
 		this.spielstein = spielstein;
 	}
-
-	/**
-	 * 
-	 */
-	
-	
+	public List<Spielstein> getSpielstein() {
+		return spielstein;
+	}
+// Konstruktor
 	public GameDataGetBehaviour(ControllerAgent agent) {
 		super(agent);
 		PropertyConfigurator.configure(GameDataGetBehaviour.class.getResource("log4j.info"));
 	}
-		
+// Methoden
+	/**
+	 * Agenten spezifische Methode
+	 */
 	@Override
 	public void action() {
 		ACLMessage empfang = this.myAgent.receive();
@@ -52,7 +43,6 @@ public class GameDataGetBehaviour  extends OneShotBehaviour{
 		if(empfang != null) {
 			try {
 				MessageBoxSteine box = (MessageBoxSteine) empfang.getContentObject();
-				
 				logger.info("Controller Agent (Auswertung): Eine Nachricht wurde angekommen.");
 				Stein stein = box.getEntferneStein();
 				Stein ziel = box.getZielStein();
@@ -65,8 +55,6 @@ public class GameDataGetBehaviour  extends OneShotBehaviour{
 				} else {
 					logger.info("Controller Agent (Auswertung): Ein technisches Problem ist aufgetreten.");
 				}
-				
-				
 			} catch (UnreadableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -75,8 +63,5 @@ public class GameDataGetBehaviour  extends OneShotBehaviour{
 		} else {
 			block();
 		}
-		
 	}
-
-
 }
