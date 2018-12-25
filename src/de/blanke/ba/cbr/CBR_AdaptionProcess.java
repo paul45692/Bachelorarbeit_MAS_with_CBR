@@ -21,7 +21,6 @@ public class CBR_AdaptionProcess {
 	 * @return
 	 */
 	protected Instance provideNewCase(Instance instance1, Instance instance2, IntegerDesc intA, IntegerDesc intB) {
-		
 		try {
 			Integer lösungA = Integer.parseInt(instance2.getAttForDesc(intA).getValueAsString());
 			Integer lösungB = Integer.parseInt(instance2.getAttForDesc(intB).getValueAsString());
@@ -31,9 +30,7 @@ public class CBR_AdaptionProcess {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return instance1;
-		
 	}
 	/**
 	 * Diese Methode untersucht die (vorgeschlagende) Lösung.
@@ -41,12 +38,11 @@ public class CBR_AdaptionProcess {
 	 */
 	protected List<Stein> evaluateSolution(Spieler spieler, Board board, Stein start, Stein ziel) {
 		List<Stein> rueckgabe = new ArrayList<>();
-		// Analyse abhängig von der Spielphase
 		switch (spieler.getSpielPhase()) {
 		
-			case 0: 		if(!board.checkAufBelegtFeld(start.convertToFeld())) {
+			case 0: 		if(board.checkAufBelegtFeld(start.convertToFeld()) == false) {
 								rueckgabe.add(start);
-							} else if(!board.checkAufBelegtFeld(ziel.convertToFeld())) {
+							} else if(board.checkAufBelegtFeld(ziel.convertToFeld()) == false) {
 								rueckgabe.add(ziel);
 							}
 							break;

@@ -18,17 +18,14 @@ import jade.lang.acl.UnreadableException;
 /**
  * Dieser Agent verwaltet das CBR System.
  * Siehe auch @RBSAgent
- * @author paul4
+ * @author Paul Blanke
  *
  */
 public class CBRAgent extends Agent{
-	/**
-	 * 
-	 */
+// Attribute
 	private static final long serialVersionUID = 1L;
 	private CBRController interpreter = new CBRController();
 	private static final Logger logger = Logger.getLogger(CBRAgent.class);
-	
 
 	@Override
 	protected void setup() {
@@ -38,7 +35,6 @@ public class CBRAgent extends Agent{
 		super.setup();
 		addBehaviour(new CyclicBehaviour() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public void action() {
 				/**
@@ -46,8 +42,6 @@ public class CBRAgent extends Agent{
 				 */
 				ACLMessage msg = receive();
 				MessageBox box = null;
-				
-				
 				if(msg != null) {
 					/**
 					 * Werte die Nachricht und sende eine Nachricht zurück.
@@ -76,7 +70,6 @@ public class CBRAgent extends Agent{
 						System.out.println("Error-AgentenEbene: Übertragungsproblem !!");
 						logger.error("CBR System: Übertragungsproblem");
 					}
-					System.out.println("Es sind : " + rueckgabe.size() + " Steine bereit");
 					logger.info("CBR-System: Eine Nachricht wurde erzeugt und wird versendet");
 					box.cleartheBox();
 					// Rücktransport
@@ -110,9 +103,7 @@ public class CBRAgent extends Agent{
 				} else {
 					block();
 				}
-				
 			}
-			
 		});
 	}
 }

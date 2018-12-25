@@ -24,12 +24,8 @@ import de.blanke.ba.spieler.Spieler;
  *
  */
 public class Spielbrett extends JPanel implements MouseListener {
-	
-	/**
-	 * 
-	 */
+// Attribute
 	private static final long serialVersionUID = -3334802508888319034L;
-	
 	private static final Logger logger = Logger.getLogger(Spielbrett.class);
 	float interpolation;
 	// Change the player
@@ -50,9 +46,7 @@ public class Spielbrett extends JPanel implements MouseListener {
 	// Spieler B: blau und @player true;
 	private Spieler spielerB;
 	private int playerB;
-	
-	
-	
+// konstruktor	
 	public Spielbrett() {
 		PropertyConfigurator.configure(Spielbrett.class.getResource("log4j.info"));
 		logger.info("Spiel: Programm gestarted");
@@ -63,49 +57,37 @@ public class Spielbrett extends JPanel implements MouseListener {
 		this.playerA = 0;
 		this.spielerB = new Spieler(Color.BLUE, "Spieler B");
 		this.playerB = 1;
-		
-		
 		try {
 			bi = ImageIO.read(this.getClass().getResource("/res/Muehlefeld.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 		this.addMouseListener(this);
 		this.setVisible(true);
 	}
-	/**
-	 * Methoden zum Setzen der Spielparameter auf die GUI
-	 * @param interpol
-	 */
+// Methoden
 	public void setInterpolation(float interpol) {
 		this.interpolation = interpol;
 	}
 	
 	public void update() {	
 	}
-	
+	// Setz die Steine auf das Panel.
 	public void paintComponent(Graphics g) {
 		g.drawImage(bi, 0,0, this.getWidth(), this.getHeight(), this);
 		if(spielsteine != null) {
-			
 			for(Spielstein k :spielsteine) {
 				Graphics2D g2d = (Graphics2D) g;
-			//	g2d.setColor(Color.BLUE);
 				g2d.drawOval(k.getX(), k.getY(), 50, 50);
-				// Steuert die Farbe.
 				g2d.setColor(k.getColor());
-				
 				g2d.fillOval(k.getX(), k.getY(), 50, 50);
-				
 			}
 		}
 	}
-
+// zentrale Spielmethode über den Mouse Klick.
 	@Override
 	public void mouseClicked(MouseEvent me) {
-		
 		xCord = me.getX();
 		yCord = me.getY();
 		logger.info("Spiel-Eingabe: " + xCord + "- " + yCord);
@@ -322,38 +304,6 @@ public class Spielbrett extends JPanel implements MouseListener {
 			}
 			
 		}	
-	}	
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public boolean isSpielEnde() {
-		return spielEnde;
-	}
-
-	public void setSpielEnde(boolean spielEnde) {
-		this.spielEnde = spielEnde;
 	}
 	// Diese Methode untersucht ob ein Spieler gewonnnen hat.
 	private void pruefeSpielEnde() {
@@ -367,6 +317,27 @@ public class Spielbrett extends JPanel implements MouseListener {
 			logger.info("Der Spieler " + spielerA.getSpielFarbe().toString() + "  gewinnt!");
 		} 
 	}
-	
-	
+// Methode und sonstiges 
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub	
+	}
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub	
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub	
+	}
+	public boolean isSpielEnde() {
+		return spielEnde;
+	}
+	public void setSpielEnde(boolean spielEnde) {
+		this.spielEnde = spielEnde;
+	}
 }

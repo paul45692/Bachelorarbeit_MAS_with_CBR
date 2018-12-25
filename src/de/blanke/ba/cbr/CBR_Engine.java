@@ -12,8 +12,6 @@ public class CBR_Engine {
 	private String projectPfad = "C:\\Users\\paul4\\git\\bachelorarbeitAgentenCBR\\src\\res\\";
 	private String projectName = "mühle_spiel.prj";
 	
-	
-	
 	public Project loadCBRProject() {
 			Project  p = null;
 			try {
@@ -23,8 +21,6 @@ public class CBR_Engine {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
 		return p;
 	}
-	
 }

@@ -10,13 +10,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import de.blanke.ba.cbr.CBRAgent;
 import de.blanke.ba.logik.SpielController;
 import de.blanke.ba.mas.ControllerAgent;
@@ -32,9 +29,13 @@ import jade.core.Runtime;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 import jade.wrapper.StaleProxyException;
-
+/**
+ * Diese Spielfeld versucht ein Spiel gegen den RBS Agenten abzubilden.
+ * @author Paul Blanke.
+ *
+ */
 public class SpielbrettVsRBS extends JPanel implements MouseListener  {
-	
+// Attribute	
 	private static final long serialVersionUID = 1L;
 	// Grafikeinstellungen
 	private BufferedImage bi;
@@ -48,7 +49,7 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 	private Spieler spielerB;
 	private boolean spielEnde = false;
 	private static final Logger logger = Logger.getLogger(SpielbrettMAS.class);
-	
+// konstruktor	
 	public SpielbrettVsRBS() {
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
@@ -67,7 +68,6 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 		this.setVisible(true);
 		this.setUpMAS();
 	}
-	
 	/**
 	 * Diese Methoden zeichnen das Spielbrett und setze die Steine dazu.
 	 */
@@ -81,41 +81,26 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 	public void paintComponent(Graphics g) {
 		g.drawImage(bi, 0,0, this.getWidth(), this.getHeight(), this);
 		if(spielsteine != null) {
-			
 			for(Spielstein k :spielsteine) {
 				Graphics2D g2d = (Graphics2D) g;
-			//	g2d.setColor(Color.BLUE);
 				g2d.drawOval(k.getX(), k.getY(), 50, 50);
-				// Steuert die Farbe.
 				g2d.setColor(k.getColor());
-				
 				g2d.fillOval(k.getX(), k.getY(), 50, 50);
-				
 			}
 		}
 	}
-	
-	
 // Methoden für die Eingabe	
 	/**
 	 * Diese Methode stellt eine modifizierte Version aus dem Spielbrett dar.
 	 */
 	@Override
 	public void mouseClicked(MouseEvent me) {
-
 		boolean zugwechsel = false;
-		
-		List<Spielstein> zugDoppel = new ArrayList<>();
-		// Checke ob das Spiel schon zu Ende ist.
-		// pruefeSpielEnde();
-		
-			int xCord = me.getX();
-			int yCord = me.getY();
-			Spielstein spielstein = new Spielstein(xCord, yCord, Color.WHITE);
-			
-			
-			
-			switch(spielerA.getSpielPhase()) {
+		int xCord = me.getX();
+		int yCord = me.getY();
+		Spielstein spielstein = new Spielstein(xCord, yCord, Color.WHITE);
+		this.pruefeAufSpielEnde();
+		switch(spielerA.getSpielPhase()) {
 			
 			case 0:
 						if(spielController.setSpielStein(xCord, yCord, spielerA, spielstein)) {
@@ -193,33 +178,23 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 						spielerA.setSpielPhase(spielerA.getTempspielPhase());
 						ausgabe = "Der Spieler B (Blau) ist am Zug!";
 						System.out.println("Der Spieler B (Blau) ist am Zug!"); 
-				
 						break;
 			default: 						
 						break;	
-				
-			}
-		
-			
-	
+			}	
 	}	
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
-
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
-
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -309,18 +284,16 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 			this.spielEnde = true;
 		}
 	}
-	
+	/**
+	 * Diese Methode setzt den Spielzug auf der GUI um.
+	 */
 	private void führeAgentenZugAus() {
-		
 		List<Spielstein> data = this.executeSpielZug(this.spielerB, spielerA);
-		
 		switch(this.spielerB.getSpielPhase()) {
 		
-			case 0:  Spielstein spielstein = data.get(0);	
+		case 0:  	Spielstein spielstein = data.get(0);	
 					int xCord = spielstein.getX();
 					int yCord = spielstein.getY();
-					
-				
 					if(spielController.setSpielStein(xCord, yCord, spielerB, spielstein)) {
 							spielstein.setColor(Color.BLUE);
 							spielsteine.add(spielstein);
@@ -329,7 +302,6 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 									System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
 									spielerB.setTempspielPhase(spielerB.getSpielPhase());
 									spielerB.setSpielPhase(3);
-					
 								} else {
 									ausgabe = "Der Spieler A (weiss) ist am Zug!";
 									System.out.println("Der Spieler A (weiss) ist am Zug!");
@@ -337,13 +309,52 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 									System.out.println("Info: Der Spieler" + spielerA.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 								}
 						}
-					System.out.println("Der Spielzug wurde ausgeführt:)");
-						break;	
+					break;	
 				
 				
-			case 1: 	break;
-			case 2:		break;
-			case 3: 	break;	
+		case 1: 	Spielstein zuEntfernen = data.get(0);
+					Spielstein ziel = data.get(1);
+					 xCord = zuEntfernen.getX();
+					 yCord = zuEntfernen.getY();
+					Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
+					spielsteine.remove(stein);
+					if(spielController.setSpielStein(xCord, yCord, spielerB, ziel))  {
+						spielsteine.add(ziel);
+						if(spielController.pruefeAufMuehle(spielerA)) {
+							System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+							spielerB.setTempspielPhase(spielerA.getSpielPhase());
+							spielerB.setSpielPhase(3);
+							
+						} else {
+							ausgabe = "Der Spieler A (weiss) ist am Zug!";
+							System.out.println("Der Spieler A (weiss) ist am Zug!");
+						}
+						break;
+					}
+					break;
+					
+		case 2:		zuEntfernen = data.get(0);
+					ziel = data.get(1);
+					xCord = zuEntfernen.getX();
+					yCord = zuEntfernen.getY();
+					stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
+					spielsteine.remove(stein);
+					if(spielController.setSpielStein(xCord, yCord, spielerB, ziel))  {
+						spielsteine.add(ziel);
+						if(spielController.pruefeAufMuehle(spielerA)) {
+							System.out.println("-->  Der Spieler A hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+							spielerB.setTempspielPhase(spielerA.getSpielPhase());
+							spielerB.setSpielPhase(3);
+								
+						} else {
+							ausgabe = "Der Spieler A (weiss) ist am Zug!";
+							System.out.println("Der Spieler A (weiss) ist am Zug!");
+						}
+						break;
+					}
+					break;
+					
+		case 3: 	break;	
 		}
 	}
 	

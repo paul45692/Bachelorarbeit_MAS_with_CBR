@@ -15,9 +15,10 @@ import de.dfki.mycbr.core.casebase.Instance;
 import de.dfki.mycbr.core.model.IntegerDesc;
 
 /**
- * Diese Klasse versucht einen Lernvorgang abzubilden, falls das CBR System gar keine neuen Fälle
+ * Diese Klasse versucht einen Lernvorgang abzubilden, falls das CBR System gar keine neuen Fall
  * finden wird.
- * @author paul4
+ * (Diese Klasse ist ein Prototyp und kommt wahrscheinlich nicht zum Einsatz.)
+ * @author Paul Blanke
  *
  */
 public class CBR_Learning_Process_Prototyp {
@@ -65,7 +66,6 @@ public class CBR_Learning_Process_Prototyp {
 	 * @param board
 	 */
 	private void calcuteLearningSpielphase1(Board board) {
-		
 		while(true) {
 			int tryTest = ran.nextInt((24-1));
 			Stein stein = operation.getSteineFuerCBRSystem(tryTest);
@@ -94,9 +94,7 @@ public class CBR_Learning_Process_Prototyp {
 		} else {
 			System.out.print("CBR-System: Das Lernen ist fehlgeschlagen!");
 		}
-		
 	}
-	
 	private void calcuteLearningSpielphase3(Board board, Spieler spieler) {
 		this.learningParameterA = operation.getIndexFromStein(spieler.getPosiSteine().get(0));
 		
@@ -110,11 +108,7 @@ public class CBR_Learning_Process_Prototyp {
 		}
 		
 	}
-	
-	
-	
 	private void calcuteLearningSpielphase4(Board board, Spieler spieler) {
-		
 		while(true) {
 			int tryTest = ran.nextInt((24-1));
 			Stein stein = operation.getSteineFuerCBRSystem(tryTest);
@@ -125,7 +119,4 @@ public class CBR_Learning_Process_Prototyp {
 			}
 		}
 	}
-	
-	
-
 }

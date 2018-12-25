@@ -38,7 +38,7 @@ import jade.wrapper.StaleProxyException;
  *
  */
 public class SpielbrettMAS extends JPanel implements MouseListener {
-	
+// Attribute	
 	private static final long serialVersionUID = 1L;
 	// Grafikeinstellungen
 	private BufferedImage bi;
@@ -52,8 +52,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	private Spieler spielerB;
 	private boolean spielEnde = false;
 	private static final Logger logger = Logger.getLogger(SpielbrettMAS.class);
-	
-	
+// Konstruktor	
 	public SpielbrettMAS() {
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
@@ -73,17 +72,15 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.setVisible(true);
 		this.setUpMAS();
 	}
+// Methoden	
 	
-	/**
-	 * Diese Methoden zeichnen das Spielbrett und setze die Steine dazu.
-	 */
 	public void setInterpolation(float interpol) {
 		this.interpolation = interpol;
 	}
 	
 	public void update() {	
 	}
-	
+	// Fügt die Spielsteine dem Panel hinzu.
 	public void paintComponent(Graphics g) {
 		g.drawImage(bi, 0,0, this.getWidth(), this.getHeight(), this);
 		if(spielsteine != null) {
@@ -98,7 +95,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			}
 		}
 	}
-	
 	
 // Methoden für die Eingabe	
 	/**
@@ -128,8 +124,12 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.führeZugDurch(spieler, spielerB, board);
 		this.paint(getGraphics());
 	}
-	
-	
+	/**
+	 * Diese Methode führt einen Spielzug des Agenten durch.
+	 * @param spieler der aktive Spieler am Zug.
+	 * @param spielerB der zweite Spieler.
+	 * @param board der Spielstand (aktuell).
+	 */
 	private void führeZugDurch(Spieler spieler, Spieler spielerB, Board board) {
 		if(!spielEnde) {
 			switch(spieler.getSpielPhase()) {
@@ -366,53 +366,35 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			this.spielEnde = true;
 		}
 	}
-	/**
-	 * Diese methode stellt die Infrastrktur bereit um einen Spielzug auszuführen, unabhängig
-	 * von dem aktuellen Spieler gerade am Zug ist
-	 * @param spieler
-	 */
 // Getter / Setter Methoden und leere Methoden
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
-
 	public String getAusgabe() {
 		return ausgabe;
 	}
-
 	public void setAusgabe(String ausgabe) {
 		this.ausgabe = ausgabe;
 	}
-	
 	public boolean isSpielEnde() {
 		return spielEnde;
 	}
-
 	public void setSpielEnde(boolean spielEnde) {
 		this.spielEnde = spielEnde;
 	}
-
-
-	
-	
 }

@@ -27,8 +27,8 @@ import de.dfki.mycbr.util.Pair;
  *
  */
 public class CBRController {
-	
-	// CBR Einstellungen
+// Attribute
+	// CBR System Einstellungen
 	private CBR_Engine engine = new CBR_Engine();
 	private Project project = engine.loadCBRProject();
 	private String conceptName = "mühle";
@@ -38,6 +38,7 @@ public class CBRController {
 	private CBR_AdaptionProcess process = new CBR_AdaptionProcess();
 	private List<Stein> resultSet = new ArrayList<>();
 	private static final Logger logger = Logger.getLogger(CBRController.class);
+// Methoden	
 	/**
 	 * Diese Methode initalisiert die zentrale CBR Infrastruktur, die benötigt wird, und lädet alle Fälle.
 	 */
@@ -53,7 +54,6 @@ public class CBRController {
 			}
 			List<AmalgamationFct> alleFKt = concept.getAvailableAmalgamFcts();
 			concept.setActiveAmalgamFct(alleFKt.get(0));
-			
 			logger.info("CBR System: Laden beendent: Es sind " + casebase.getCases().size()+  " vorhanden (Initalisierungsphase)");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -93,7 +93,6 @@ public class CBRController {
 				spielsteineR3++;
 			}
 		}
-		
 		// Set up the retrieval & prepare the Query
 		try {
 			Retrieval retrieval = new Retrieval(concept, casebase);
@@ -111,7 +110,7 @@ public class CBRController {
 			// Result auswerten 
 			List<Pair<Instance, Similarity>> result = retrieval.getResult();
 			List<Instance> dataResult = new ArrayList<>();
-			
+			// Betrachte die ersten fünf Fälle aus dem Result und spilte sie nach dem Sim-Wert auf.
 			for(int i = 0; i < 5; i++) {
 				double simResult = result.get(i).getSecond().getValue();
 				logger.info("Fall: " + i +  " :" + result.get(i).getFirst().getName()
@@ -123,15 +122,14 @@ public class CBRController {
 				}
 			}
 			this.analyseQuery(spieler, board, dataResult);
-			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println(resultSet.get(0).toString());
+		System.out.println(resultSet.get(1).toString());
 		return resultSet;
 	}
-	
 	/**
 	 * Diese Methode verarbeitet die Anfrage und passt sie entsprechend an.
 	 * @param spieler der aktuelle Spieler
@@ -171,7 +169,7 @@ public class CBRController {
 			Stein result = process.evaluateSolution(spieler, board, eins, zwei).get(0);
 			if(result!= null) {
 				this.resultSet.add(eins);
-			// 	this.resultSet.add(zwei);
+			 	this.resultSet.add(zwei);
 				break;
 			}
 		}
