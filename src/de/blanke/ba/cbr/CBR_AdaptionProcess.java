@@ -10,9 +10,11 @@ import de.blanke.ba.spieler.Spieler;
 import de.dfki.mycbr.core.casebase.Instance;
 import de.dfki.mycbr.core.model.IntegerDesc;
 /**
- * Diese Klasse versucht bei einer ungültigen Lösung oder gar keiner Lösung
- * eine Fallanpassung zu provozieren.
- * @author paul4
+ * 
+ * Diese Klasse versucht eine Lösung zu adaptieren.
+ * Die zweite Methode in dieser Klasse analysiert eine mögliche Lsg. und
+ * prüft ob die passenden Felder frei sind.
+ * @author Paul Blanke
  *
  */
 public class CBR_AdaptionProcess {
@@ -42,10 +44,8 @@ public class CBR_AdaptionProcess {
 		
 			case 0: 		if(board.checkAufBelegtFeld(start.convertToFeld()) == false) {
 								rueckgabe.add(start);
-								System.out.println("Start ist frei");
 							} else if(board.checkAufBelegtFeld(ziel.convertToFeld()) == false) {
 								rueckgabe.add(ziel);
-								System.out.print("Das Ziel ist frei");
 							}
 							break;
 							

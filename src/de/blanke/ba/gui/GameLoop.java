@@ -5,18 +5,14 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Diese Klasse bildet das Herzstück des Spiel.
- * übernommen und erweitert bzw. Angepasst
- * http://www.java-gaming.org/index.php?topic=24220.0 (Stand 04.08.2018)
- * 
+ * Diese Klasse bildet die Meachanik einer Game Loop im Hintergrund ab.
+ * Diese Klasse wurde von folgender Quelle übernommen und erweitert:
+ * http://www.java-gaming.org/index.php?topic=24220.0 (Stand 25.12.2018)
  * @author Paul Blanke
  *
  */
 public class GameLoop extends JFrame implements ActionListener {
-	
-	/**
-	 * 
-	 */
+// Attribute
 	// Design Änderung
 	private static final long serialVersionUID = 1L;
 	// Normales Mühle Spiel
@@ -25,7 +21,7 @@ public class GameLoop extends JFrame implements ActionListener {
 	private SpielbrettMAS spielbrettMAS;
 	private SpielbrettVsRBS spielbrettRBS;
 	int mas = 0;
-	private JButton startButton = new JButton("Neues Spiel");
+	private JButton startButton = new JButton("Start");
 	private JButton endeButton = new JButton("Ende!");
 	private JButton pausedButton = new JButton("Pause");
 	private JLabel textLabel = new JLabel(" ");
@@ -33,14 +29,7 @@ public class GameLoop extends JFrame implements ActionListener {
 	private boolean paused = false;
 	private int fps = 60;
 	private int framecount = 0;
-	// Interene Spieleinstellung vornehmen
-	
 	private boolean spielEnde = false;
-	
-	
-	
-	
-	
 	/**
 	 * Konstruktor
 	 */
@@ -79,7 +68,6 @@ public class GameLoop extends JFrame implements ActionListener {
 						
 		default:        break;
 		}
-		
 		cp.add(textLabel, BorderLayout.NORTH);
 		cp.add(p, BorderLayout.SOUTH);
 		setSize(800, 800);
@@ -88,10 +76,10 @@ public class GameLoop extends JFrame implements ActionListener {
 		pausedButton.addActionListener(this);
 		endeButton.addActionListener(this);
 		this.spielEnde = false;
-		
 	}
-	
-	
+	/**
+	 * Diese Methode verarbeitet Button Klicks.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		
@@ -119,7 +107,7 @@ public class GameLoop extends JFrame implements ActionListener {
 		}
 	}
 	
-	
+	// Diese Methode lässt das Spiel als eigenen Thread laufen.
 	public void runGameLoop() {
 		Thread loop = new Thread() {
 			public void run() {
@@ -128,7 +116,6 @@ public class GameLoop extends JFrame implements ActionListener {
 		};
 		loop.start();
 	}
-	
 	
 	private void gameLoop() {
 		final double GAME_HERTZ = 30.00;
@@ -199,6 +186,7 @@ public class GameLoop extends JFrame implements ActionListener {
 	private void updateGame() {
 		switch(mas) {
 		case 0:		spielbrett.update();
+					this.textLabel.setText(spielbrett.getAusgabe());
 					break;
 					
 		case 1:     spielbrettMAS.update();
@@ -215,6 +203,8 @@ public class GameLoop extends JFrame implements ActionListener {
 	private void drawGame(float interpolation) {
 		switch(mas) {
 		case 0:	  	this.spielbrett.repaint();
+					this.textLabel.setText(spielbrett.getAusgabe());
+					this.spielEnde = spielbrett.isSpielEnde();
 					break;
 					
 		case 1:     this.spielbrettMAS.repaint();
@@ -228,17 +218,4 @@ public class GameLoop extends JFrame implements ActionListener {
 					break; 	
 		}
 	}
-
-	public boolean isSpielEnde() {
-		return spielEnde;
-	}
-
-
-	public void setSpielEnde(boolean spielEnde) {
-		this.spielEnde = spielEnde;
-	}
-	
-	
-	
-
 }
