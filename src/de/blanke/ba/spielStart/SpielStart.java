@@ -3,7 +3,7 @@ package de.blanke.ba.spielStart;
 import de.blanke.ba.gui.GameLoop;
 /**
  * Diese Klasse stellt den Spieleinstieg bereit.
- * @author paul4
+ * @author Paul Blanke.
  *
  */
 public class SpielStart {
@@ -18,7 +18,4 @@ public class SpielStart {
 		GameLoop loop = new GameLoop(configParameter);
 		loop.setVisible(true);	
 	}
-
-	
-	
 }

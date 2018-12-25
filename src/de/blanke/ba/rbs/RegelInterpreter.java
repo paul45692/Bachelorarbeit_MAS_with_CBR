@@ -16,7 +16,7 @@ import de.blanke.ba.spieler.Spieler;
  *
  */
 public class RegelInterpreter {
-	// Regeln für die Spielphasen
+// Attribute
 	private RegelSet data = new RegelSet();
 	private List<RegelSpielPhase0> spielphase0 = data.getSpielphase0();
 	private List<RegelSpielPhase1u2> spielphase1 = data.getSpielphase1();
@@ -24,31 +24,23 @@ public class RegelInterpreter {
 	private List<RegelSpielPhase0> spielphase3 = data.getSpielphase3();
 	private List<Regel> uebergreifendeRegeln = data.getUbergreifendeRegeln();
 	private SpielLogikErweChecks logikCheck = new SpielLogikErweChecks();
-	
-	// Rückgabe Liste von Steinen speziell für Spielphase 1 und 2.
 	private List<Stein> dataBack = new ArrayList<>();
-	// Logger zum Auslesen
 	private static final Logger logger = Logger.getLogger(RegelInterpreter.class);
-
-	// Konstruktor für den Logger
+// Konstruktor für den Logger
 	public RegelInterpreter() {
 		PropertyConfigurator.configure(RegelInterpreter.class.getResource("log4j.info"));
 		logger.info("RBS Agent (Auswertung: Bereit!");
 	}
-	
-	
-	
 	/**
 	 * Diese Methode verarbeitet eine Anfrage an das System.
 	 * @param board
 	 * @param spieler
-	 * @return
+	 * @return Steine die gesetzt werden können.
 	 */
 	public List<Stein> sendQuery(Board board, Spieler spieler, Spieler spielerB) {
 		this.setzeColor(spieler.getSpielFarbe());
 		this.dataBack.clear();
 		logger.info("RBS Agent (Auswertung): Eine Anfrage wird beantwortet ....");
-		
 		switch(spieler.getSpielPhase()) {
 		
 		case 0:    	if(this.analyseQueryBefore(spieler, spielerB, board)) {
@@ -56,7 +48,6 @@ public class RegelInterpreter {
 					} else {
 						analyseQuerySpielPhase0(board, spieler);
 					}
-					
 					break;
 					
 		case 1:     if(this.analyseQueryBefore(spieler, spielerB, board)) {
@@ -86,13 +77,12 @@ public class RegelInterpreter {
 		}
 		logger.info("RBS Agent (Auswertung): Ergebnis war: Start:" + dataBack.get(0).toString() + "  Ziel:" + ausgabeLog);
 		return this.dataBack;
-	}
-	
-	
+	}	
 /**
- * Die folgenden Methoden analysieren die Anfrage und liefern eine passende Antwort.	
- * @param board
- * @param spieler
+ * Die folgenden Methoden analysieren die Anfrage und liefern eine passende Antwort.
+ * Je nach Spielphase wird eine andere Methode aufgerufen.	
+ * @param board Spielstand
+ * @param spieler Spieler der am Zug ist.
  */
 	private void analyseQuerySpielPhase0(Board board, Spieler spieler) {
 		for(RegelSpielPhase0 regel: spielphase0) {
@@ -109,16 +99,13 @@ public class RegelInterpreter {
 				// Solange wie nichts gefunden wurde, suche weiter:)
 				while(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 					regel.erzeugeZufällig();
-					
 					if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
-						
 						this.dataBack.add(regel.getElseStein());
 						regel.erzeugeZufällig();
 						break;
 					}
 				}
 			}
-			
 		}
 	}
 	

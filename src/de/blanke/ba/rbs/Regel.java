@@ -4,7 +4,7 @@ import java.awt.Color;
 
 /**
  * Diese Klasse stellt die einfachste Regelform dar.
- * @author paul4
+ * @author Paul Blanke.
  *
  */
 public class Regel {

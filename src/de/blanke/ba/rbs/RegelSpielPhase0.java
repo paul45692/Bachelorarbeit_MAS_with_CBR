@@ -6,7 +6,7 @@ import de.blanke.ba.model.Stein;
 /**
  * Diese Klasse erweitert die Regel um SpielSteine.
  * 
- * @author paul4
+ * @author Paul Blanke.
  *
  */
 public class RegelSpielPhase0 extends Regel {

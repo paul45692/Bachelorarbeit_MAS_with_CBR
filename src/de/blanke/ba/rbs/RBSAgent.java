@@ -14,12 +14,11 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-
 /**
  * Dieser Agent verwaltet das RBS System. Seine einzige Aufgabe ist es, 
  * auf den Nachrichtenempfang zu warten.
  * @author Paul Blanke
- * 08.12.2018.
+ * 
  *
  */
 public class RBSAgent extends Agent {
@@ -86,34 +85,22 @@ public class RBSAgent extends Agent {
 						zwei = null;
 						logger.info("RBS Agent(Rückgabe)-Error: keine Parameter!)");
 					}
-					
 					MessageBoxSteine steine = new MessageBoxSteine(eins, zwei);
-					
 					try {
 						msg.setContentObject(steine);
-						// msg.setContentObject(zwei);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					send(msg);
 					msg = receive();
-					
 					logger.info("RBS Agent: Die Nachricht wurde beantwortet!");
 					
 				} else {
 					block();
 				}
-				
 			}
 			
 		});
 	}
-
-	@Override
-	protected void takeDown() {
-		// TODO Auto-generated method stub
-		super.takeDown();
-	}
-	
 }

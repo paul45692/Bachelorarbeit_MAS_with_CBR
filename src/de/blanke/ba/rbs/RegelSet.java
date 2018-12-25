@@ -5,20 +5,18 @@ import java.util.List;
 
 import de.blanke.ba.model.Stein;
 /**
- * Diese Klasse enthält alle Regeln in Listen bereit.
- * Innerhalb dieser Klasse werden die Regeln beim Programmstart zusammen gestellt.
- * @author Paul Blanke
+ * Diese Klasse instanziert die Regeln beim Programm Start und 
+ * speichert sie in Listen.
+ * @author Paul Blanke.
  *
  */
 public class RegelSet {	
-	
-	// Attribute
+// Attribute
 	protected List<RegelSpielPhase0> spielphase0 = new ArrayList<>();
 	protected List<RegelSpielPhase1u2> spielphase1 = new ArrayList<>();
 	protected List<RegelSpielPhase1u2> spielphase2 = new ArrayList<>();
 	protected List<RegelSpielPhase0> spielphase3 = new ArrayList<>();
 	protected List<Regel> ubergreifendeRegeln = new ArrayList<>();
-	
 // Getter und Setter	
 	protected List<RegelSpielPhase0> getSpielphase0() {
 		return spielphase0;
@@ -26,8 +24,6 @@ public class RegelSet {
 	protected void setSpielphase0(List<RegelSpielPhase0> spielphase0) {
 		this.spielphase0 = spielphase0;
 	}
-	
-	
 	protected List<RegelSpielPhase0> getSpielphase3() {
 		return spielphase3;
 	}
