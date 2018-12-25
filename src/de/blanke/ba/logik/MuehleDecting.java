@@ -7,13 +7,12 @@ import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 
 /**
- * Diese Klasse ermittelt eine Mühle anhand vorgegbener Positionen
- * 
+ * Diese Klasse untersucht, ob ein Spieler eine Mühle erzeugt hat.
  * @author Paul Blanke
  *
  */
 public class MuehleDecting {
-	// Attribute
+// Attribute
 	/**
 	 * Diese Listen halten die Position der Mühlen
 	 */
@@ -21,19 +20,14 @@ public class MuehleDecting {
 	List<Stein> posiRing1B = new ArrayList<>();
 	List<Stein> posiRing1C = new ArrayList<>();
 	List<Stein> posiRing1D = new ArrayList<>();
-	
 	List<Stein> posiRing2A = new ArrayList<>();
 	List<Stein> posiRing2B = new ArrayList<>();
 	List<Stein> posiRing2C = new ArrayList<>();
 	List<Stein> posiRing2D = new ArrayList<>();
-	
-	
 	List<Stein> posiRing3A = new ArrayList<>();
 	List<Stein> posiRing3B = new ArrayList<>();
 	List<Stein> posiRing3C = new ArrayList<>();
 	List<Stein> posiRing3D = new ArrayList<>();
-	
-	
 	List<Stein> posiRing4A = new ArrayList<>();
 	List<Stein> posiRing4B = new ArrayList<>();
 	List<Stein> posiRing4C = new ArrayList<>();

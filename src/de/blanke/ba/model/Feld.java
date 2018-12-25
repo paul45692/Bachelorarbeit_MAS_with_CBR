@@ -4,33 +4,23 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import de.blanke.ba.logik.Board;
 
-
-
 /**
- * Diese Klasse repräsentiert einen Knoten aus dem Spielfeld
- * @author paul4
- * Eine Stein Instanz anbinden ?
- * 
+ * Diese Klasse repräsentiert ein Knoten auf dem Spielfeld 
+ * in Form eines Feldes. Jedes belegte Feld enthält ein Instanz 
+ * des Steines auf dem Feld.
+ * @author Paul Blanke.
+ *
  */
 public class Feld implements Serializable {
-/**
-	 * 
-	 */
+// Attribute
 	private static final long serialVersionUID = -93812416829409512L;
-	// Attribute
 	private int ringZahl;
 	private int xCord;
 	private int yCord;
-	// Nimmt den Stein auf, falls das Feld einen hat.
 	private Stein stein;
-	// Sammelt alle Felder in der Nachbarnschaft
 	private List<Feld> nachbarn;
-	/**
-	 * false = frei und belegt true
-	 */
 	private boolean belegt;
 	
 // Getter und Setter
@@ -38,41 +28,31 @@ public class Feld implements Serializable {
 	public int getRingZahl() {
 		return ringZahl;
 	}
-
 	public void setRingZahl(int ringZahl) {
 		this.ringZahl = ringZahl;
 	}
-
-	
 	public int getxCord() {
 		return xCord;
 	}
-
 	public void setxCord(int xCord) {
 		this.xCord = xCord;
 	}
-
 	public int getyCord() {
 		return yCord;
 	}
-
 	public boolean getBelegt() {
 		return  belegt;
 	}
-	
 	public void setyCord(int yCord) {
 		this.yCord = yCord;
 	}
 	public Stein getStein() {
 		return stein;
 	}
-	
 	public void entferneStein() {
-		
 		this.belegt = false;
 		this.stein = null;
 	}
-	
 	public void setStein(Stein stein) {
 		this.stein = stein;
 		this.belegt = true;
@@ -86,23 +66,14 @@ public class Feld implements Serializable {
 		return nachbarn;
 	}
 	
-	
-// Kontruktor
-	public Feld() {
-		
-	}
-	
-	
+// Konstruktor
 	public Feld(int ringZahl, int xCord, int yCord) {
-		
 		this.setRingZahl(ringZahl);
 		this.setxCord(xCord);
 		this.setyCord(yCord);
 		this.belegt = false;
-	
-		
 	}
-	
+// Methoden	
 	/**
 	 * Diese Methode untersucht bei einen bestimmten Spielstand die Nachbarn 
 	 * des Eingabeparametern.
@@ -284,10 +255,8 @@ public class Feld implements Serializable {
 			if(f.getStein() == null) {
 				frei.add(f);
 			}
-			
 		}
 		return frei;
-		
 	}
 	/**
 	 * Diese Methode sucht alle Nachbarn der gleichen Farbe heraus.
@@ -296,20 +265,14 @@ public class Feld implements Serializable {
 	 * @return passende Nachbarn.
 	 */
 	public List<Feld> alleGleichFarbenNachbarn(Board board, Color color) {
-		
 		sucheAlleNachbarn(board);
 		List<Feld> data = new ArrayList<>();
-		
 		for(Feld feld: nachbarn) {
-			
 			if(feld.getStein().getFarbe() == color) {
 				data.add(feld);
-				
 			}
 		}
-		
 		return data;
-		
 	}
 	
 	public boolean checkObFeldNachbarnIst(Board board,Feld test) {
@@ -320,15 +283,12 @@ public class Feld implements Serializable {
 				wert = true;
 			}
 		}
-		
 		return wert;
 	}
-	
 	
 	public Stein convertToStein() {
 		return new Stein(this.getRingZahl(), this.getxCord(), this.getyCord(), null);
 	}
-
 	/**
 	 *@Override Diese Methode überschreibt die Prüfung auf 
 	 *	Gleichheit zweier Objekte.Hier wird auf Gleicheit über die
@@ -344,6 +304,4 @@ public class Feld implements Serializable {
 		}
 		return rueckgabe;
 	}
-	
-	
 }

@@ -23,14 +23,12 @@ public class Board implements Serializable {
 	public List<Feld> getFelder() {
 		return felder;
 	}
-
 	public void setFelder(List<Feld> felder) {
 		this.felder = felder;
 	}
 	public int getAnzahlFreiFelder() {
 		return anzahlFreiFelder;
 	}
-
 	public void setAnzahlFreiFelder(int anzahlFreiFelder) {
 		this.anzahlFreiFelder = anzahlFreiFelder;
 	}
@@ -73,16 +71,13 @@ public class Board implements Serializable {
 			boolean rueckgabe = false;
 			// Durchläuft alle felder
 			for(Feld f: felder) {
-				
 				if((f.getRingZahl() == r) && (f.getxCord() == x) && (f.getyCord() == y)) {
 					
 					if(!f.getBelegt()) {
-						
 						f.setStein(stein);
 						System.out.println("Der Stein wurde auf :" + r + " ," + x +  "," + y + "platziert");
 						anzahlFreiFelder --;
 						rueckgabe = true;
-						
 					} else {
 						System.out.println("Das Feld ist belegt!");
 					}
@@ -122,11 +117,9 @@ public class Board implements Serializable {
 					
 					stein = f.getStein();
 					f.entferneStein();
-					System.out.println("Feld gefunden");
 					break;
 				}
 			}
-			
 			if(stein != null) {
 				spielstein = stein.getSpielstein();
 			} else {

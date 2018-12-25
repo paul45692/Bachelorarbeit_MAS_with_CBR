@@ -159,12 +159,9 @@ public class Converter {
 				System.out.println("Der Zug ist nicht erlaubt");
 				return null;
 			}
-			
-			
 		} else {
 			System.out.println("Bitte klicken Sie in den Spielbereich und auf das Feld");
 			return null;
 		}
-		
-}
+	}
 }

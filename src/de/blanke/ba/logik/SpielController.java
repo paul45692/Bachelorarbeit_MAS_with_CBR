@@ -9,10 +9,10 @@ import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 
 /**
- * Diese Klasse stellt die Logik Controlle bereit und
+ * Diese Klasse stellt die Logik Kontrolle bereit und
  * validiert Spielzüge auf ihre Umsetzung.
  * Erst nach der endgültigen Freigabe werden die Züge umgesetzt.
- * @author Paul Blanke, 23.12.2018.
+ * @author Paul Blanke.
  *
  */
 public class SpielController {
@@ -26,15 +26,12 @@ public class SpielController {
 	public Board getBoard() {
 		return board;
 	}
-
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-
 	public boolean isMuehle() {
 		return muehle;
 	}
-
 	public void setMuehle(boolean muehle) {
 		this.muehle = muehle;
 	}
@@ -49,17 +46,14 @@ public class SpielController {
 	 * @return Der Stein wurde erfolgreich gesetzt / nicht gesetzt.
 	 */
 	public boolean setSpielStein(int x, int y, Spieler spieler, Spielstein steinGUI) {
-	
 		 Feld feld = helper.ermitteleFeld(x, y);
 		// 1. Spielphase
 		if(spieler.getAnzahlSteine() < 9 && spieler.getSpielPhase() == 0) {
 			if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {
-				
 				spieler.setAnzahlSteine(spieler.getAnzahlSteine() + 1);
 				spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 				Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
 				spieler.setzeSpielstein(stein);
-				
 				if(spieler.getAnzahlSteine() == 9) {
 					spieler.setSpielPhase(1);
 					System.out.print("Info: Der "  + spieler.getName() + "hat die erste Spielphase verlassen!");
@@ -67,10 +61,8 @@ public class SpielController {
 				return true;
 				
 			} else {
-				System.out.println("Das Feld ist belegt");
 				return false;
 			}
-			
 		} else  if(spieler.getSpielPhase() == 1)	{
 				if(!this.testAufSpielEnde(spieler)) { 
 					if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)
@@ -88,39 +80,28 @@ public class SpielController {
 						return true;
 				
 					} else {
-						System.out.println("Das Feld ist belegt");
-				
 						return false;
 					}
 				} else {
-					return true;
+					return false;
 				}
-				
-				
-			
 		} else if(spieler.getSpielPhase() == 2)  {
 			if(!this.testAufSpielEnde(spieler)) {
 				if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)) {
-				
 					spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 					Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
 					spieler.setzeSpielstein(stein);
 					return true;
-			
 				} else {
-					System.out.println("Spiellogik: Das Feld ist belegt");
 					return false;
 				}
 			} else {
 				return false;
 			}
 		} else  {
-			System.out.print("Ein Fehler ist passiert");
 			return false;
 		}
 	}
-	
-	
 	/**
 	 * Diese Methode entfernt eine Stein vom Spielfeld.
 	 * @param x
@@ -128,15 +109,12 @@ public class SpielController {
 	 * @return
 	 */
 	public Spielstein entferneSteinVonFeld(int x, int y, Spieler spieler) {
-		
 		feld = helper.ermitteleFeld(x, y);
 		Spielstein spielstein = board.entferneStein(feld);
 		if(spieler.getSpielPhase() != 0) {
 			spieler.setAnzahlSteine(spieler.getAnzahlSteine() -1);
 		}
-		
 		spieler.removeStein(feld.getStein());
-		
 		return spielstein;
 	}
 	/**
@@ -174,9 +152,5 @@ public class SpielController {
 			System.out.println("Spiel Ende: Der Spieler:"+  spieler.getName() + "kann keine Züge mehr ausführen!");
 		}
 		return check;
-	}
-	
-	public void test() {
-		System.out.println("Das Feld ist belegt: " + board.checkAufBelegtFeld(new Feld(0,0,0)));
 	}
 }
