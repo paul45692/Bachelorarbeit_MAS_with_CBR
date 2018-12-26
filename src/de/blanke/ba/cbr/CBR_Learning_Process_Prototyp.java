@@ -33,7 +33,6 @@ public class CBR_Learning_Process_Prototyp {
 	public Instance letsTryToLearnANewCase(Instance eingabe, Spieler spieler, Board board, IntegerDesc intA, IntegerDesc intB) {
 		PropertyConfigurator.configure(CBRAgent.class.getResource("log4j.info"));
 		logger.info(" CBR System: !! Ein neuer Fall wird versuchsweise angelernt!");
-		System.out.println("!!! --- >CBR-System: Ein neuer Fall wird angelernt!");
 		switch(spieler.getSpielPhase()) {
 		
 		case 0:		this.calcuteLearningSpielphase1(board);
@@ -53,7 +52,6 @@ public class CBR_Learning_Process_Prototyp {
 			eingabe.addAttribute(intA, this.learningParameterA);
 			eingabe.addAttribute(intB, this.learningParameterB);
 		} catch (ParseException e) {
-			System.out.println("CBR System: das Lernen eines neuen Falles ist fehlgeschlagen !!");
 			logger.info("CBR System-Learning: Anlernen ist fehl geschlagen!");
 			e.printStackTrace();
 		}

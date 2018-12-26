@@ -124,6 +124,15 @@ public class CBRController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		String spielzug = "CBR Agent:";
+		if(spieler.getSpielPhase() == 0) {
+			spielzug += "Der Stein wurde auf: " + resultSet.get(0).toString() + " gesetzt.";
+		} else if(spieler.getSpielPhase() == 3) {
+			spielzug += "Der Stein:" + resultSet.get(0).toString() + "soll entfernt werden.";
+		} else {
+			spielzug += "Spielzug von " + resultSet.get(0).toString() + "nach " + resultSet.get(1).toString();
+		}
+		System.out.println(spielzug);
 		return resultSet;
 	}
 	/**

@@ -12,7 +12,7 @@ import de.blanke.ba.model.Stein;
 import de.blanke.ba.spieler.Spieler;
 /**
  * Diese Klasse stellt die Regeln bereit und wertet eine Anfrage an das System aus.
- * @author Paul Blanke
+ * @author Paul Blanke.
  *
  */
 public class RegelInterpreter {
@@ -75,7 +75,15 @@ public class RegelInterpreter {
 		} else {
 			ausgabeLog = dataBack.get(1).toString();
 		}
-		System.out.println("RBS-Resultat:" + dataBack.get(0).toString());
+		String spielzug = "RBS Agent: ";
+		if(spieler.getSpielPhase() == 0) {
+			spielzug += "Der Stein wurde auf: " + dataBack.get(0).toString() + " gesetzt.";
+		} else if(spieler.getSpielPhase() == 3) {
+			spielzug += "Der Stein:" + dataBack.get(0).toString() + "soll entfernt werden.";
+		} else {
+			spielzug += "Spielzug von " + dataBack.get(0).toString() + "nach " + dataBack.get(1).toString();
+		}
+		System.out.println(spielzug);
 		logger.info("RBS Agent (Auswertung): Ergebnis war: Start:" + dataBack.get(0).toString() + "  Ziel:" + ausgabeLog);
 		return this.dataBack;
 	}	
@@ -192,7 +200,6 @@ public class RegelInterpreter {
 				while(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 					regel.erzeugeZufällig();
 					if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
-						
 						this.dataBack.add(regel.getElseStein());
 						regel.erzeugeZufällig();
 						break;
