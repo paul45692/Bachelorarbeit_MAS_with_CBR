@@ -44,7 +44,7 @@ public class CBRController {
 	 * Diese Methode initalisiert die zentrale CBR Infrastruktur, die benötigt wird, und lädet alle Fälle.
 	 */
 	private void initCBRStrcuture() {
-		PropertyConfigurator.configure(CBRController.class.getResource("log4j.info"));
+		PropertyConfigurator.configure(this.getClass().getResource("log4j.info"));
 		this.concept = project.getConceptByID(conceptName);
 		try {
 			this.concept = project.getConceptByID(conceptName);

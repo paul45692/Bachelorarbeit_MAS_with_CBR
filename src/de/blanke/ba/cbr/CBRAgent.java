@@ -68,7 +68,7 @@ public class CBRAgent extends Agent{
 						}
 					} else {
 						System.out.println("Error-AgentenEbene: Übertragungsproblem !!");
-						logger.error("CBR System: Übertragungsproblem");
+						logger.info("CBR System: Übertragungsproblem");
 					}
 					logger.info("CBR-System: Eine Nachricht wurde erzeugt und wird versendet");
 					box.cleartheBox();
@@ -88,7 +88,7 @@ public class CBRAgent extends Agent{
 							eins = rueckgabe.get(0);
 							zwei = rueckgabe.get(1);
 					} else if(rueckgabe.isEmpty()) {
-						logger.error("CBR System: Übertragungsproblem");
+						logger.info("CBR System: Übertragungsproblem");
 						steine = new MessageBoxSteine(null, null);
 					}
 					try {
