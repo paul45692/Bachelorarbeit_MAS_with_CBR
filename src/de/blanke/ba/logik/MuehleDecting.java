@@ -270,10 +270,11 @@ public class MuehleDecting {
 					if(mühle.getIndex() == vergleich.getIndex()) {
 						tempGefunden.remove(mühle);
 						vorh_Data.remove(vergleich);
+						break;
 					}
 				}
 			} 
-			if(tempGefunden.size() > 0) {
+			if(!tempGefunden.isEmpty()) {
 				
 				for(Mühle mühle: tempGefunden) {
 					spieler.addMuehle(mühle);

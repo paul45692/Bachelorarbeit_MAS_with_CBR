@@ -187,16 +187,18 @@ public class GameLoop extends JFrame implements ActionListener {
 		switch(mas) {
 		case 0:		spielbrett.update();
 					this.textLabel.setText(spielbrett.getAusgabe());
+					this.spielEnde = spielbrett.isSpielEnde();
 					break;
 					
 		case 1:     spielbrettMAS.update();
 					this.textLabel.setText(spielbrettMAS.getAusgabe());
+					this.spielEnde = spielbrettMAS.isSpielEnde();
 					break;	
 					
 		case 2:     spielbrettRBS.update(); 
 					this.textLabel.setText(spielbrettRBS.getAusgabe());
+					this.spielEnde = spielbrettRBS.isSpielEnde();
 					break;
-		 
 		} 
 	}
 	

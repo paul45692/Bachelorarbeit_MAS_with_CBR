@@ -112,7 +112,7 @@ public class Board implements Serializable {
 			Spielstein spielstein = null;
 			for(Feld f: felder) {
 				// Suche Feld heraus
-				if(f.equals(feld) && spieler.steineIsVorhanden(f.convertToStein())) {
+				if(f.equals(feld) && spieler.steinIstVorhanden(f.convertToStein())) {
 					stein = f.getStein();
 					if(!stein.getIsTeilVonMuehle()) {
 						f.entferneStein();

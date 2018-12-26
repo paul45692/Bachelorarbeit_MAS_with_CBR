@@ -99,7 +99,7 @@ public class CBR_Learning_Process_Prototyp {
 		while(true) {
 			int tryTest = ran.nextInt((24-1));
 			Stein stein = operation.getSteineFuerCBRSystem(tryTest);
-			if(board.checkAufBelegtFeld(stein.convertToFeld())) {
+			if(!board.checkAufBelegtFeld(stein.convertToFeld())) {
 				this.learningParameterB = tryTest;
 				break;
 			}
@@ -110,7 +110,7 @@ public class CBR_Learning_Process_Prototyp {
 		while(true) {
 			int tryTest = ran.nextInt((24-1));
 			Stein stein = operation.getSteineFuerCBRSystem(tryTest);
-			if(!board.checkAufBelegtFeld(stein.convertToFeld()) && !spieler.steineIsVorhanden(stein)) {
+			if(board.checkAufBelegtFeld(stein.convertToFeld()) && !spieler.steinIstVorhanden(stein)) {
 				this.learningParameterA = tryTest;
 				this.learningParameterB = tryTest + 1;
 				break;

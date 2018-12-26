@@ -197,6 +197,7 @@ public class RegelInterpreter {
 			if(regel.getIfTeil().contains("Besetzt") && board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())
 					&& !spieler.steinIstVorhanden(regel.getIfStein())) {
 				this.dataBack.add(regel.getElseStein());
+				System.out.println("Ein Stein wurde gefunden!");
 				break;
 			}  else if(regel.getIfTeil().contains("zufall")) {
 				// Solange wie nichts gefunden wurde, suche weiter:)

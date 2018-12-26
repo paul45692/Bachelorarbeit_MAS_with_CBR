@@ -21,11 +21,9 @@ import de.blanke.ba.mas.ControllerAgent;
 import de.blanke.ba.mas.GameBehaviour;
 import de.blanke.ba.mas.GameDataGetBehaviour;
 import de.blanke.ba.mas.MessageBox;
-import de.blanke.ba.model.Feld;
 import de.blanke.ba.model.Spielstein;
 import de.blanke.ba.rbs.RBSAgent;
 import de.blanke.ba.spieler.Spieler;
-import de.blanke.ba.testszenarien.SetUpTestSzenarien;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -106,12 +104,12 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		for(int i = 0; i < 13; i++) {
-			Spieler spieler = this.spielerB;
-			Spieler spielerB = this.spielerA;
+		for(int i = 0; i < 10; i++) {
+			Spieler spieler = this.spielerA;
+			Spieler spielerB = this.spielerB;
 			if(i % 2 == 0) {
-				spieler = this.spielerA;
-				spielerB = this.spielerB;
+				spieler = this.spielerB;
+				spielerB = this.spielerA;
 			}
 			Board board = this.spielController.getBoard();
 			this.führeZugDurch(spieler, spielerB, board);
@@ -142,9 +140,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							
 							if(spielController.pruefeAufMuehle(spieler)) {
 								System.out.println("-->  Der "+ spieler.getName() + " hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								spieler.setTempspielPhase(spieler.getSpielPhase());
-								spieler.setSpielPhase(3);
-								this.führeZugDurch(spieler, spielerB, board);
+							//	spieler.setTempspielPhase(spieler.getSpielPhase());
+							//	spieler.setSpielPhase(3);
+							//	this.führeZugDurch(spieler, spielerB, board);
 								
 							} else {
 								// Unterscheide welcher Spieler als nächstes dran ist
