@@ -95,14 +95,23 @@ public class Spieler implements Serializable{
 	public void removeStein(Stein stein) {
 		this.posiSteine.remove(stein);
 	}
-	
+	/**
+	 * Diese Methode setzt die Steine des Spieler beim
+	 * Mühlen Fund auf Belegt.
+	 * @param muehle
+	 */
 	public void addMuehle(Mühle muehle) {
+		for(Stein stein: muehle.getSteine()) {
+			for(Stein s: this.posiSteine) {
+				if(s.equals(stein)) {
+					s.setIsTeilVonMuehle(true);
+				}
+			}
+		}
 		this.vorhandeneMuehlen.add(muehle);
-		
 	}
 	
 	public void removeMuehle(Mühle muehle) {
-		
 		this.vorhandeneMuehlen.remove(muehle);
 	}
 	
@@ -121,7 +130,7 @@ public class Spieler implements Serializable{
 	public boolean steineIsVorhanden(Stein stein) {
 		boolean check = false;
 		for(Stein s: posiSteine) {
-			if((s.getRing() == stein.getRing()) && stein.getxCord() == s.getxCord() && stein.getyCord() == s.getyCord()) {
+			if(stein.equals(s)) {
 				check = true;
 				break;
 			}

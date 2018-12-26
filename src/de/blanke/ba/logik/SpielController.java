@@ -22,6 +22,7 @@ public class SpielController {
 	private MuehleDecting decting = new MuehleDecting();
 	private Converter helper = new Converter();
 	private Feld feld = null;
+	private boolean spielEnde = false;
 // Getter und Setter	
 	public Board getBoard() {
 		return board;
@@ -35,8 +36,13 @@ public class SpielController {
 	public void setMuehle(boolean muehle) {
 		this.muehle = muehle;
 	}
-
-// Methoden	
+	public boolean isSpielEnde() {
+		return spielEnde;
+	}
+	public void setSpielEnde(boolean spielEnde) {
+		this.spielEnde = spielEnde;
+	}
+	// Methoden	
 	/**
 	 * Diese Methode stellt die Umsetzung der Aktion Spielstein setzen dar.
 	 * @param x Koordinaten
@@ -67,16 +73,13 @@ public class SpielController {
 				if(!this.testAufSpielEnde(spieler)) { 
 					if(board.setzteStein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler, steinGUI)
 						&& (this.feld.checkObFeldNachbarnIst(board, feld))) {
-				
 						spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 						Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
 						spieler.setzeSpielstein(stein);
-						
 						if(spieler.getAnzahlSteine() == 3) {
 							System.out.print("Der " + spieler.getName() + "wechselt in die dritte Spielphase!");
 							spieler.setSpielPhase(2);
 						}
-				
 						return true;
 				
 					} else {
@@ -110,25 +113,23 @@ public class SpielController {
 	 */
 	public Spielstein entferneSteinVonFeld(int x, int y, Spieler spieler) {
 		feld = helper.ermitteleFeld(x, y);
-		Spielstein spielstein = board.entferneStein(feld);
+		Spielstein spielstein = board.entferneStein(feld, spieler);
 		if(spieler.getSpielPhase() != 0) {
 			spieler.setAnzahlSteine(spieler.getAnzahlSteine() -1);
 		}
 		spieler.removeStein(feld.getStein());
 		return spielstein;
 	}
+	
+	
 	/**
 	 * Diese Methode kontrolliert die Mühle Prüfung.
 	 * @param spieler
 	 */
 	public boolean pruefeAufMuehle(Spieler spieler) {
-		
 		if(spieler.getAnzahlSteine() > 2) { 
-			
 			return decting.findeMühle(spieler);
-			
 		} else {
-			
 			return false;
 		}
 	}
@@ -149,6 +150,7 @@ public class SpielController {
 		}
 		if(dataCheck.isEmpty()) {
 			check = true;
+			this.spielEnde = true;
 			System.out.println("Spiel Ende: Der Spieler:"+  spieler.getName() + "kann keine Züge mehr ausführen!");
 		}
 		return check;

@@ -220,7 +220,7 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 	}
 
 	private void setUpMAS() {
-		Runtime runtime = Runtime.instance();
+			Runtime runtime = Runtime.instance();
 	       Profile profile = new ProfileImpl();
 	       profile.setParameter(Profile.MAIN_HOST, "localhost");
 	       // Für Gui auf true setzen

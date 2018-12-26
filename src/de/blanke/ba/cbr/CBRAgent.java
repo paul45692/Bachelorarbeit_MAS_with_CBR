@@ -29,9 +29,9 @@ public class CBRAgent extends Agent{
 
 	@Override
 	protected void setup() {
-		System.out.print("CBR System aktiv!");
+		System.out.println("CBR System aktiv!");
 		PropertyConfigurator.configure(CBRAgent.class.getResource("log4j.info"));
-		logger.info(" Das CBR System wurde aktiviert (@" + CBRAgent.class);
+		logger.info(" Das CBR System wurde aktiviert");
 		super.setup();
 		addBehaviour(new CyclicBehaviour() {
 			private static final long serialVersionUID = 1L;

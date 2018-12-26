@@ -237,9 +237,7 @@ public class RegelInterpreter {
 									if(!moeglicheZuege.isEmpty()) {
 										dataBack.add(moeglicheZuege.get(0).convertToStein());
 										back = true;
-									} else {
-										System.out.println("Keine Funde!");
-									}
+									} 
 								}
 								
 							} else {
@@ -254,8 +252,6 @@ public class RegelInterpreter {
 										if(!moeglicheZuege.isEmpty()) {
 											dataBack.add(moeglicheZuege.get(0).convertToStein());
 											back = true;
-										} else {
-											System.out.println("Keine Funde!");
 										}
 									}
 								}

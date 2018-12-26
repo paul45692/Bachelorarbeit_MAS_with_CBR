@@ -67,8 +67,8 @@ public class Board implements Serializable {
 * @return  Der Stein wurde gesetzt ja / Nein.
  */
 	public boolean setzteStein(int r, int x, int y, Spieler spieler, Spielstein spielstein) {
-			Stein stein = new Stein(r,x,y, spieler.getSpielFarbe(), spielstein);
-			boolean rueckgabe = false;
+		Stein stein = new Stein(r,x,y, spieler.getSpielFarbe(), spielstein);
+		boolean rueckgabe = false;
 			// Durchläuft alle felder
 			for(Feld f: felder) {
 				if((f.getRingZahl() == r) && (f.getxCord() == x) && (f.getyCord() == y)) {
@@ -84,50 +84,49 @@ public class Board implements Serializable {
 					break;	
 				}
 			}
-			return rueckgabe;
+		return rueckgabe;
 			
 		}
-		// Diese Methode ist analog zu oberen Methoden @setzteStein
-		// Gibt nur ein Feld zurück.
-		public Feld gebeFeldZurueck(int r, int x, int y) {
-			Feld feld = null;
-			for(Feld f: felder) {
-				if((f.getRingZahl() == r) && (f.getxCord() == x) && (f.getyCord() == y)) {
-					
-					feld = f;
-					
-					break;
-					
-				}
+	// Diese Methode ist analog zu oberen Methoden @setzteStein
+	// Gibt nur ein Feld zurück.
+	public Feld gebeFeldZurueck(int r, int x, int y) {
+		Feld feld = null;
+		for(Feld f: felder) {
+			if((f.getRingZahl() == r) && (f.getxCord() == x) && (f.getyCord() == y)) {
+				
+				feld = f;
+				
+				break;
+				
 			}
-			return feld;
 		}
+		return feld;
+	}
 		/**
 		 * Diese Methode löscht einen Spielstein vom Feld herunter.
 		 * @param feld Das Ziel, welches gelöscht werden soll.
 		 * @return Der Spielstein auf dem Feld.
 		 */
-		public Spielstein entferneStein(Feld feld) {
+		public Spielstein entferneStein(Feld feld, Spieler spieler) {
 			Stein stein = null;
 			Spielstein spielstein = null;
 			for(Feld f: felder) {
 				// Suche Feld heraus
-				if((f.getRingZahl() == feld.getRingZahl()) && (f.getxCord() == feld.getxCord()) 
-						&& (f.getyCord() == feld.getyCord()) ) {
-					
+				if(f.equals(feld) && spieler.steineIsVorhanden(f.convertToStein())) {
 					stein = f.getStein();
-					f.entferneStein();
+					if(!stein.getIsTeilVonMuehle()) {
+						f.entferneStein();
+					}
 					break;
 				}
 			}
 			if(stein != null) {
 				spielstein = stein.getSpielstein();
 			} else {
-				System.out.println("Fehler auf der Logik Ebene");
+				System.out.println("Der Stein gehört zu einer Mühle und darf nicht entfernt werden!");
 			}
 			return spielstein;
 		}
-		
 		/**
 		 * Diese Methode überprüft ob ein Feld belegt ist.
 		 * @param feld das zu prüfende Feld

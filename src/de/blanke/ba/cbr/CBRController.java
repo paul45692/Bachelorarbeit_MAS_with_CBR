@@ -115,8 +115,6 @@ public class CBRController {
 				double simResult = result.get(i).getSecond().getValue();
 				logger.info("Fall: " + i +  " :" + result.get(i).getFirst().getName()
 				+ "Sim: " + result.get(i).getSecond().getValue());
-				System.out.println("Ähnlichkeit ist: " + result.get(i).getFirst().getName()
-				+ "Sim: " + result.get(i).getSecond().getValue());
 				if(simResult >= 0.60) {
 					dataResult.add(result.get(i).getFirst());
 				}

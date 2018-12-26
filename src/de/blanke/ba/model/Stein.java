@@ -15,7 +15,7 @@ public class Stein implements Serializable{
 	private int ring;
 	private int xCord;
 	private int yCord;
-	private int isTeilVonMuehle;
+	private boolean isTeilVonMuehle;
 	private Spielstein spielstein;
 	private int index;
 // Getter und Setter
@@ -49,10 +49,10 @@ public class Stein implements Serializable{
 	public void setSpielstein(Spielstein spielstein) {
 		this.spielstein = spielstein;
 	}
-	public int getIsTeilVonMuehle() {
+	public boolean getIsTeilVonMuehle() {
 		return isTeilVonMuehle;
 	}
-	public void setIsTeilVonMuehle(int isTeilVonMuehle) {
+	public void setIsTeilVonMuehle(boolean isTeilVonMuehle) {
 		this.isTeilVonMuehle = isTeilVonMuehle;
 	}
 	public int getIndex() {
