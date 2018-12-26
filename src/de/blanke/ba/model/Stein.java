@@ -115,7 +115,7 @@ public class Stein implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return " Ring: " + this.ring + " X: " + this.xCord + " Y" + this.yCord ;
+		return "Koordinaten:" + this.ring + " , " + this.xCord + " , " + this.yCord + " (Ring, X, Y)." ;
 	}
 
 }

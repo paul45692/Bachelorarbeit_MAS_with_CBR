@@ -57,8 +57,8 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.setLayout(new BorderLayout());
 		this.spielsteine = new ArrayList<>();
 		this.spielController = new SpielController();
-		this.spielerA = new Spieler(Color.WHITE,"Spieler A");
-		this.spielerB = new Spieler(Color.BLUE, "Spieler B");
+		this.spielerA = new Spieler(Color.WHITE,"RBS Agent");
+		this.spielerB = new Spieler(Color.BLUE, "CBR Agent");
 		this.ausgabe = " Das Spiel kann beginnen, bitte klicken Sie auf das Spielfeld!";
 		PropertyConfigurator.configure(SpielbrettMAS.class.getResource("log4j.info"));
 		logger.info("Spiel (MAS): Variate mit MAS ! Der Spielverlauf wird eher weniger geloggt!");
@@ -106,7 +106,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < 9; i++) {
 			Spieler spieler = this.spielerA;
 			Spieler spielerB = this.spielerB;
 			if(i % 2 == 0) {
@@ -129,7 +129,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			switch(spieler.getSpielPhase()) {
 			case 0:
 						Spielstein spielstein = this.executeSpielZug(spieler, spielerB, board).get(0);
-						if(spieler.getName().contains("B")) {
+						if(spieler.getName().contains("CBR")) {
 							spielstein.setColor(Color.BLUE);
 						} else {
 							spielstein.setColor(Color.WHITE);
@@ -147,19 +147,11 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 								
 							} else {
 								// Unterscheide welcher Spieler als nächstes dran ist
-								if(spieler.getName().contains("B")) {
-									ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-									System.out.println("Der Spieler A (Weiss) ist am Zug!");
-									int ausgabe = 9 - spielerA.getAnzahlSteine();
-									this.pruefeAufSpielEnde();
-									System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
-								} else {
-									ausgabe = "Der Spieler B (Blau) ist am Zug!";
-									System.out.println("Der Spieler B (Blau) ist am Zug!");
-									int ausgabe = 9 - this.spielerA.getAnzahlSteine();
-									this.pruefeAufSpielEnde();
-									System.out.println("Info: Der" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
-								}
+								ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
+								System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
+								int ausgabe = 9 - spielerB.getAnzahlSteine();
+								this.pruefeAufSpielEnde();
+								System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 							}
 							break;
 						} 
@@ -178,7 +170,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							spielstein2 = dataResult.get(1);
 						}
 						// Farbe steuern.
-						if(spieler.getName().contains("B")) {
+						if(spieler.getName().contains("CBR")) {
 							spielstein2.setColor(Color.BLUE);
 						} else {
 							spielstein2.setColor(Color.WHITE);
@@ -197,19 +189,16 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							if(spielController.pruefeAufMuehle(spieler)) {
 								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
 									
-								spieler.setTempspielPhase(spielerB.getSpielPhase());
+								spieler.setTempspielPhase(spieler.getSpielPhase());
 								spieler.setSpielPhase(3);
 								
 							} else {
-								if(spieler.getName().contains("B")) {
-									ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-									this.pruefeAufSpielEnde();
-									System.out.println("Der Spieler A (Weiss) ist am Zug!");
-								} else {
-									ausgabe = "Der Spieler B (Blau) ist am Zug!";
-									this.pruefeAufSpielEnde();
-									System.out.println("Der Spieler B (Blau) ist am Zug!");
-									}
+								// Unterscheide welcher Spieler als nächstes dran ist
+								ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
+								System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
+								int ausgabe = 9 - spielerB.getAnzahlSteine();
+								this.pruefeAufSpielEnde();
+								System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 							}
 							break;
 						} 
@@ -228,7 +217,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							spielstein2 = dataResult.get(1);
 						}
 						// Farbe steuern.
-						if(spieler.getName().contains("B")) {
+						if(spieler.getName().contains("CBR")) {
 							spielstein2.setColor(Color.BLUE);
 						} else {
 							spielstein2.setColor(Color.WHITE);
@@ -242,8 +231,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 				
 						if(spielController.setSpielStein(xCord, yCord, spieler, spielstein2))  {
 							spielsteine.add(spielstein2);
-						
-			
 							if(spielController.pruefeAufMuehle(spieler)) {
 								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
 								
@@ -251,15 +238,12 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 								spielerB.setSpielPhase(3);
 				
 							} else {
-								if(spieler.getName().contains("B")) {
-									ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-									this.pruefeAufSpielEnde();
-									System.out.println("Der Spieler A (Weiss) ist am Zug!");
-								} else {
-									ausgabe = "Der Spieler B (Blau) ist am Zug!";
-									this.pruefeAufSpielEnde();
-									System.out.println("Der Spieler B (Blau) ist am Zug!");
-								}
+								// Unterscheide welcher Spieler als nächstes dran ist
+								ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
+								System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
+								int ausgabe = 9 - spielerB.getAnzahlSteine();
+								this.pruefeAufSpielEnde();
+								System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 							}
 							break;
 						} 
@@ -272,14 +256,12 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
 						spielsteine.remove(stein);
 						spieler.setSpielPhase(spieler.getTempspielPhase());
-						ausgabe = "Der Spieler A (Weiss) ist am Zug!";
-						if(spieler.getName().contains("A")) {
-							ausgabe = "Der Spieler B (Blau) ist nun am Zug!";
-							System.out.println("Der Spieler B ist nun am Zug!");
-						} else {
-							ausgabe = "Der Spieler A (Weiss) ist nun am Zug!";
-							System.out.println("Der Spieler A ist nun am Zug!");
-						}
+						// Unterscheide welcher Spieler als nächstes dran ist
+						ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
+						System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
+						int ausgabe = 9 - spielerB.getAnzahlSteine();
+						this.pruefeAufSpielEnde();
+						System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 						this.pruefeAufSpielEnde();
 						break;
 			default: 						
@@ -331,7 +313,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		logger.info("Spiel(MAS): Ein Spielzug beginnt!");
 		MessageBox box  = new MessageBox(spieler, spielerB, board);
 		boolean changeAgent = false;
-		if(spieler.getName().contains("A")) {
+		if(spieler.getName().contains("RBS")) {
 			changeAgent = true;
 		} 
 		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, changeAgent);
@@ -358,11 +340,10 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	 */
 	private void pruefeAufSpielEnde() {
 		if(spielerA.getAnzahlSteine() == 2 && spielerA.getSpielPhase() == 3) {
-			System.out.println("Spieler B gewinnt das Spiel!");
+			System.out.println( spielerB.getName() + " gewinnt das Spiel!");
 			this.spielEnde = true;
-			System.out.println("Spieler B gewinnt das Spiel!");
 		} else if(spielerB.getAnzahlSteine() == 2 && spielerB.getSpielPhase() == 3) {
-			System.out.println("Spieler A gewinnt das Spiel!");
+			System.out.println( spielerA.getName() + "gewinnt das Spiel!");
 			this.spielEnde = true;
 		}
 	}

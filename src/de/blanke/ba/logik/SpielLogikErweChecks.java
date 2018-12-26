@@ -20,7 +20,6 @@ public class SpielLogikErweChecks {
 	 * @return zwei Steinen neben einander
 	 */
 	public List<Stein> sucheZweiInGleicherReihe(List<Stein> data, Board board) {
-		
 		List<Stein> rueckgabe = new ArrayList<>();
 		// Durchlaufe alle Steine, nehme den ersten aus der Liste und suche nach passenden.
 		for(int i = 0; i < data.size(); i++) {
@@ -42,10 +41,15 @@ public class SpielLogikErweChecks {
 			} else {
 				freieFelder = rueckgabe.get(1).convertToFeld().allefreienNachbarn(board);
 				rueckgabe.clear();
-				rueckgabe.add(freieFelder.get(0).convertToStein());
+				if(!freieFelder.isEmpty()) {
+					rueckgabe.add(freieFelder.get(0).convertToStein());
+				} else {
+					rueckgabe.add(new Stein(0,0,0, null));
+				}
+				
 			}
 		} else {
-			System.out.println("Es wurden keine zwei Steine in einer Reihe gefunden!");
+			rueckgabe.add(new Stein(0,0,0, null));
 		}
 		
 		return rueckgabe;
@@ -92,18 +96,9 @@ public class SpielLogikErweChecks {
 					break;
 				}
 			}
-			
-			
-		} else {
-			System.out.println("Es wurden keine zwei Steine in einer Reihe gefunden!");
-		}
-		
-		
-		
-		
+		} 
 		return rueckgabe;
 	}
-	
 	/**
 	 * Diese Methode sucht einen Stein in im selben Ring heraus
 	 * @param data
@@ -116,7 +111,6 @@ public class SpielLogikErweChecks {
 		for(Stein s: spieler.getPosiSteine()) {
 			if(toSearch.getRing() == s.getRing()) {
 				rueckgabe.add(s);
-				
 			}
 		}
 		return rueckgabe;

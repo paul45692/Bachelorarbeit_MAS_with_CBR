@@ -227,10 +227,12 @@ public class RegelInterpreter {
 		switch (spieler.getSpielPhase()) {
 			case 0: 	// Werte nur Regel 1 aus
 						List<Stein> rueckgabe = this.logikCheck.sucheZweiInGleicherReihe(spieler.getPosiSteine(), board);
-						if(!rueckgabe.isEmpty()) {
+						
+						if(!rueckgabe.isEmpty() && !rueckgabe.get(0).equals(new Stein(0,0,0, null))) {
+							
 							dataBack.add(rueckgabe.get(0));
 							back = true;
-						}
+						} 
 						break;
 						
 			case 1:		for(Regel regel: uebergreifendeRegeln) {

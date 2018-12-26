@@ -36,6 +36,7 @@ public class CBRController {
 	private ICaseBase casebase = null;
 	private AgentenOperations operations = new AgentenOperations();
 	private CBR_AdaptionProcess process = new CBR_AdaptionProcess();
+	private CBR_Learning_Process_Prototyp learning = new CBR_Learning_Process_Prototyp();
 	private List<Stein> resultSet = new ArrayList<>();
 	private static final Logger logger = Logger.getLogger(CBRController.class);
 // Methoden	
@@ -119,7 +120,16 @@ public class CBRController {
 					dataResult.add(result.get(i).getFirst());
 				}
 			}
-			this.analyseQuery(spieler, board, dataResult);
+			if(!dataResult.isEmpty()) {
+				this.analyseQuery(spieler, board, dataResult);
+			} else {
+				// Falls keine Fälle gefunden wurden, wird versucht ein neuen Fall anzulernen.
+				IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungfeld_Start");
+				IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld_Ziel");
+				Instance neuGelernt = this.learning.letsTryToLearnANewCase(query, spieler, board, lösungADesc, lösungBDesc);
+				this.casebase.addCase(neuGelernt);
+				this.project.save();
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,7 +182,7 @@ public class CBRController {
 			Stein eins = caculateSol.get(i);
 			Stein zwei = caculateSol.get(i+1);
 			List<Stein> result = process.evaluateSolution(spieler, board, eins, zwei);
-			if(result!= null) {
+			if(!result.isEmpty()) {
 				if(spieler.getSpielPhase() == 0 || spieler.getSpielPhase() == 3) {
 					this.resultSet.add(result.get(0));
 				} else {
