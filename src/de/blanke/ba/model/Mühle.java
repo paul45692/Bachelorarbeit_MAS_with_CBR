@@ -3,14 +3,17 @@ package de.blanke.ba.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import jade.util.leap.Serializable;
 /**
  * Diese Klasse bildet eine Mühle ab.
  * Die liste der Steine enthält alle Positionen der Mühle.
  * @author Paul Blanke.
  *
  */
-public class Mühle {
-// Attribute
+public class Mühle implements Serializable {
+	// Attribute
+	private static final long serialVersionUID = 1L;
 	private int index;
 	private List<Stein> steine = new ArrayList<>();
 // Getter und Setter	

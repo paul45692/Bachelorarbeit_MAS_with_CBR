@@ -72,9 +72,11 @@ public class RegelInterpreter {
 		String ausgabeLog = "";
 		if(dataBack.size() < 2) {
 			ausgabeLog = "Leer";
+		} else if(dataBack.isEmpty()) {
+			System.out.println("Error!");
 		} else {
 			ausgabeLog = dataBack.get(1).toString();
-		}
+		} 
 		String spielzug = "RBS Agent: ";
 		if(spieler.getSpielPhase() == 0) {
 			spielzug += "Der Stein wurde auf: " + dataBack.get(0).toString() + " gesetzt.";
@@ -123,7 +125,7 @@ public class RegelInterpreter {
 		
 		for(RegelSpielPhase1u2 regel: spielphase1) {
 			// Wenn der Spieler das Feld besetzt dann werte Regel weiter aus.
-			if(spielData.contains(regel.getBesetztesFeld()) && board.checkAufBelegtFeld(regel.getBewegungsFeld().convertToFeld())) {
+			if(spieler.steinIstVorhanden(regel.getBesetztesFeld()) && !board.checkAufBelegtFeld(regel.getBewegungsFeld().convertToFeld())) {
 				dataBack.add(regel.getBesetztesFeld());
 				dataBack.add(regel.getBewegungsFeld());
 				break;
@@ -160,7 +162,7 @@ public class RegelInterpreter {
 		
 		for(RegelSpielPhase1u2 regel: spielphase2) {
 			// Wenn der Spieler das Feld besetzt dann werte Regel weiter aus.
-			if(spielData.contains(regel.getBesetztesFeld()) && board.checkAufBelegtFeld(regel.getBewegungsFeld().convertToFeld())) {
+			if(spieler.steinIstVorhanden(regel.getBesetztesFeld()) && !board.checkAufBelegtFeld(regel.getBewegungsFeld().convertToFeld())) {
 				dataBack.add(regel.getBesetztesFeld());
 				dataBack.add(regel.getBewegungsFeld());
 				break;
@@ -192,14 +194,15 @@ public class RegelInterpreter {
 	
 	private void analyseQuerySpielPhase3(Board board, Spieler spieler) {
 		for(RegelSpielPhase0 regel: spielphase3) {
-			if(regel.getIfTeil().contains("Besetzt") && !board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+			if(regel.getIfTeil().contains("Besetzt") && board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())
+					&& !spieler.steinIstVorhanden(regel.getIfStein())) {
 				this.dataBack.add(regel.getElseStein());
 				break;
 			}  else if(regel.getIfTeil().contains("zufall")) {
 				// Solange wie nichts gefunden wurde, suche weiter:)
-				while(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+				while(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 					regel.erzeugeZufällig();
-					if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+					if(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) && !spieler.steinIstVorhanden(regel.getIfStein())) {
 						this.dataBack.add(regel.getElseStein());
 						regel.erzeugeZufällig();
 						break;
@@ -229,7 +232,6 @@ public class RegelInterpreter {
 						List<Stein> rueckgabe = this.logikCheck.sucheZweiInGleicherReihe(spieler.getPosiSteine(), board);
 						
 						if(!rueckgabe.isEmpty() && !rueckgabe.get(0).equals(new Stein(0,0,0, null))) {
-							
 							dataBack.add(rueckgabe.get(0));
 							back = true;
 						} 

@@ -135,7 +135,7 @@ public class Spieler implements Serializable{
 		this.posiSteine = posiSteine;
 	}
 	
-	public boolean steineIsVorhanden(Stein stein) {
+	public boolean steinIstVorhanden(Stein stein) {
 		boolean check = false;
 		for(Stein s: posiSteine) {
 			if(stein.equals(s)) {
