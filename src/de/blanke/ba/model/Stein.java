@@ -15,7 +15,7 @@ public class Stein implements Serializable{
 	private int ring;
 	private int xCord;
 	private int yCord;
-	private boolean isTeilVonMuehle;
+	private boolean isTeilVonMuehle = false;
 	private Spielstein spielstein;
 	private int index;
 // Getter und Setter

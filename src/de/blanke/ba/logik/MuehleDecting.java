@@ -65,7 +65,7 @@ public class MuehleDecting {
 			
 				for(Stein check: posiRing1A) {
 					for(Stein s:alleRing1) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(0));
@@ -75,7 +75,7 @@ public class MuehleDecting {
 				counter = 0;
 				for(Stein check: posiRing1B) {
 					for(Stein s:alleRing1) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(1));
@@ -86,7 +86,7 @@ public class MuehleDecting {
 			
 				for(Stein check: posiRing1C) {
 					for(Stein s:alleRing1) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(2));
@@ -97,7 +97,7 @@ public class MuehleDecting {
 				
 				for(Stein check: posiRing1D) {
 					for(Stein s:alleRing1) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(3));
@@ -112,7 +112,7 @@ public class MuehleDecting {
 			
 				for(Stein check: posiRing2A) {
 					for(Stein s:alleRing2) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(4));
@@ -122,7 +122,7 @@ public class MuehleDecting {
 				counter = 0;
 				for(Stein check: posiRing2B) {
 					for(Stein s:alleRing2) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(5));
@@ -132,7 +132,7 @@ public class MuehleDecting {
 				counter = 0;
 				for(Stein check: posiRing2C) {
 					for(Stein s:alleRing2) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(6));
@@ -142,7 +142,7 @@ public class MuehleDecting {
 				counter = 0;
 				for(Stein check: posiRing2D) {
 					for(Stein s:alleRing2) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(7));
@@ -156,7 +156,7 @@ public class MuehleDecting {
 			
 				for(Stein check: posiRing3A) {
 					for(Stein s:alleRing3) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(8));
@@ -167,7 +167,7 @@ public class MuehleDecting {
 				
 				for(Stein check: posiRing3B) {
 					for(Stein s:alleRing3) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(9));
@@ -178,7 +178,7 @@ public class MuehleDecting {
 				
 				for(Stein check: posiRing3C) {
 					for(Stein s:alleRing3) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(10));
@@ -189,7 +189,7 @@ public class MuehleDecting {
 				
 				for(Stein check: posiRing3D) {
 					for(Stein s:alleRing3) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(11));
@@ -203,7 +203,7 @@ public class MuehleDecting {
 			
 				for(Stein check: posiRing4A) {
 					for(Stein s:spielsteine) {
-						if((s.getxCord() == check.getxCord()) && (s.getyCord() == check.getyCord())) {
+						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(12));
@@ -265,7 +265,6 @@ public class MuehleDecting {
 			
 		} else if(vorh_Data.size() > 0 && tempGefunden.size() > 0)  {
 			// Sonst vergleich die vorhanden Mühlen mit den gefundenen Mühlen
-			System.out.println("Test:" + vorh_Data.size() + "Gefunden:" + tempGefunden.size());
 			for(Mühle mühle: tempGefunden) {
 				for(Mühle vergleich:vorh_Data) {
 					if(mühle.getIndex() == vergleich.getIndex()) {

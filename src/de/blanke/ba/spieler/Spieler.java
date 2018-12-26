@@ -112,6 +112,14 @@ public class Spieler implements Serializable{
 	}
 	
 	public void removeMuehle(Mühle muehle) {
+		for(Stein stein: muehle.getSteine()) {
+			for(Stein s: this.posiSteine) {
+				if(s.equals(stein)) {
+					s.setIsTeilVonMuehle(false);
+				}
+			}
+		}
+		
 		this.vorhandeneMuehlen.remove(muehle);
 	}
 	
