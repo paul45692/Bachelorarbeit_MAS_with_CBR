@@ -75,7 +75,7 @@ public class Board implements Serializable {
 					
 					if(!f.getBelegt()) {
 						f.setStein(stein);
-						System.out.println("Der Stein wurde auf :" + r + " ," + x +  "," + y + "platziert");
+						System.out.println("Der Stein wurde auf :" + r + " ," + x +  "," + y + " platziert");
 						anzahlFreiFelder --;
 						rueckgabe = true;
 					} else {
@@ -114,7 +114,7 @@ public class Board implements Serializable {
 				// Suche Feld heraus
 				if(f.equals(feld) && spieler.steinIstVorhanden(f.convertToStein())) {
 					stein = f.getStein();
-					if(!stein.getIsTeilVonMuehle()) {
+					if(!spieler.pruefeObSteinTeilEinerMuehhleIst(stein)) {
 						f.entferneStein();
 					}
 					break;

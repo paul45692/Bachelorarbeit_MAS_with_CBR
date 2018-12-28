@@ -59,16 +59,6 @@ public class Spieler implements Serializable{
 	public void setVorhandeneMuehlen(List<Mühle> vorhandeneMuehlen) {
 		this.vorhandeneMuehlen = vorhandeneMuehlen;
 	}
-	public void setWeitereMühlenDazu(List<Mühle> weitere) {
-		for(Mühle mühle: weitere) {
-			this.vorhandeneMuehlen.add(mühle);
-		}
-	}
-	public void removeÜberflüssigeMühlen(List<Mühle> überzählig) {
-		for(Mühle mühle: überzählig) {
-			this.vorhandeneMuehlen.remove(mühle);
-		}
-	}
 	public int getTempspielPhase() {
 		return tempspielPhase;
 	}
@@ -144,5 +134,16 @@ public class Spieler implements Serializable{
 			}
 		}
 		return check;
+	}
+	
+	public boolean pruefeObSteinTeilEinerMuehhleIst(Stein stein) {
+		boolean rueckgabe = false;
+		for(Stein s: posiSteine) {
+			if(s.equals(stein)) {
+				rueckgabe = s.getIsTeilVonMuehle();
+				break;
+			} 
+		}
+		return rueckgabe;
 	}
 }

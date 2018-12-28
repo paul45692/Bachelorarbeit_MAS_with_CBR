@@ -41,6 +41,7 @@ public class RegelInterpreter {
 		this.setzeColor(spieler.getSpielFarbe());
 		this.dataBack.clear();
 		logger.info("RBS Agent (Auswertung): Eine Anfrage wird beantwortet ....");
+		
 		switch(spieler.getSpielPhase()) {
 		
 		case 0:    	if(this.analyseQueryBefore(spieler, spielerB, board)) {
@@ -64,7 +65,8 @@ public class RegelInterpreter {
 					}
 					break;
 					
-		case 3: 	analyseQuerySpielPhase3(board, spieler);
+		case 3: 	
+					analyseQuerySpielPhase3(board, spieler);
 					break;
 					
 		default:    break;
@@ -193,8 +195,9 @@ public class RegelInterpreter {
 	}
 	
 	private void analyseQuerySpielPhase3(Board board, Spieler spieler) {
+		
 		for(RegelSpielPhase0 regel: spielphase3) {
-			if(regel.getIfTeil().contains("Besetzt") && board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())
+			if(regel.getIfTeil().contains("Belegt") && board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) 
 					&& !spieler.steinIstVorhanden(regel.getIfStein())) {
 				this.dataBack.add(regel.getElseStein());
 				System.out.println("Ein Stein wurde gefunden!");
@@ -210,10 +213,8 @@ public class RegelInterpreter {
 					}
 				}
 			}
-			
 		}
-		
-		
+		System.out.println("Ergebnis ?" + this.dataBack.size());
 	}
 
 	

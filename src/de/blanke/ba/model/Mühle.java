@@ -40,4 +40,31 @@ public class Mühle implements Serializable {
 			stein.setFarbe(color);
 		}
 	}
+	/**
+	 * Diese Methode vergleicht zwei Mühlen über die übergegebenden Steinen
+	 * miteinander, wenn alle drei Steine gleich sind, dann true,
+	 * sonst false.
+	 */
+	@Override
+	public boolean equals(Object object) {
+		boolean rueckgabe = false;
+		Mühle mühle = (Mühle) object;
+		List<Stein> steine = mühle.getSteine();
+		int counter = 0;
+		for(Stein stein:this.steine) {
+			for(Stein s: steine) {
+				if(stein.equals(s)) {
+					counter++;
+					break;
+				}
+			}
+		}
+		if(counter == 3) {
+			rueckgabe = true;
+		}
+		return rueckgabe;
+		
+	}
+		
+		
 }

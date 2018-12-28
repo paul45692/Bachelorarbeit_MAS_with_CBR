@@ -123,12 +123,12 @@ public class RegelSet {
 		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(0,0,2, null), "Entferne", new Stein(0,0,2, null)));
 		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(0,1,0, null), "Entferne", new Stein(0,1,0, null)));
 		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(0,2,0, null), "Entferne", new Stein(0,2,0, null)));
-		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,0,2, null), "Entferne", new Stein(0,0,2, null)));
-		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,1,0, null), "Entferne", new Stein(0,1,0, null)));
-		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,2,0, null), "Entferne", new Stein(0,2,0, null)));
-		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,0,2, null), "Entferne", new Stein(0,0,2, null)));
-		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(2,1,0, null), "Entferne", new Stein(0,1,0, null)));
-		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(2,2,0, null), "Entferne", new Stein(0,2,0, null)));
+		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,0,2, null), "Entferne", new Stein(1,0,2, null)));
+		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,1,0, null), "Entferne", new Stein(1,1,0, null)));
+		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,2,0, null), "Entferne", new Stein(1,2,0, null)));
+		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(1,0,2, null), "Entferne", new Stein(1,0,2, null)));
+		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(2,1,0, null), "Entferne", new Stein(2,1,0, null)));
+		spielphase3.add(new RegelSpielPhase0("Belegt", new Stein(2,2,0, null), "Entferne", new Stein(2,2,0, null)));
 		RegelSpielPhase0 zufall = new RegelSpielPhase0("zufall", new Stein(0,1,2, null), "", new Stein(0,1,2, null));
 		zufall.erzeugeZufällig();
 		for(RegelSpielPhase0 regel: spielphase0) {
@@ -137,7 +137,7 @@ public class RegelSet {
 				break;
 			} 
 		}
-		spielphase0.add(zufall);
+		spielphase3.add(zufall);
 	}
 
 	private void setUpUeberGreifendeRegelnAuf() {

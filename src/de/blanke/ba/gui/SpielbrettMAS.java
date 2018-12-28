@@ -104,7 +104,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 13; i++) {
 			Spieler spieler = this.spielerA;
 			Spieler spielerB = this.spielerB;
 			if(i % 2 == 0) {
@@ -140,9 +140,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							
 							if(spielController.pruefeAufMuehle(spieler)) {
 								System.out.println("-->  Der "+ spieler.getName() + " hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-							//	spieler.setTempspielPhase(spieler.getSpielPhase());
-							//	spieler.setSpielPhase(3);
-							//	this.führeZugDurch(spieler, spielerB, board);
+								spieler.setTempspielPhase(spieler.getSpielPhase());
+								spieler.setSpielPhase(3);
+								this.führeZugDurch(spieler, spielerB, board);
 								
 							} else {
 								// Unterscheide welcher Spieler als nächstes dran ist

@@ -40,8 +40,13 @@ public class MuehleDecting {
 		erzeugeMühlen();
 	}
 	/**
-	 * Diese Methode enthält die zentrale Logik der Klasse.
-	 * @return gefundene Mühle oder nicht.
+	 * Diese Methode untersucht die Positionen der Spielersteine und
+	 * vergleicht sie mit den möglichen Mühlenpositionen.
+	 * Nach Abschluss wird über die Liste tempGefunden ein Vergleich der
+	 * gefunden Mühlen mit den vorhandenen Mühlen durchgeführt und dann wird
+	 * entschieden ob eine neue Mühle gefunden wurde.
+	 * @param spieler
+	 * @return
 	 */
 	public boolean findeMühle(Spieler spieler) {
 		List<Stein> spielsteine = spieler.getPosiSteine();
@@ -251,23 +256,22 @@ public class MuehleDecting {
 	}
 	/**
 	 * Diese Methode untersucht ob die gefundenen Mühlen schon zum Spieler gehören.
-	 * @param spieler
-	 * @return
+	 * @param spieler der Spieler der aktuell am Zug ist.
+	 * @return neue Mühle oder keine Mühle gefunden.
 	 */
 	private boolean pruefeAufvorHandeneMühlen(Spieler spieler) {
 		boolean rueckgabe = false;
 		List<Mühle> vorh_Data = spieler.getVorhandeneMuehlen();
-		// Wenn keine Mühlen vorhanden sind, dannn füge die erste dazu
+		// Wenn keine Mühlen vorhanden sind, dannn füge die erste dazu.
 		if(vorh_Data.isEmpty() && !tempGefunden.isEmpty()) {
-			
 			spieler.addMuehle(tempGefunden.get(0));
 			rueckgabe = true;
-			
+			// Sonst vergleiche die vorhanden Mühlen mit den gefundenen Mühlen.
 		} else if(vorh_Data.size() > 0 && tempGefunden.size() > 0)  {
-			// Sonst vergleich die vorhanden Mühlen mit den gefundenen Mühlen
 			for(Mühle mühle: tempGefunden) {
 				for(Mühle vergleich:vorh_Data) {
-					if(mühle.getIndex() == vergleich.getIndex()) {
+					// Wenn die gleiche Mühle in beiden Liste vorhanden ist, entferne sie.
+					if(mühle.equals(vergleich)) {
 						tempGefunden.remove(mühle);
 						vorh_Data.remove(vergleich);
 						break;
@@ -280,9 +284,11 @@ public class MuehleDecting {
 					spieler.addMuehle(mühle);
 					rueckgabe = true;
 				}
-				
+				// Wenn der Spieler noch Mühlen offen hat, die nicht gefunden wurden, werden diese entfernt.
 			} else if(tempGefunden.isEmpty() && vorh_Data.size()> 0) {
-				spieler.getVorhandeneMuehlen().clear();
+				for(Mühle mühle: vorh_Data) {
+					spieler.removeMuehle(mühle);
+				}
 			} 
 			
 		}
@@ -366,9 +372,6 @@ public class MuehleDecting {
 		posiRing4D.add(new Stein(1,2,1,null));
 		posiRing4D.add(new Stein(2,2,1,null));
 		alleMühlen.add(new Mühle(15, posiRing4D));
-		
-		
-	
 	}
 	
 }

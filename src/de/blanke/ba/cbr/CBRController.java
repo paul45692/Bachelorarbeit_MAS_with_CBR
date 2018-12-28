@@ -180,7 +180,11 @@ public class CBRController {
 		}
 		for(int i = 0; i < caculateSol.size(); i++) {
 			Stein eins = caculateSol.get(i);
-			Stein zwei = caculateSol.get(i+1);
+			int secondParameter = i;
+			if(secondParameter < caculateSol.size()-1) {
+				secondParameter++;
+			}
+			Stein zwei = caculateSol.get(secondParameter);
 			List<Stein> result = process.evaluateSolution(spieler, board, eins, zwei);
 			if(!result.isEmpty()) {
 				if(spieler.getSpielPhase() == 0 || spieler.getSpielPhase() == 3) {
