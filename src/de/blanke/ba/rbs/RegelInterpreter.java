@@ -29,7 +29,7 @@ public class RegelInterpreter {
 // Konstruktor für den Logger
 	public RegelInterpreter() {
 		PropertyConfigurator.configure(RegelInterpreter.class.getResource("log4j.info"));
-		logger.info("RBS Agent (Auswertung: Bereit!");
+		logger.info("RBS Agent Auswertung: Bereit!");
 	}
 	/**
 	 * Diese Methode verarbeitet eine Anfrage an das System.
@@ -108,14 +108,20 @@ public class RegelInterpreter {
 				this.dataBack.add(regel.getElseStein());
 				spielphase0.remove(regel);
 				break;
-			} else if(regel.getIfTeil().contains("Zufall")) {
-				// Solange wie nichts gefunden wurde, suche weiter:)
-				while(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+			} else if(regel.getIfTeil().contains("zufall")) {
+				
+				if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+					this.dataBack.add(regel.getIfStein());
+				} else {
 					regel.erzeugeZufällig();
-					if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
-						this.dataBack.add(regel.getElseStein());
+					while(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 						regel.erzeugeZufällig();
-						break;
+						System.out.println("Eine zufällige Regel wurde erzeugt.");
+						if(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+							this.dataBack.add(regel.getElseStein());
+							regel.erzeugeZufällig();
+							break;
+						}
 					}
 				}
 			}
@@ -131,7 +137,6 @@ public class RegelInterpreter {
 				dataBack.add(regel.getBesetztesFeld());
 				dataBack.add(regel.getBewegungsFeld());
 				break;
-				
 			} else if(regel.getIfTeil().contains("zufall")){
 				for(int i = 0; i < spielData.size(); i++) {
 					Stein steineins = spielData.get(i);
@@ -200,21 +205,24 @@ public class RegelInterpreter {
 			if(regel.getIfTeil().contains("Belegt") && board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) 
 					&& !spieler.steinIstVorhanden(regel.getIfStein())) {
 				this.dataBack.add(regel.getElseStein());
-				System.out.println("Ein Stein wurde gefunden!");
 				break;
 			}  else if(regel.getIfTeil().contains("zufall")) {
-				// Solange wie nichts gefunden wurde, suche weiter:)
-				while(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+				if(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
+					this.dataBack.add(regel.getIfStein());
+				} else {
 					regel.erzeugeZufällig();
-					if(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) && !spieler.steinIstVorhanden(regel.getIfStein())) {
-						this.dataBack.add(regel.getElseStein());
+					while(!board.checkAufBelegtFeld(regel.getIfStein().convertToFeld())) {
 						regel.erzeugeZufällig();
-						break;
+						System.out.println("Eine zufällige Regel wurde erzeugt.");
+						if(board.checkAufBelegtFeld(regel.getIfStein().convertToFeld()) && !spieler.steinIstVorhanden(regel.getIfStein()) ) {
+							this.dataBack.add(regel.getElseStein());
+							regel.erzeugeZufällig();
+							break;
+						}
 					}
 				}
 			}
 		}
-		System.out.println("Ergebnis ?" + this.dataBack.size());
 	}
 
 	

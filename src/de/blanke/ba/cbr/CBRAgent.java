@@ -51,7 +51,6 @@ public class CBRAgent extends Agent{
 					try {
 						box = (MessageBox) msg.getContentObject();
 						// Hole mir die Daten raus
-						logger.info("CBR-System: Eine Nachricht ist eingetroffen!");
 						
 					} catch (UnreadableException e) {
 						// TODO Auto-generated catch block
@@ -89,6 +88,7 @@ public class CBRAgent extends Agent{
 							zwei = rueckgabe.get(1);
 					} else if(rueckgabe.isEmpty()) {
 						logger.info("CBR System: Übertragungsproblem");
+						System.out.println("CBR System: Es konnte keine Rückgabe ermittelt werden!");
 						steine = new MessageBoxSteine(null, null);
 					}
 					try {
@@ -99,7 +99,6 @@ public class CBRAgent extends Agent{
 					}
 					send(aclmsg);
 					msg =  null;
-					logger.info("CBR-System: Aufgabe wurde abgeschlossen!");
 				} else {
 					block();
 				}

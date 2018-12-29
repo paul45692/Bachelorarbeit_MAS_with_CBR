@@ -37,11 +37,10 @@ public class RegelSpielPhase0 extends Regel {
 	 */
 	protected void erzeugeZufällig() {
 		Random r = new Random();
-		
 		for(int i = 0; i < 2; i++) {
 			int zahlR = r.nextInt((3-0));
-			int zahlX = r.nextInt(10-0);
-			int zahlY = r.nextInt(10-0);
+			int zahlX = r.nextInt(3-0);
+			int zahlY = r.nextInt(3-0);
 			if(i== 0) {
 				this.setIfStein(new Stein(zahlR, zahlX, zahlY, null));
 			} else {

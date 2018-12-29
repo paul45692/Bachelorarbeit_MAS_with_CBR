@@ -39,6 +39,7 @@ public class CBRController {
 	private CBR_Learning_Process_Prototyp learning = new CBR_Learning_Process_Prototyp();
 	private List<Stein> resultSet = new ArrayList<>();
 	private static final Logger logger = Logger.getLogger(CBRController.class);
+	private Instance eingabe = null;
 // Methoden	
 	/**
 	 * Diese Methode initalisiert die zentrale CBR Infrastruktur, die benötigt wird, und lädet alle Fälle.
@@ -104,6 +105,7 @@ public class CBRController {
 			query.addAttribute("Spielsteine_Ring_2", spielsteineR2);
 			query.addAttribute("Spielsteine_Ring_3", spielsteineR3);
 			query.addAttribute("Mühlen", mühlen);
+			eingabe = query;
 			retrieval.setRetrievalMethod(Retrieval.RetrievalMethod.RETRIEVE_SORTED );
 			retrieval.start();
 			logger.info("CBR Query execute with: " + spielphase + ", "+ anzahlDerEigenenSpielsteine + ", "
@@ -120,15 +122,15 @@ public class CBRController {
 					dataResult.add(result.get(i).getFirst());
 				}
 			}
+			
 			if(!dataResult.isEmpty()) {
 				this.analyseQuery(spieler, board, dataResult);
-			} else {
-				// Falls keine Fälle gefunden wurden, wird versucht ein neuen Fall anzulernen.
+			} else if(dataResult.isEmpty())  {
 				IntegerDesc lösungADesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungfeld_Start");
 				IntegerDesc lösungBDesc = (IntegerDesc) concept.getAllAttributeDescs().get("Lösungsfeld_Ziel");
 				Instance neuGelernt = this.learning.letsTryToLearnANewCase(query, spieler, board, lösungADesc, lösungBDesc);
 				this.casebase.addCase(neuGelernt);
-				this.project.save();
+				// this.project.save();
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -178,6 +180,7 @@ public class CBRController {
 		for(Integer a: evaluateData) {
 			caculateSol.add(operations.getSteineFuerCBRSystem(a));
 		}
+		
 		for(int i = 0; i < caculateSol.size(); i++) {
 			Stein eins = caculateSol.get(i);
 			int secondParameter = i;
@@ -194,7 +197,15 @@ public class CBRController {
 					this.resultSet.add(result.get(1));
 				}
 				break;
-			}
+			} 
+		}
+		// Prüfe ob das Ergebnis immer noch leer ist und lerne dann einen neuen Fall dazu.
+		if(this.resultSet.isEmpty()) {
+			System.out.println("Ein neuer Fall wird per Zufall dazu gelernt.");
+			 Instance neu = this.learning.letsTryToLearnANewCase(eingabe, spieler, board, lösungADesc, lösungBDesc);
+			 this.casebase.addCase(neu);
+			 System.out.println("Die Fallbasis enthält jetzt: " + this.casebase.getCases().size());
+			 resultSet.add(this.learning.getErgebnisA());
 		}
 	}
 

@@ -104,17 +104,19 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
-		for(int i = 0; i < 13; i++) {
-			Spieler spieler = this.spielerA;
-			Spieler spielerB = this.spielerB;
+		for(int i = 0; i < 12; i++) {
+			Spieler spieler = this.spielerB;
+			Spieler spielerB = this.spielerA;
 			if(i % 2 == 0) {
-				spieler = this.spielerB;
-				spielerB = this.spielerA;
+				spieler = this.spielerA;
+				spielerB = this.spielerB;
 			}
 			Board board = this.spielController.getBoard();
 			this.führeZugDurch(spieler, spielerB, board);
 			this.paint(getGraphics());
 		}
+		System.out.println("Agenten Spiel beendet!");
+		ausgabe = "Das Spiel mit den Agenten wurde beendet!";
 	}
 	/**
 	 * Diese Methode führt einen Spielzug des Agenten durch.
@@ -140,9 +142,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							
 							if(spielController.pruefeAufMuehle(spieler)) {
 								System.out.println("-->  Der "+ spieler.getName() + " hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								spieler.setTempspielPhase(spieler.getSpielPhase());
-								spieler.setSpielPhase(3);
-								this.führeZugDurch(spieler, spielerB, board);
+								 spieler.setTempspielPhase(spieler.getSpielPhase());
+								 spieler.setSpielPhase(3);
+								 this.führeZugDurch(spieler, spielerB, board);
 								
 							} else {
 								// Unterscheide welcher Spieler als nächstes dran ist
@@ -257,23 +259,20 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						// Unterscheide welcher Spieler als nächstes dran ist
 						ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
 						System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
-						int ausgabe = 9 - spielerB.getAnzahlSteine();
-						this.pruefeAufSpielEnde();
-						System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 						this.pruefeAufSpielEnde();
 						break;
+						
 			default: 						
 						break;	
-				
 			}
 			
 		}
 		
 	}	
-// MAS wird aufgesetzt.	
+
 	/**
-	 * Diese Methode hält das Script für das MAS bereit
-	 * @return
+	 * Diese Methode setzt das MAS bei Initialisierung auf.
+	 * 
 	 */
 	private void setUpMAS() {
 		Runtime runtime = Runtime.instance();
@@ -289,7 +288,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	      
 	       try {
 	    	 ac = containerController.acceptNewAgent("CBR Agent", cbrAgent);
-			ac1 = containerController.acceptNewAgent("RBS Agent",rbsAgent );
+			ac1 = containerController.acceptNewAgent("RBS Agent",	rbsAgent );
 			ac2 = containerController.acceptNewAgent("Controller Agent", controllerMAS);
 			ac1.start();
 			ac.start();

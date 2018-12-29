@@ -70,7 +70,7 @@ public class RegelSet {
 		spielphase0.add(new RegelSpielPhase0("Frei", new Stein(1,2,1, null), "Setze", new Stein(1,2,1, null)));
 		spielphase0.add(new RegelSpielPhase0("Frei", new Stein(2,1,2, null), "Setze", new Stein(2,1,2, null)));
 		// nehme Zufallsregel auf
-		RegelSpielPhase0 zufall = new RegelSpielPhase0("Zufall", new Stein(0,1,2, null), "", new Stein(0,1,2, null));
+		RegelSpielPhase0 zufall = new RegelSpielPhase0("zufall", new Stein(0,1,2, null), "", new Stein(0,1,2, null));
 		zufall.erzeugeZufällig();
 		for(RegelSpielPhase0 regel: spielphase0) {
 			if(regel.equals(zufall)) {

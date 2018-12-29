@@ -54,7 +54,7 @@ public class MuehleDecting {
 		List<Stein> alleRing1 = new ArrayList<>();
 		List<Stein> alleRing2 = new ArrayList<>();
 		List<Stein> alleRing3 = new ArrayList<>();
-	
+		this.tempGefunden.clear();
 		// Splitte auf
 		for(Stein s: spielsteine) {
 			if(s.getRing()== 0) {
@@ -74,6 +74,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(0));
+							break;
 						}
 					}
 				}
@@ -83,7 +84,9 @@ public class MuehleDecting {
 						if(s.equals(check)) {
 							counter++;
 						} else if(counter == 3) {
+							System.out.println("Die Mühle wurde erkannt");
 							tempGefunden.add(alleMühlen.get(1));
+							break;
 						}
 					}
 				}
@@ -95,6 +98,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(2));
+							break;
 						}
 					}
 				}
@@ -106,6 +110,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(3));
+							break;
 						}
 					}
 				}
@@ -121,6 +126,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(4));
+							break;
 						}
 					}
 				}
@@ -131,6 +137,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(5));
+							break;
 						}
 					}
 				}
@@ -141,6 +148,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(6));
+							break;
 						}
 					}
 				}
@@ -151,6 +159,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(7));
+							break;
 						}
 					}
 				}
@@ -165,6 +174,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(8));
+							break;
 						}
 					}
 				}
@@ -176,6 +186,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(9));
+							break;
 						}
 					}
 				}
@@ -187,6 +198,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(10));
+							break;
 						}
 					}
 				}
@@ -198,6 +210,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(11));
+							break;
 						}
 					}
 				}
@@ -212,6 +225,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(12));
+							break;
 						}
 					}
 				}
@@ -223,6 +237,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(13));
+							break;
 						}
 					}
 				}
@@ -234,6 +249,7 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(14));
+							break;
 						}
 					}
 				}
@@ -245,12 +261,12 @@ public class MuehleDecting {
 							counter++;
 						} else if(counter == 3) {
 							tempGefunden.add(alleMühlen.get(15));
+							break;
 						}
 					}
 				}
 				counter = 0;
 			}
-	
 		
 		return pruefeAufvorHandeneMühlen(spieler);
 	}
@@ -263,37 +279,32 @@ public class MuehleDecting {
 		boolean rueckgabe = false;
 		List<Mühle> vorh_Data = spieler.getVorhandeneMuehlen();
 		// Wenn keine Mühlen vorhanden sind, dannn füge die erste dazu.
+		
 		if(vorh_Data.isEmpty() && !tempGefunden.isEmpty()) {
 			spieler.addMuehle(tempGefunden.get(0));
 			rueckgabe = true;
 			// Sonst vergleiche die vorhanden Mühlen mit den gefundenen Mühlen.
 		} else if(vorh_Data.size() > 0 && tempGefunden.size() > 0)  {
+			List<Mühle> treffer = new ArrayList<>();
 			for(Mühle mühle: tempGefunden) {
-				for(Mühle vergleich:vorh_Data) {
-					// Wenn die gleiche Mühle in beiden Liste vorhanden ist, entferne sie.
-					if(mühle.equals(vergleich)) {
-						tempGefunden.remove(mühle);
-						vorh_Data.remove(vergleich);
+				for(Mühle m: vorh_Data) {
+					if(mühle.equals(m)) {
+						treffer.add(mühle);
 						break;
 					}
 				}
-			} 
+			}
+			tempGefunden.removeAll(treffer);
 			if(!tempGefunden.isEmpty()) {
-				
-				for(Mühle mühle: tempGefunden) {
-					spieler.addMuehle(mühle);
-					rueckgabe = true;
-				}
-				// Wenn der Spieler noch Mühlen offen hat, die nicht gefunden wurden, werden diese entfernt.
-			} else if(tempGefunden.isEmpty() && vorh_Data.size()> 0) {
-				for(Mühle mühle: vorh_Data) {
-					spieler.removeMuehle(mühle);
-				}
-			} 
-			
+				System.out.println("Eine weitere Mühle wurden gefunden");
+				spieler.addMuehle(tempGefunden.get(0));
+				rueckgabe = true;
+			}
+		} else if(tempGefunden.isEmpty() && !vorh_Data.isEmpty()) {
+			vorh_Data.clear();
+			spieler.setVorhandeneMuehlen(vorh_Data);
 		}
-		// Das ist wichtig um eine leere Liste am Ende zu haben.
-		tempGefunden.clear();
+		
 		return rueckgabe;
 	}
 	
@@ -310,6 +321,7 @@ public class MuehleDecting {
 		posiRing1B.add(new Stein(0,0,0,null));
 		posiRing1B.add(new Stein(0,0,1,null));
 		posiRing1B.add(new Stein(0,0,2,null));
+		
 		alleMühlen.add(new Mühle(1, posiRing1B));
 		posiRing1C.add(new Stein(0,0,2,null));
 		posiRing1C.add(new Stein(0,1,2,null));
