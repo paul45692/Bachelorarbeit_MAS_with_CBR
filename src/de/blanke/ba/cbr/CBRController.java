@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-
 import de.blanke.ba.logik.Board;
 import de.blanke.ba.mas.AgentenOperations;
 import de.blanke.ba.model.Stein;
@@ -36,7 +35,7 @@ public class CBRController {
 	private ICaseBase casebase = null;
 	private AgentenOperations operations = new AgentenOperations();
 	private CBR_AdaptionProcess process = new CBR_AdaptionProcess();
-	private CBR_Learning_Process_Prototyp learning = new CBR_Learning_Process_Prototyp();
+	private CBR_Learning_Process learning = new CBR_Learning_Process();
 	private List<Stein> resultSet = new ArrayList<>();
 	private static final Logger logger = Logger.getLogger(CBRController.class);
 	private Instance eingabe = null;
@@ -137,12 +136,17 @@ public class CBRController {
 			e.printStackTrace();
 		}
 		String spielzug = "CBR Agent:";
-		if(spieler.getSpielPhase() == 0) {
-			spielzug += "Der Stein wurde auf: " + resultSet.get(0).toString() + " gesetzt.";
-		} else if(spieler.getSpielPhase() == 3) {
-			spielzug += "Der Stein:" + resultSet.get(0).toString() + "soll entfernt werden.";
+		// Fehlerbehandlung für eines leeres Ergebnisset.
+		if(!resultSet.isEmpty()) {
+			if(spieler.getSpielPhase() == 0) {
+				spielzug += "Der Stein wurde auf: " + resultSet.get(0).toString() + " gesetzt.";
+			} else if(spieler.getSpielPhase() == 3) {
+				spielzug += "Der Stein:" + resultSet.get(0).toString() + "soll entfernt werden.";
+			} else {
+				spielzug += "Spielzug von " + resultSet.get(0).toString() + "nach " + resultSet.get(1).toString();
+			}
 		} else {
-			spielzug += "Spielzug von " + resultSet.get(0).toString() + "nach " + resultSet.get(1).toString();
+			spielzug += " Aufgrund eines Fehlers konnte kein Ergebnis ermittelt werden";
 		}
 		System.out.println(spielzug);
 		return resultSet;

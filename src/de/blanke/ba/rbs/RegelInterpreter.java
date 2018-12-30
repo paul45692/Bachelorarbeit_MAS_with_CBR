@@ -71,24 +71,22 @@ public class RegelInterpreter {
 					
 		default:    break;
 		}
-		String ausgabeLog = "";
-		if(dataBack.size() < 2) {
-			ausgabeLog = "Leer";
-		} else if(dataBack.isEmpty()) {
-			System.out.println("Error!");
-		} else {
-			ausgabeLog = dataBack.get(1).toString();
-		} 
+		
 		String spielzug = "RBS Agent: ";
-		if(spieler.getSpielPhase() == 0) {
-			spielzug += "Der Stein wurde auf: " + dataBack.get(0).toString() + " gesetzt.";
-		} else if(spieler.getSpielPhase() == 3) {
-			spielzug += "Der Stein:" + dataBack.get(0).toString() + "soll entfernt werden.";
+		if(!dataBack.isEmpty()) {
+			if(spieler.getSpielPhase() == 0) {
+				spielzug += "Der Stein wurde auf: " + dataBack.get(0).toString() + " gesetzt.";
+			} else if(spieler.getSpielPhase() == 3) {
+				spielzug += "Der Stein:" + dataBack.get(0).toString() + "soll entfernt werden.";
+			} else {
+				spielzug += "Spielzug von " + dataBack.get(0).toString() + "nach " + dataBack.get(1).toString();
+				logger.info("RBS Agent (Auswertung): Ergebnis war: Start:" + dataBack.get(0).toString() + "  Ziel:" + dataBack.get(1).toString());
+			}
 		} else {
-			spielzug += "Spielzug von " + dataBack.get(0).toString() + "nach " + dataBack.get(1).toString();
+			spielzug += " Ein Fehler ist aufgetreten und es konnte kein Spielzug ermittelt!";
 		}
 		System.out.println(spielzug);
-		logger.info("RBS Agent (Auswertung): Ergebnis war: Start:" + dataBack.get(0).toString() + "  Ziel:" + ausgabeLog);
+		
 		return this.dataBack;
 	}	
 /**

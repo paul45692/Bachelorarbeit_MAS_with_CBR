@@ -19,7 +19,8 @@ import de.dfki.mycbr.core.model.IntegerDesc;
  */
 public class CBR_AdaptionProcess {
 	/**
-	 * Diese Methode versucht eine Verbesserung an einen vorhanden Fall vorzunehmen
+	 * Diese Methode versucht eine Verbesserung an einen vorhanden Fall vorzunehmen.
+	 * Diese Methode wird nicht verwendet und wird nur prototypsich verwendet.
 	 * @return
 	 */
 	protected Instance provideNewCase(Instance instance1, Instance instance2, IntegerDesc intA, IntegerDesc intB) {
@@ -61,10 +62,10 @@ public class CBR_AdaptionProcess {
 							}
 							break;
 							
-			case 3:			if(board.checkAufBelegtFeld(start.convertToFeld()) && !spieler.getPosiSteine().contains(start))  {
+			case 3:			if(board.checkAufBelegtFeld(start.convertToFeld()) && !spieler.steinIstVorhanden(start))  {
 								rueckgabe.add(start);
 							}
-							else if (board.checkAufBelegtFeld(ziel.convertToFeld()) && !spieler.getPosiSteine().contains(ziel)) {
+							else if (board.checkAufBelegtFeld(ziel.convertToFeld()) && !spieler.steinIstVorhanden(ziel)) {
 								rueckgabe.add(ziel);
 							}
 							break;	

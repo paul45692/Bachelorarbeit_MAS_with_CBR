@@ -26,7 +26,7 @@ public class CBRAgent extends Agent{
 	private static final long serialVersionUID = 1L;
 	private CBRController interpreter = new CBRController();
 	private static final Logger logger = Logger.getLogger(CBRAgent.class);
-
+// Agenten Methode
 	@Override
 	protected void setup() {
 		System.out.println("CBR System aktiv!");

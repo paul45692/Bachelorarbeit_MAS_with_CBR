@@ -141,6 +141,7 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 							} else {
 								ausgabe = "Der Spieler B (Blau) ist am Zug!";
 								System.out.println("Der Spieler B (Blau) ist am Zug!");
+								this.führeAgentenZugAus();
 							}
 							break;
 						}
@@ -164,6 +165,7 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 							} else {
 								ausgabe = "Der Spieler B (Blau) ist am Zug!";
 								System.out.println("Der Spieler B (Blau) ist am Zug!");
+								this.führeAgentenZugAus();
 							}
 							break;
 						} else {
@@ -177,7 +179,8 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 						// Der Spieler muss wieder in die Spielphase zurück
 						spielerA.setSpielPhase(spielerA.getTempspielPhase());
 						ausgabe = "Der Spieler B (Blau) ist am Zug!";
-						System.out.println("Der Spieler B (Blau) ist am Zug!"); 
+						System.out.println("Der Spieler B (Blau) ist am Zug!");
+						this.führeAgentenZugAus();
 						break;
 			default: 						
 						break;	
@@ -354,7 +357,19 @@ public class SpielbrettVsRBS extends JPanel implements MouseListener  {
 					}
 					break;
 					
-		case 3: 	break;	
+		case 3: 	Spielstein target = data.get(0);
+					Spielstein entferne = spielController.entferneSteinVonFeld(target.getX(),target.getY(), spielerB);
+					if(entferne != null) {
+						spielsteine.remove(entferne);
+						// Der Spieler muss wieder in die Spielphase zurück
+						spielerB.setSpielPhase(spielerB.getTempspielPhase());
+						ausgabe = "Der Spieler A (weiss) ist am Zug!";
+						System.out.println("Der Spieler A (weiss) ist am Zug!");	
+					} else {
+						ausgabe = "Der Stein konnte leider nicht entfernt werden";
+						System.out.print("Ein Fehler ist aufgetreten");
+					}
+					break;	
 		}
 	}
 	

@@ -3,7 +3,7 @@
    # Define the file appender
 	log4j.appender.FILE=org.apache.log4j.FileAppender 
    # Set the name of the file
-   log4j.appender.FILE.File= src/de.blanke.ba.logger/agenten-CBRAgent.out
+   log4j.appender.FILE.File= src/de.blanke.ba.logger/cbrAgent.out
 
    # Set the immediate flush to true (default)
    log4j.appender.FILE.ImmediateFlush=true

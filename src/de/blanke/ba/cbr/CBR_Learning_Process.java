@@ -21,7 +21,7 @@ import de.dfki.mycbr.core.model.IntegerDesc;
  * @author Paul Blanke
  *
  */
-public class CBR_Learning_Process_Prototyp {
+public class CBR_Learning_Process {
 	int learningParameterA;
 	int learningParameterB;
 	AgentenOperations operation = new AgentenOperations();
@@ -29,8 +29,8 @@ public class CBR_Learning_Process_Prototyp {
 	private static final Logger logger = Logger.getLogger(CBRAgent.class);
 	Stein ergebnisA = null;
 	
-	public CBR_Learning_Process_Prototyp() {
-		PropertyConfigurator.configure(CBRAgent.class.getResource("log4j.info"));
+	public CBR_Learning_Process() {
+		PropertyConfigurator.configure(CBR_Learning_Process.class.getResource("log4j.info"));
 	}
 	/**
 	 * Diese Methode versucht per Zufall einen neuen Fall anzulernen.
@@ -65,7 +65,7 @@ public class CBR_Learning_Process_Prototyp {
 			logger.info("CBR System-Learning: Anlernen ist fehl geschlagen!");
 			e.printStackTrace();
 		}
-		
+		System.out.print("CBR System: Fall anlernen war erfolgreich!");
 		return eingabe;
 	}
 	

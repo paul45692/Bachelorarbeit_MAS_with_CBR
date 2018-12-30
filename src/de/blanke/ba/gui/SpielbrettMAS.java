@@ -105,11 +105,12 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	// Diese Methode beginnt ein Spiel.
 	public void	beginneSpiel() {
 		for(int i = 0; i < 12; i++) {
-			Spieler spieler = this.spielerB;
-			Spieler spielerB = this.spielerA;
+			Spieler spieler = this.spielerA;
+			Spieler spielerB = this.spielerB;
 			if(i % 2 == 0) {
-				spieler = this.spielerA;
-				spielerB = this.spielerB;
+				// legt fest welcher Spieler am Anfang beginnt.
+				spieler = this.spielerB;
+				spielerB = this.spielerA;
 			}
 			Board board = this.spielController.getBoard();
 			this.führeZugDurch(spieler, spielerB, board);
@@ -188,17 +189,15 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 							spielsteine.add(spielstein2);
 							
 							if(spielController.pruefeAufMuehle(spieler)) {
-								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
+								System.out.println("-->  Der" + spieler.getName() +" hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
 								spieler.setTempspielPhase(spieler.getSpielPhase());
 								spieler.setSpielPhase(3);
+								this.führeZugDurch(spieler, spielerB, board);
 								
 							} else {
 								// Unterscheide welcher Spieler als nächstes dran ist
 								ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
 								System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
-								int ausgabe = 9 - spielerB.getAnzahlSteine();
-								this.pruefeAufSpielEnde();
-								System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 							}
 							break;
 						} 
@@ -232,18 +231,13 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						if(spielController.setSpielStein(xCord, yCord, spieler, spielstein2))  {
 							spielsteine.add(spielstein2);
 							if(spielController.pruefeAufMuehle(spieler)) {
-								System.out.println("-->  Der Spieler B hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
-								
+								System.out.println("-->  Der" + spieler.getName() + " hat eine Mühle erzeugt! Entferne einen gegnerischen Stein");
 								spieler.setTempspielPhase(spieler.getSpielPhase());
 								spielerB.setSpielPhase(3);
-				
+								this.führeZugDurch(spieler, spielerB, board);
 							} else {
 								// Unterscheide welcher Spieler als nächstes dran ist
 								ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
-								System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
-								int ausgabe = 9 - spielerB.getAnzahlSteine();
-								this.pruefeAufSpielEnde();
-								System.out.println("Info:" + spielerB.getName() + " kann noch " + ausgabe + " Spielsteine setzen!");
 							}
 							break;
 						} 
@@ -254,12 +248,16 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						xCord = spielstein.getX();
 						yCord = spielstein.getY();
 						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
-						spielsteine.remove(stein);
-						spieler.setSpielPhase(spieler.getTempspielPhase());
-						// Unterscheide welcher Spieler als nächstes dran ist
-						ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
-						System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
-						this.pruefeAufSpielEnde();
+						if(stein != null) {
+							spielsteine.remove(stein);
+							spieler.setSpielPhase(spieler.getTempspielPhase());
+							// Unterscheide welcher Spieler als nächstes dran ist
+							ausgabe = "Der Spieler " + spielerB.getName() +"ist am Zug!";
+							System.out.println("Der Spieler" + spielerB.getName() + " ist am Zug!");
+							this.pruefeAufSpielEnde();
+						} else {
+							System.out.println("Das Schlagen ist fehlgeschlagen!");
+						}
 						break;
 						
 			default: 						
