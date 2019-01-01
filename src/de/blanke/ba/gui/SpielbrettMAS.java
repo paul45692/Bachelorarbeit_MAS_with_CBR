@@ -47,6 +47,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	private SpielController spielController;
 	private ControllerAgent controllerMAS;
 	private Spieler spielerA;
+	private boolean cbrreasoning;
 	private Spieler spielerB;
 	private boolean spielEnde = false;
 	private static final Logger logger = Logger.getLogger(SpielbrettMAS.class);
@@ -60,7 +61,6 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		this.ausgabe = " Das Spiel kann beginnen, bitte klicken Sie auf das Spielfeld!";
 		PropertyConfigurator.configure(SpielbrettMAS.class.getResource("log4j.info"));
 		logger.info("Spiel (MAS): Variate mit MAS ! Der Spielverlauf wird eher weniger geloggt!");
-	//	this.prepareTestszenario(0);
 		try {
 			bi = ImageIO.read(this.getClass().getResource("/res/Muehlefeld.jpg"));
 		} catch (IOException e) {
@@ -117,7 +117,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 			this.paint(getGraphics());
 		}
 		System.out.println("Agenten Spiel beendet!");
-		ausgabe = "Das Spiel mit den Agenten wurde beendet!";
+		ausgabe = "Das Spiel mit den Agenten wurde beendet! CBR Agent (Blau) & RBS Agent (Weiss)";
 	}
 	/**
 	 * Diese Methode führt einen Spielzug des Agenten durch.
@@ -126,10 +126,17 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	 * @param board der Spielstand (aktuell).
 	 */
 	private void führeZugDurch(Spieler spieler, Spieler spielerB, Board board) {
+		List<Spielstein> data = this.executeSpielZug(spieler, spielerB, board);
+		// Löse erneut aus, falls ein Problem auftritt.
+		if(data.isEmpty()) {
+			this.cbrreasoning = true;
+			data = this.executeSpielZug(spieler, spielerB, board);
+		}
 		if(!spielEnde) {
+			
 			switch(spieler.getSpielPhase()) {
 			case 0:
-						Spielstein spielstein = this.executeSpielZug(spieler, spielerB, board).get(0);
+						Spielstein spielstein = data.get(0);
 						if(spieler.getName().contains("CBR")) {
 							spielstein.setColor(Color.BLUE);
 						} else {
@@ -160,17 +167,8 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;
 				
 			case 1:		// zweite Spielphase(Steine auf Nachbarfelder)
-						List<Spielstein> dataResult = this.executeSpielZug(spieler, spielerB, board);
-						spielstein = null;
-						Spielstein spielstein2 = null;
-						if(!dataResult.isEmpty()) {
-							spielstein = dataResult.get(0);
-							spielstein2 = dataResult.get(1);	
-						} else if(dataResult.isEmpty()) {
-							dataResult = this.executeSpielZug(spieler, spielerB, board);
-							spielstein = dataResult.get(0);
-							spielstein2 = dataResult.get(1);
-						}
+						spielstein = data.get(0);
+						Spielstein spielstein2 = data.get(1);	
 						// Farbe steuern.
 						if(spieler.getName().contains("CBR")) {
 							spielstein2.setColor(Color.BLUE);
@@ -204,17 +202,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;
 						
 					
-			case 2:		dataResult = this.executeSpielZug(spieler, spielerB, board);
-						spielstein = null;
-						spielstein2 = null;
-						if(!dataResult.isEmpty()) {
-							spielstein = dataResult.get(0);
-							spielstein2 = dataResult.get(1);	
-						} else if(dataResult.isEmpty()) {
-							dataResult = this.executeSpielZug(spieler, spielerB, board);
-							spielstein = dataResult.get(0);
-							spielstein2 = dataResult.get(1);
-						}
+			case 2:		
+							spielstein = data.get(0);
+							spielstein2 = data.get(1);	
 						// Farbe steuern.
 						if(spieler.getName().contains("CBR")) {
 							spielstein2.setColor(Color.BLUE);
@@ -244,7 +234,7 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 						break;
 						
 			case 3:		
-						spielstein = this.executeSpielZug(spieler, spielerB, board).get(0);
+						spielstein = data.get(0);
 						xCord = spielstein.getX();
 						yCord = spielstein.getY();
 						Spielstein stein = spielController.entferneSteinVonFeld(xCord, yCord, spielerB);
@@ -310,7 +300,9 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 		boolean changeAgent = false;
 		if(spieler.getName().contains("RBS")) {
 			changeAgent = true;
-		} 
+		}  else if(cbrreasoning) {
+			box.setReosoning(true);
+		}
 		GameBehaviour spielZug = new GameBehaviour(this.controllerMAS,box, changeAgent);
 		this.controllerMAS.addBehaviour(spielZug);
 		try {
@@ -372,5 +364,13 @@ public class SpielbrettMAS extends JPanel implements MouseListener {
 	}
 	public void setSpielEnde(boolean spielEnde) {
 		this.spielEnde = spielEnde;
+	}
+
+	public boolean isCbrreasoning() {
+		return cbrreasoning;
+	}
+
+	public void setCbrreasoning(boolean cbrreasoning) {
+		this.cbrreasoning = cbrreasoning;
 	}
 }

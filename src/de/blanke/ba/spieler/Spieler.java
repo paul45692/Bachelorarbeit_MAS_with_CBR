@@ -83,7 +83,15 @@ public class Spieler implements Serializable{
 	}
 // Methoden	
 	public void removeStein(Stein stein) {
-		this.posiSteine.remove(stein);
+		for(Stein s:posiSteine) {
+			if(s.equals(stein)) {
+				posiSteine.remove(s);
+				if(this.spielPhase > 0) {
+					this.anzahlSteine--;
+				}
+				break;
+			}
+		}
 	}
 	/**
 	 * Diese Methode setzt die Steine des Spieler beim

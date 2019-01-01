@@ -46,7 +46,7 @@ public class AgentenOperations {
 		fixeSteineRing3.add(new Stein(2,0,1,null, new Spielstein(255, 340, null)));
 		fixeSteineRing3.add(new Stein(2,0,2,null, new Spielstein(255, 435, null)));
 		fixeSteineRing3.add(new Stein(2,1,2,null, new Spielstein(370, 435, null)));
-		fixeSteineRing3.add(new Stein(2,2,2,null, new Spielstein(492, 435, null)));
+		fixeSteineRing3.add(new Stein(2,2,2,null, new Spielstein(494, 435, null)));
 		fixeSteineRing3.add(new Stein(2,2,1,null, new Spielstein(494, 340, null)));
 		
 		alleSteineFesteReihenFolge.add(new Stein(0,0,0,null, new Spielstein(15,11, null), 0));
@@ -72,7 +72,7 @@ public class AgentenOperations {
 		alleSteineFesteReihenFolge.add(new Stein(2,1,0,null, new Spielstein(373, 235, null), 18));
 		alleSteineFesteReihenFolge.add(new Stein(2,2,0,null, new Spielstein(493, 236, null), 19));
 		alleSteineFesteReihenFolge.add(new Stein(2,2,1,null, new Spielstein(494, 348, null), 20));
-		alleSteineFesteReihenFolge.add(new Stein(2,2,2,null, new Spielstein(492, 435, null), 21));
+		alleSteineFesteReihenFolge.add(new Stein(2,2,2,null, new Spielstein(494, 435, null), 21));
 		alleSteineFesteReihenFolge.add(new Stein(2,1,2,null, new Spielstein(370, 435, null), 22));
 		alleSteineFesteReihenFolge.add(new Stein(2,0,2,null, new Spielstein(255, 435, null), 23));
 		alleSteineFesteReihenFolge.add(new Stein(2,0,1,null, new Spielstein(255, 345, null), 24));

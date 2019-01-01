@@ -59,9 +59,10 @@ public class CBRAgent extends Agent{
 					
 					Board board = box.getBoard();
 					Spieler spieler = box.getSpieler();
+					boolean reosoning = box.isReosoning();
 					// Fehlerhandling
 					if(board != null && spieler != null) {
-						List <Stein> extractData = interpreter.executeQuery(board, spieler);
+						List <Stein> extractData = interpreter.executeQuery(board, spieler, reosoning);
 						for(Stein i: extractData) {
 							rueckgabe.add(i);
 						}

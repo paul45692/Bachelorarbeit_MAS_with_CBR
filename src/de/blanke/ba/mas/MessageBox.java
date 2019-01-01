@@ -16,6 +16,7 @@ public class MessageBox implements Serializable {
 	private Spieler spieler;
 	private Spieler spielerB;
 	private Board board;
+	private boolean reosoning = false;
 // getter und setter
 	public Spieler getSpieler() {
 		return spieler;
@@ -35,11 +36,18 @@ public class MessageBox implements Serializable {
 	public void setSpielerB(Spieler spielerB) {
 		this.spielerB = spielerB;
 	}
-// Konstruktor	
+	public boolean isReosoning() {
+		return reosoning;
+	}
+	public void setReosoning(boolean reosoning) {
+		this.reosoning = reosoning;
+	}
+	// Konstruktor	
 	public MessageBox(Spieler spieler,Spieler spielerB, Board board) {
 		this.spieler = spieler;
 		this.spielerB = spielerB;
 		this.board = board;
+		this.setReosoning(false);
 		
 	}
 // Methoden	

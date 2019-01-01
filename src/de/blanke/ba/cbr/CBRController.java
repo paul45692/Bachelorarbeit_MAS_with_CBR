@@ -39,6 +39,9 @@ public class CBRController {
 	private List<Stein> resultSet = new ArrayList<>();
 	private static final Logger logger = Logger.getLogger(CBRController.class);
 	private Instance eingabe = null;
+	private Instance noUsing = null;
+	private boolean reosoning = false;
+
 // Methoden	
 	/**
 	 * Diese Methode initalisiert die zentrale CBR Infrastruktur, die benötigt wird, und lädet alle Fälle.
@@ -74,9 +77,10 @@ public class CBRController {
 	 * @param spieler Eingabeparameter.
 	 * @return Liste von Integers als Ausgabeparameter.
 	 */
-	public List<Stein> executeQuery(Board board, Spieler spieler) {
+	public List<Stein> executeQuery(Board board, Spieler spieler, boolean reosoning) {
 		// Werte die Daten aus:
 		this.resultSet.clear();
+		this.reosoning = reosoning;
 		int spielphase = spieler.getSpielPhase();
 		int anzahlDerEigenenSpielsteine = spieler.getAnzahlSteine();
 		int mühlen = spieler.getAnzahlMühlen();
@@ -173,12 +177,17 @@ public class CBRController {
 				relevant.add(a);
 			}
 		}
+		// Schließe bei einem Fehlschlag die Lösung von der weiteren Verabreitung aus.
+		if(reosoning) {
+			relevant.remove(noUsing);
+		}
 		logger.info("Es wurden: " + relevant.size() + " relevante Fälle gefunden!");
 		// Processing 1 a - Hole die konkreten Instanzen
 		for(Instance r: relevant) {
 			evaluateData.add(Integer.parseInt(r.getAttForDesc(lösungADesc).getValueAsString()));
 			evaluateData.add(Integer.parseInt(r.getAttForDesc(lösungBDesc).getValueAsString()));
 		}
+		
 		// Processing 1 b - Wandle auf Steine um
 		List<Stein> caculateSol = new ArrayList<>();
 		for(Integer a: evaluateData) {
@@ -196,9 +205,18 @@ public class CBRController {
 			if(!result.isEmpty()) {
 				if(spieler.getSpielPhase() == 0 || spieler.getSpielPhase() == 3) {
 					this.resultSet.add(result.get(0));
+					Instance used = this.getMappingInstance(data, lösungADesc, operations.getIndexFromStein(caculateSol.get(0)));
+					this.noUsing = process.provideNewCase(eingabe, used, lösungADesc, lösungBDesc);
+					this.casebase.addCase(noUsing);
+				 	System.out.println("Adaption der Spielsituation abgeschlossen! Es sind nun " + casebase.getCases().size() 
+				 			+ " Fälle vorhanden");
 				} else {
 					this.resultSet.add(result.get(0));
 					this.resultSet.add(result.get(1));
+					Instance used = this.getMappingInstance(data, lösungADesc, operations.getIndexFromStein(caculateSol.get(0)));
+					this.noUsing = process.provideNewCase(eingabe, used, lösungADesc, lösungBDesc);
+					this.casebase.addCase(noUsing);
+				 	System.out.println("Adaption der Spielsituation abgeschlossen!");
 				}
 				break;
 			} 
@@ -212,7 +230,20 @@ public class CBRController {
 			 resultSet.add(this.learning.getErgebnisA());
 		}
 	}
-
+	
+	
+	private Instance getMappingInstance(List<Instance> data, IntegerDesc lösung, int start) {
+		Instance rueckgabe = null;
+		for(Instance a: data) {
+			int check = Integer.parseInt(a.getAttForDesc(lösung).getValueAsString());
+			if(check == start) {
+				rueckgabe = a;
+				break;
+			}
+		}
+		return rueckgabe;
+	}
 }	
+
 
 

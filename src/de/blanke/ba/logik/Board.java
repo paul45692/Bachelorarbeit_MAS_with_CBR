@@ -116,6 +116,7 @@ public class Board implements Serializable {
 					stein = f.getStein();
 					if(!spieler.pruefeObSteinTeilEinerMuehhleIst(stein)) {
 						f.entferneStein();
+						System.out.println("Der Stein wurde entfernt:" + f.getRingZahl() + "," + f.getxCord() + " ," + f.getyCord());
 					}
 					break;
 				}

@@ -20,15 +20,15 @@ import de.dfki.mycbr.core.model.IntegerDesc;
 public class CBR_AdaptionProcess {
 	/**
 	 * Diese Methode versucht eine Verbesserung an einen vorhanden Fall vorzunehmen.
-	 * Diese Methode wird nicht verwendet und wird nur prototypsich verwendet.
-	 * @return
+	 * 
+	 * @return angepasste Instanz
 	 */
 	protected Instance provideNewCase(Instance instance1, Instance instance2, IntegerDesc intA, IntegerDesc intB) {
 		try {
 			Integer lösungA = Integer.parseInt(instance2.getAttForDesc(intA).getValueAsString());
 			Integer lösungB = Integer.parseInt(instance2.getAttForDesc(intB).getValueAsString());
-			instance1.addAttribute("Lösungfeld A", lösungA);
-			instance1.addAttribute("Lösungsfeld B", lösungB);
+			instance1.addAttribute("Lösungfeld_Start", lösungA);
+			instance1.addAttribute("Lösungsfeld_Ziel", lösungB);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -151,7 +151,7 @@ public class Converter {
 				x = 2;
 				y = 1;
 				return new Feld(ring, x, y);
-			} else if(445 < yCord && yCord < 485) {
+			} else if(430 < yCord && yCord < 485) {
 				x = 2;
 				y = 2;
 				return new Feld(ring, x, y);

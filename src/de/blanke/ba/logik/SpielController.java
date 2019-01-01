@@ -76,6 +76,7 @@ public class SpielController {
 						spieler.setAnzahlSpielZüge(spieler.getAnzahlSpielZüge() + 1);
 						Stein stein = new Stein(feld.getRingZahl(), feld.getxCord(), feld.getyCord(), spieler.getSpielFarbe());
 						spieler.setzeSpielstein(stein);
+						// Wechsel der Spielphase
 						if(spieler.getAnzahlSteine() == 3) {
 							System.out.print("Der " + spieler.getName() + "wechselt in die dritte Spielphase!");
 							spieler.setSpielPhase(2);
@@ -114,10 +115,7 @@ public class SpielController {
 	public Spielstein entferneSteinVonFeld(int x, int y, Spieler spieler) {
 		feld = helper.ermitteleFeld(x, y);
 		Spielstein spielstein = board.entferneStein(feld, spieler);
-		if(spieler.getSpielPhase() != 0) {
-			spieler.setAnzahlSteine(spieler.getAnzahlSteine() -1);
-		}
-		spieler.removeStein(feld.getStein());
+		spieler.removeStein(feld.convertToStein());
 		return spielstein;
 	}
 	
@@ -152,6 +150,9 @@ public class SpielController {
 			check = true;
 			this.spielEnde = true;
 			System.out.println("Spiel Ende: Der Spieler:"+  spieler.getName() + "kann keine Züge mehr ausführen!");
+		} else if(spieler.getAnzahlSteine() == 2) {
+			check = true;
+			System.out.println("Spielende:" + spieler.getName() +  " hat verloren!");
 		}
 		return check;
 	}
