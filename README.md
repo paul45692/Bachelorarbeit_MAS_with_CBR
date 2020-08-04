@@ -1,9 +1,13 @@
-Dieses Projekt enthält die Programmierung meiner Bachelorarbeit in Form einer Java Swing Anwendung.
+Dieses Projekt enthält den Programmierungsanteil meiner Bachelorarbeit an der Universität Hildesheim
+im Studiengang Wirtschaftsinformatik.
 
-Bitte beachten: Dieses Projekt hat eine Abh&aengigkeit mit folgenden JAR die f&uer den Systemstart ben&oetigt werden:
+Titel der Arbeit: Konzept und Realisierung eines Multiagenten System für das Brettspiel Mühle
 
-- jade 4.3
-- myCBR 3.1
-- log4j 1.2
+Das Ziel dieser Arbeit war die Entwicklung und Realiserung eines Multiagentsystem (MAS) in Verbindung mit einem
+Case Based Reasoning (CBR) System. 
+Im Rahmen der Arbeit wurde das Brettspiel Mühle im Form eines Java Swing Programmes umgesetzt und zwei KIs sind der Lage
+gegenaneinander zu spielen.
 
-Das CBR System ben�tigt in der Klasse CBR_Engine eine Pfad Angabe bevor das System gestartet werden:)
+Verwendete Technolgien: Java Swing, Jade und myCBR
+
+(Hinweis: Damit das Programm gestartet werden kann, muss der Pfad der CBR Datei angepasst werden.)
